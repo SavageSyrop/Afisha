@@ -1,0 +1,401 @@
+2023-05-04 22:23:48 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 14536 (D:\Java Projects\Afisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\Afisha)
+2023-05-04 22:23:48 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-04 22:23:48 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-04 22:23:48 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-04 22:23:49 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-04 22:23:49 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
+2023-05-04 22:23:50 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-04 22:23:50 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-04 22:23:50 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-04 22:23:50 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-04 22:23:50 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 2067 ms
+2023-05-04 22:23:51 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-04 22:23:51 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-04 22:23:51 INFO  VersionPrinter:37 - 
+2023-05-04 22:23:51 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-04 22:23:51 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-04 22:23:51 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaUsersDB (PostgreSQL 15.0)
+2023-05-04 22:23:51 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-04 22:23:51 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.028s)
+2023-05-04 22:23:51 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-04 22:23:51 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-04 22:23:51 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-04 22:23:51 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-04 22:23:51 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:23:52 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-04 22:23:52 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:23:52 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:23:52 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-04 22:23:53 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2fa5dee7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@214f7e46, org.springframework.security.web.context.SecurityContextPersistenceFilter@7a42d081, org.springframework.security.web.header.HeaderWriterFilter@494646be, org.springframework.web.filter.CorsFilter@33d4a750, org.springframework.security.web.authentication.logout.LogoutFilter@23ac95c, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@310fe614, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4b8a586c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@381ba71, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@77186af6, org.springframework.security.web.session.SessionManagementFilter@755de6d8, org.springframework.security.web.access.ExceptionTranslationFilter@28a8eb4e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3ab720b]
+2023-05-04 22:23:54 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-04 22:23:54 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-04 22:23:54 INFO  Main:61 - Started Main in 5.827 seconds (JVM running for 6.392)
+2023-05-04 22:24:33 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:24:33 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-04 22:24:33 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-04 22:33:12 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 15260 (D:\Java Projects\Afisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\Afisha)
+2023-05-04 22:33:12 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-04 22:33:12 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-04 22:33:12 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-04 22:33:13 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-04 22:33:13 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 10 ms. Found 0 JPA repository interfaces.
+2023-05-04 22:33:14 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-04 22:33:14 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-04 22:33:14 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-04 22:33:14 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-04 22:33:14 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 1624 ms
+2023-05-04 22:33:14 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-04 22:33:14 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-04 22:33:14 INFO  VersionPrinter:37 - 
+2023-05-04 22:33:14 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-04 22:33:15 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-04 22:33:15 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaUsersDB (PostgreSQL 15.0)
+2023-05-04 22:33:15 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-04 22:33:15 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.032s)
+2023-05-04 22:33:15 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-04 22:33:15 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-04 22:33:15 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-04 22:33:15 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-04 22:33:15 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:33:15 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-04 22:33:16 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:33:16 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:33:16 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-04 22:33:17 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@325dcf69, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5f94b488, org.springframework.security.web.context.SecurityContextPersistenceFilter@6d29ff50, org.springframework.security.web.header.HeaderWriterFilter@4759764, org.springframework.web.filter.CorsFilter@7ffd4998, org.springframework.security.web.authentication.logout.LogoutFilter@c15711d, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4e7d696d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5c230334, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5fd9bd6f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1f84c591, org.springframework.security.web.session.SessionManagementFilter@2671b90b, org.springframework.security.web.access.ExceptionTranslationFilter@5f0361b7, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1a18727b]
+2023-05-04 22:33:17 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-04 22:33:17 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-04 22:33:17 INFO  Main:61 - Started Main in 5.582 seconds (JVM running for 6.179)
+2023-05-04 22:33:32 INFO  [/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-05-04 22:33:32 INFO  DispatcherServlet:525 - Initializing Servlet 'dispatcherServlet'
+2023-05-04 22:33:32 INFO  DispatcherServlet:547 - Completed initialization in 1 ms
+2023-05-04 22:33:33 ERROR [dispatcherServlet]:175 - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: ru.it.lab.exceptions.ExceptionDTO["timestamp"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1300)
+	at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4568)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:3780)
+	at ru.it.lab.exceptions.handlers.DelegatedAuthenticationEntryPoint.commence(DelegatedAuthenticationEntryPoint.java:27)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.sendStartAuthentication(ExceptionTranslationFilter.java:215)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.handleAccessDeniedException(ExceptionTranslationFilter.java:193)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.handleSpringSecurityException(ExceptionTranslationFilter.java:174)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:143)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-05-04 22:34:52 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:34:52 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-04 22:34:52 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-04 22:39:36 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 19212 (D:\Java Projects\Afisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\Afisha)
+2023-05-04 22:39:36 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-04 22:39:36 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-04 22:39:36 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-04 22:39:37 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-04 22:39:37 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
+2023-05-04 22:39:37 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-04 22:39:37 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-04 22:39:37 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-04 22:39:38 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-04 22:39:38 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 1847 ms
+2023-05-04 22:39:38 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-04 22:39:38 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-04 22:39:38 INFO  VersionPrinter:37 - 
+2023-05-04 22:39:38 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-04 22:39:38 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-04 22:39:38 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaUsersDB (PostgreSQL 15.0)
+2023-05-04 22:39:38 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-04 22:39:38 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.035s)
+2023-05-04 22:39:38 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-04 22:39:38 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-04 22:39:38 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-04 22:39:38 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-04 22:39:39 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:39:39 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-04 22:39:39 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:39:39 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:39:40 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-04 22:39:40 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@cf2de83, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37c1d46c, org.springframework.security.web.context.SecurityContextPersistenceFilter@406aadc1, org.springframework.security.web.header.HeaderWriterFilter@57c3e9ec, org.springframework.web.filter.CorsFilter@6a3f1aef, org.springframework.security.web.authentication.logout.LogoutFilter@63aa9f5a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@f73eec7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@69e1e0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@639abb48, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4e0cfe48, org.springframework.security.web.session.SessionManagementFilter@36508e9, org.springframework.security.web.access.ExceptionTranslationFilter@19f61071, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@570f786b]
+2023-05-04 22:39:40 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-04 22:39:40 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-04 22:39:40 INFO  Main:61 - Started Main in 5.087 seconds (JVM running for 5.685)
+2023-05-04 22:39:53 INFO  [/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-05-04 22:39:53 INFO  DispatcherServlet:525 - Initializing Servlet 'dispatcherServlet'
+2023-05-04 22:39:53 INFO  DispatcherServlet:547 - Completed initialization in 1 ms
+2023-05-04 22:39:54 ERROR [dispatcherServlet]:175 - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: ru.it.lab.exceptions.ExceptionDTO["timestamp"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1300)
+	at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4568)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:3780)
+	at ru.it.lab.exceptions.handlers.DelegatedAuthenticationEntryPoint.commence(DelegatedAuthenticationEntryPoint.java:27)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.sendStartAuthentication(ExceptionTranslationFilter.java:215)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.handleAccessDeniedException(ExceptionTranslationFilter.java:193)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.handleSpringSecurityException(ExceptionTranslationFilter.java:174)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:143)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-05-04 22:39:56 ERROR [dispatcherServlet]:175 - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: ru.it.lab.exceptions.ExceptionDTO["timestamp"])
+	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
+	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1300)
+	at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
+	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)
+	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)
+	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)
+	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)
+	at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4568)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValue(ObjectMapper.java:3780)
+	at ru.it.lab.exceptions.handlers.DelegatedAuthenticationEntryPoint.commence(DelegatedAuthenticationEntryPoint.java:27)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.sendStartAuthentication(ExceptionTranslationFilter.java:215)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.handleAccessDeniedException(ExceptionTranslationFilter.java:193)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.handleSpringSecurityException(ExceptionTranslationFilter.java:174)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:143)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:336)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:211)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:183)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-05-04 22:48:45 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:48:45 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-04 22:48:45 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-04 22:49:00 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 18636 (D:\Java Projects\Afisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\Afisha)
+2023-05-04 22:49:00 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-04 22:49:00 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-04 22:49:00 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-04 22:49:01 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-04 22:49:01 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 13 ms. Found 0 JPA repository interfaces.
+2023-05-04 22:49:02 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-04 22:49:03 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-04 22:49:03 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-04 22:49:03 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-04 22:49:03 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 3288 ms
+2023-05-04 22:49:03 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-04 22:49:03 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-04 22:49:03 INFO  VersionPrinter:37 - 
+2023-05-04 22:49:03 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-04 22:49:04 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-04 22:49:04 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaUsersDB (PostgreSQL 15.0)
+2023-05-04 22:49:04 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-04 22:49:04 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.029s)
+2023-05-04 22:49:04 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-04 22:49:04 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-04 22:49:04 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-04 22:49:04 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-04 22:49:05 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-04 22:49:05 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-04 22:49:07 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-04 22:49:07 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:49:08 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-04 22:49:08 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@148802ba, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@59b008f0, org.springframework.security.web.context.SecurityContextPersistenceFilter@1e31393a, org.springframework.security.web.header.HeaderWriterFilter@f948884, org.springframework.web.filter.CorsFilter@67ae28af, org.springframework.security.web.authentication.logout.LogoutFilter@2417b0e5, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7ef8a58b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6f880b3d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@196dbf6d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@71ae9c44, org.springframework.security.web.session.SessionManagementFilter@62b37300, org.springframework.security.web.access.ExceptionTranslationFilter@760d3797, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7a81f290]
+2023-05-04 22:49:09 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-04 22:49:09 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-04 22:49:09 INFO  Main:61 - Started Main in 11.484 seconds (JVM running for 12.124)
+2023-05-04 22:50:18 INFO  [/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-05-04 22:50:18 INFO  DispatcherServlet:525 - Initializing Servlet 'dispatcherServlet'
+2023-05-04 22:50:18 INFO  DispatcherServlet:547 - Completed initialization in 6 ms
+2023-05-04 22:51:34 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-04 22:51:34 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-04 22:51:34 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
