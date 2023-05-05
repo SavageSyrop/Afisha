@@ -548,7 +548,7 @@
 2023-05-05 12:04:48 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
 2023-05-05 12:04:48 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 2272 ms
 2023-05-05 12:04:48 ERROR StandardManager:175 - Exception loading sessions from persistent storage
-java.io.InvalidClassException: ru.it.lab.entitities.User; local class incompatible: stream classdesc serialVersionUID = 1751525109159115629, local class serialVersionUID = 5318122402386737795
+java.io.InvalidClassException: ru.it.lab.entitities.Authorization; local class incompatible: stream classdesc serialVersionUID = 1751525109159115629, local class serialVersionUID = 5318122402386737795
 	at java.base/java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:728)
 	at java.base/java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:2060)
 	at java.base/java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1907)
@@ -606,7 +606,7 @@ java.io.InvalidClassException: ru.it.lab.entitities.User; local class incompatib
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
-	at ru.it.lab.Main.main(Main.java:28)
+	at ru.it.lab.UserMicroserviceMain.main(Main.java:28)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -680,7 +680,7 @@ role_id bigint NOT NULL REFERENCES roles(id) ON DELETE NO ACTION
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
-	at ru.it.lab.Main.main(Main.java:28)
+	at ru.it.lab.UserMicroserviceMain.main(Main.java:28)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -834,7 +834,7 @@ CONSTRAINT permissions PRIMARY KEY (id)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
-	at ru.it.lab.Main.main(Main.java:28)
+	at ru.it.lab.UserMicroserviceMain.main(Main.java:28)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -952,3 +952,800 @@ Caused by: org.postgresql.util.PSQLException: ОШИБКА: отношение "
 2023-05-05 12:09:20 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
 2023-05-05 12:09:20 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
 2023-05-05 12:09:20 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-05 20:10:42 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 7964 (D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 20:10:42 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 20:10:42 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 20:10:42 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 20:10:42 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 20:10:43 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 20:10:43 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 22 ms. Found 0 JPA repository interfaces.
+2023-05-05 20:10:44 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 20:10:44 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 20:10:44 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 20:10:44 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 20:10:44 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 2201 ms
+2023-05-05 20:10:45 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-05 20:10:45 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-05 20:10:45 INFO  VersionPrinter:37 - 
+2023-05-05 20:10:45 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-05 20:10:45 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-05 20:10:45 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaDB (PostgreSQL 15.0)
+2023-05-05 20:10:45 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-05 20:10:45 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.026s)
+2023-05-05 20:10:45 INFO  JdbcTableSchemaHistory:37 - Creating Schema History table "public"."flyway_schema_history" ...
+2023-05-05 20:10:45 INFO  DbMigrate:37 - Current version of schema "public": << Empty Schema >>
+2023-05-05 20:10:45 INFO  DbMigrate:37 - Migrating schema "public" to version "2023.04.05.11.12 - add user tables"
+2023-05-05 20:10:45 INFO  DbMigrate:37 - Migrating schema "public" to version "2023.05.04.1.17 - insert user values"
+2023-05-05 20:10:45 INFO  DbMigrate:37 - Successfully applied 2 migrations to schema "public", now at version v2023.05.04.1.17 (execution time 00:00.074s)
+2023-05-05 20:10:45 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 20:10:46 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-05 20:10:46 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 20:10:46 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-05 20:10:47 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 20:10:47 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 20:10:47 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-05 20:10:48 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'usersController' defined in file [D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes\ru\it\lab\controller\UsersController.class]: Initialization of bean failed; nested exception is java.lang.IllegalStateException: Failed to create channel: 
+2023-05-05 20:10:48 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 20:10:48 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-05 20:10:48 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-05 20:10:48 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 20:10:48 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 20:10:48 ERROR SpringApplication:824 - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'usersController' defined in file [D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes\ru\it\lab\controller\UsersController.class]: Initialization of bean failed; nested exception is java.lang.IllegalStateException: Failed to create channel: 
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:953)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at ru.it.lab.UserMicroserviceMain.main(Main.java:15)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.IllegalStateException: Failed to create channel: 
+	at net.devh.boot.grpc.client.inject.GrpcClientBeanPostProcessor.processInjectionPoint(GrpcClientBeanPostProcessor.java:126)
+	at net.devh.boot.grpc.client.inject.GrpcClientBeanPostProcessor.postProcessBeforeInitialization(GrpcClientBeanPostProcessor.java:85)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:440)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1796)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	... 20 more
+Caused by: java.lang.IllegalArgumentException: Expected authority at index 2: //
+	at java.base/java.net.URI.create(URI.java:906)
+	at io.grpc.internal.DnsNameResolver.<init>(DnsNameResolver.java:171)
+	at io.grpc.internal.DnsNameResolverProvider.newNameResolver(DnsNameResolverProvider.java:58)
+	at io.grpc.internal.DnsNameResolverProvider.newNameResolver(DnsNameResolverProvider.java:41)
+	at io.grpc.NameResolverRegistry$NameResolverFactory.newNameResolver(NameResolverRegistry.java:154)
+	at io.grpc.internal.ManagedChannelImpl.getNameResolver(ManagedChannelImpl.java:718)
+	at io.grpc.internal.ManagedChannelImpl.<init>(ManagedChannelImpl.java:605)
+	at io.grpc.internal.AbstractManagedChannelImplBuilder.build(AbstractManagedChannelImplBuilder.java:517)
+	at net.devh.boot.grpc.client.channelfactory.AbstractChannelFactory.newManagedChannel(AbstractChannelFactory.java:134)
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1708)
+	at net.devh.boot.grpc.client.channelfactory.AbstractChannelFactory.createChannel(AbstractChannelFactory.java:102)
+	at net.devh.boot.grpc.client.channelfactory.InProcessOrAlternativeChannelFactory.createChannel(InProcessOrAlternativeChannelFactory.java:83)
+	at net.devh.boot.grpc.client.inject.GrpcClientBeanPostProcessor.processInjectionPoint(GrpcClientBeanPostProcessor.java:121)
+	... 24 more
+Caused by: java.net.URISyntaxException: Expected authority at index 2: //
+	at java.base/java.net.URI$Parser.fail(URI.java:2974)
+	at java.base/java.net.URI$Parser.failExpecting(URI.java:2980)
+	at java.base/java.net.URI$Parser.parseHierarchical(URI.java:3224)
+	at java.base/java.net.URI$Parser.parse(URI.java:3186)
+	at java.base/java.net.URI.<init>(URI.java:623)
+	at java.base/java.net.URI.create(URI.java:904)
+	... 36 more
+2023-05-05 22:16:40 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 15784 (D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 22:16:40 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 22:16:40 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 22:16:40 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 22:16:40 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 22:16:41 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 22:16:41 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 22 ms. Found 0 JPA repository interfaces.
+2023-05-05 22:16:42 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 22:16:42 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 22:16:42 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 22:16:42 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 22:16:42 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 2166 ms
+2023-05-05 22:16:42 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+2023-05-05 22:16:42 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 22:16:42 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 22:16:42 ERROR LoggingFailureAnalysisReporter:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2023-05-05 22:27:14 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 5176 (D:\Java Projects\NewAfisha\Afisha\user-service\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 22:27:14 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 22:27:14 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 22:27:14 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 22:27:14 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 22:27:15 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 22:27:15 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
+2023-05-05 22:27:16 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 22:27:16 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 22:27:16 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 22:27:16 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 22:27:16 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 1982 ms
+2023-05-05 22:27:16 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-05 22:27:16 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-05 22:27:16 INFO  VersionPrinter:37 - 
+2023-05-05 22:27:16 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-05 22:27:17 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-05 22:27:17 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaDB (PostgreSQL 15.0)
+2023-05-05 22:27:17 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-05 22:27:17 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.030s)
+2023-05-05 22:27:17 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-05 22:27:17 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-05 22:27:17 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 22:27:17 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-05 22:27:17 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 22:27:18 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-05 22:27:18 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 22:27:18 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:27:18 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userServerService': Unsatisfied dependency expressed through field 'encoder'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2023-05-05 22:27:18 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:27:18 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-05 22:27:18 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-05 22:27:18 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 22:27:18 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 22:27:18 ERROR LoggingFailureAnalysisReporter:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field encoder in ru.it.lab.service.UserServerService required a bean of type 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder' in your configuration.
+
+2023-05-05 22:29:16 INFO  UserMicroserviceMain:55 - Starting UserMicroserviceMain using Java 17.0.1 on DESKTOP-RGGTMQN with PID 12240 (D:\Java Projects\NewAfisha\Afisha\user-service\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 22:29:16 INFO  UserMicroserviceMain:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 22:29:16 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 22:29:16 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 22:29:16 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 22:29:17 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 22:29:17 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+2023-05-05 22:29:19 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 22:29:19 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 22:29:19 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 22:29:19 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 22:29:19 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 3340 ms
+2023-05-05 22:29:19 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-05 22:29:19 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-05 22:29:19 INFO  VersionPrinter:37 - 
+2023-05-05 22:29:19 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-05 22:29:20 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-05 22:29:20 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaDB (PostgreSQL 15.0)
+2023-05-05 22:29:20 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-05 22:29:20 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.089s)
+2023-05-05 22:29:20 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-05 22:29:20 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-05 22:29:21 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 22:29:21 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-05 22:29:21 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 22:29:21 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-05 22:29:22 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 22:29:22 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:29:22 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-05 22:29:23 WARN  UserDetailsServiceAutoConfiguration:88 - 
+
+Using generated security password: df313cbe-6a7b-4f16-b62e-18bc008d46e0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-05-05 22:29:24 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5433879f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@142d08f7, org.springframework.security.web.context.SecurityContextPersistenceFilter@34026e27, org.springframework.security.web.header.HeaderWriterFilter@65a8d843, org.springframework.security.web.csrf.CsrfFilter@5998c9c9, org.springframework.security.web.authentication.logout.LogoutFilter@35f2fa57, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2b061c8e, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@964ada3, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@f525bf3, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@7bc77335, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@531be5db, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6ae41742, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@34b5c97d, org.springframework.security.web.session.SessionManagementFilter@6d9ba406, org.springframework.security.web.access.ExceptionTranslationFilter@7e0cc21e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@62c07e25]
+2023-05-05 22:29:24 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-05 22:29:24 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-05 22:29:24 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+2023-05-05 22:29:24 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:29:24 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-05 22:29:24 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-05 22:29:24 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 22:29:24 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 22:29:24 ERROR SpringApplication:824 - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at ru.it.lab.UserMicroserviceMain.main(UserMicroserviceMain.java:13)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at io.grpc.health.v1.HealthGrpc$HealthImplBase.bindService(HealthGrpc.java:174)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:115)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:55)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configureServices(AbstractGrpcServerFactory.java:107)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configure(AbstractGrpcServerFactory.java:90)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.createServer(AbstractGrpcServerFactory.java:72)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.createAndStartGrpcServer(GrpcServerLifecycle.java:89)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.start(GrpcServerLifecycle.java:49)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: io.grpc.stub.AbstractStub$StubFactory
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
+	... 28 more
+2023-05-05 22:31:27 INFO  UserMicroserviceMain:55 - Starting UserMicroserviceMain using Java 17.0.1 on DESKTOP-RGGTMQN with PID 9596 (D:\Java Projects\NewAfisha\Afisha\user-service\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 22:31:27 INFO  UserMicroserviceMain:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 22:31:27 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 22:31:27 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 22:31:27 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 22:31:29 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 22:31:29 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 26 ms. Found 0 JPA repository interfaces.
+2023-05-05 22:31:30 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 22:31:30 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 22:31:30 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 22:31:30 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 22:31:30 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 3010 ms
+2023-05-05 22:31:31 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-05 22:31:31 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-05 22:31:31 INFO  VersionPrinter:37 - 
+2023-05-05 22:31:31 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-05 22:31:31 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-05 22:31:31 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaDB (PostgreSQL 15.0)
+2023-05-05 22:31:31 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-05 22:31:31 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.034s)
+2023-05-05 22:31:31 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-05 22:31:31 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-05 22:31:31 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 22:31:31 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-05 22:31:32 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 22:31:32 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-05 22:31:33 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 22:31:33 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:31:33 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-05 22:31:33 WARN  UserDetailsServiceAutoConfiguration:88 - 
+
+Using generated security password: 54e206ed-b648-4c1f-93c8-99ccaa75370f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2023-05-05 22:31:34 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1b6eb4aa, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@36bd9bce, org.springframework.security.web.context.SecurityContextPersistenceFilter@7ee31596, org.springframework.security.web.header.HeaderWriterFilter@9b4d412, org.springframework.security.web.csrf.CsrfFilter@6a5b0036, org.springframework.security.web.authentication.logout.LogoutFilter@48c8513b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@686df35b, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@168b3e6a, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@741ccc84, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@69289acb, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6ce67722, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@61f645a0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@64dac959, org.springframework.security.web.session.SessionManagementFilter@4aa40a73, org.springframework.security.web.access.ExceptionTranslationFilter@7d69389f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5b0957ec]
+2023-05-05 22:31:34 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-05 22:31:34 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-05 22:31:34 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+2023-05-05 22:31:34 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:31:34 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-05 22:31:34 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-05 22:31:34 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 22:31:34 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 22:31:34 ERROR SpringApplication:824 - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at ru.it.lab.UserMicroserviceMain.main(UserMicroserviceMain.java:13)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at io.grpc.health.v1.HealthGrpc$HealthImplBase.bindService(HealthGrpc.java:174)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:146)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:53)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configureServices(AbstractGrpcServerFactory.java:107)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configure(AbstractGrpcServerFactory.java:90)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.createServer(AbstractGrpcServerFactory.java:72)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.createAndStartGrpcServer(GrpcServerLifecycle.java:89)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.start(GrpcServerLifecycle.java:49)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: io.grpc.stub.AbstractStub$StubFactory
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
+	... 28 more
+2023-05-05 22:39:03 INFO  UserMicroserviceMain:55 - Starting UserMicroserviceMain using Java 17.0.1 on DESKTOP-RGGTMQN with PID 14880 (D:\Java Projects\NewAfisha\Afisha\user-service\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 22:39:03 INFO  UserMicroserviceMain:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 22:39:03 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 22:39:03 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 22:39:03 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 22:39:05 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 22:39:05 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 24 ms. Found 0 JPA repository interfaces.
+2023-05-05 22:39:06 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 22:39:06 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 22:39:06 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 22:39:06 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 22:39:06 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 3143 ms
+2023-05-05 22:39:06 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-05 22:39:06 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-05 22:39:06 INFO  VersionPrinter:37 - 
+2023-05-05 22:39:06 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-05 22:39:07 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-05 22:39:07 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaDB (PostgreSQL 15.0)
+2023-05-05 22:39:07 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-05 22:39:07 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.034s)
+2023-05-05 22:39:07 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-05 22:39:07 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-05 22:39:07 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 22:39:07 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-05 22:39:07 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 22:39:08 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-05 22:39:09 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 22:39:09 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:39:09 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-05 22:39:10 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-05 22:39:10 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-05 22:39:10 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+2023-05-05 22:39:10 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:39:10 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-05 22:39:10 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-05 22:39:10 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 22:39:10 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 22:39:10 ERROR SpringApplication:824 - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at ru.it.lab.UserMicroserviceMain.main(UserMicroserviceMain.java:14)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at io.grpc.health.v1.HealthGrpc$HealthImplBase.bindService(HealthGrpc.java:174)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:146)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:53)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configureServices(AbstractGrpcServerFactory.java:107)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configure(AbstractGrpcServerFactory.java:90)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.createServer(AbstractGrpcServerFactory.java:72)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.createAndStartGrpcServer(GrpcServerLifecycle.java:89)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.start(GrpcServerLifecycle.java:49)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: io.grpc.stub.AbstractStub$StubFactory
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
+	... 28 more
+2023-05-05 22:40:50 INFO  UserMicroserviceMain:55 - Starting UserMicroserviceMain using Java 17.0.1 on DESKTOP-RGGTMQN with PID 14824 (D:\Java Projects\NewAfisha\Afisha\user-service\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 22:40:50 INFO  UserMicroserviceMain:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 22:40:50 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 22:40:50 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 22:40:50 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 22:40:51 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 22:40:51 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 22 ms. Found 0 JPA repository interfaces.
+2023-05-05 22:40:52 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 22:40:52 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 22:40:52 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 22:40:52 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 22:40:52 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 1704 ms
+2023-05-05 22:40:52 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-05 22:40:52 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-05 22:40:52 INFO  VersionPrinter:37 - 
+2023-05-05 22:40:52 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-05 22:40:52 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-05 22:40:52 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaDB (PostgreSQL 15.0)
+2023-05-05 22:40:52 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-05 22:40:52 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.026s)
+2023-05-05 22:40:52 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-05 22:40:52 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-05 22:40:52 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 22:40:53 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-05 22:40:53 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 22:40:53 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-05 22:40:54 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 22:40:54 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:40:54 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-05 22:40:54 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-05 22:40:54 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-05 22:40:54 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+2023-05-05 22:40:54 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 22:40:54 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-05 22:40:54 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.
+2023-05-05 22:40:54 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 22:40:54 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 22:40:54 ERROR SpringApplication:824 - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'shadedNettyGrpcServerLifecycle'; nested exception is java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at ru.it.lab.UserMicroserviceMain.main(UserMicroserviceMain.java:14)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: java.lang.NoClassDefFoundError: io/grpc/stub/AbstractStub$StubFactory
+	at io.grpc.health.v1.HealthGrpc$HealthImplBase.bindService(HealthGrpc.java:174)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:146)
+	at io.grpc.internal.AbstractServerImplBuilder.addService(AbstractServerImplBuilder.java:53)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configureServices(AbstractGrpcServerFactory.java:107)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.configure(AbstractGrpcServerFactory.java:90)
+	at net.devh.boot.grpc.server.serverfactory.AbstractGrpcServerFactory.createServer(AbstractGrpcServerFactory.java:72)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.createAndStartGrpcServer(GrpcServerLifecycle.java:89)
+	at net.devh.boot.grpc.server.serverfactory.GrpcServerLifecycle.start(GrpcServerLifecycle.java:49)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 19 more
+Caused by: java.lang.ClassNotFoundException: io.grpc.stub.AbstractStub$StubFactory
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:520)
+	... 28 more
+2023-05-05 23:04:57 INFO  UserMicroserviceMain:55 - Starting UserMicroserviceMain using Java 17.0.1 on DESKTOP-RGGTMQN with PID 18792 (D:\Java Projects\NewAfisha\Afisha\user-service\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 23:04:57 INFO  UserMicroserviceMain:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 23:04:57 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 23:04:57 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 23:04:57 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 23:04:58 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 23:04:58 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 28 ms. Found 0 JPA repository interfaces.
+2023-05-05 23:04:59 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 23:04:59 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 23:04:59 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 23:05:00 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 23:05:00 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 2703 ms
+2023-05-05 23:05:00 INFO  VersionPrinter:37 - Flyway Community Edition 8.5.13 by Redgate
+2023-05-05 23:05:00 INFO  VersionPrinter:37 - See what's new here: https://flywaydb.org/documentation/learnmore/releaseNotes#8.5.13
+2023-05-05 23:05:00 INFO  VersionPrinter:37 - 
+2023-05-05 23:05:00 INFO  HikariDataSource:110 - HikariPool-1 - Starting...
+2023-05-05 23:05:00 INFO  HikariDataSource:123 - HikariPool-1 - Start completed.
+2023-05-05 23:05:00 INFO  BaseDatabaseType:37 - Database: jdbc:postgresql://localhost:5432/afishaDB (PostgreSQL 15.0)
+2023-05-05 23:05:00 WARN  Database:41 - Flyway upgrade recommended: PostgreSQL 15.0 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 14.
+2023-05-05 23:05:00 INFO  DbValidate:37 - Successfully validated 2 migrations (execution time 00:00.045s)
+2023-05-05 23:05:00 INFO  DbMigrate:37 - Current version of schema "public": 2023.05.04.1.17
+2023-05-05 23:05:00 INFO  DbMigrate:37 - Schema "public" is up to date. No migration necessary.
+2023-05-05 23:05:01 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-05-05 23:05:01 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.6.9.Final
+2023-05-05 23:05:01 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-05-05 23:05:02 INFO  Dialect:175 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL95Dialect
+2023-05-05 23:05:02 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-05-05 23:05:02 INFO  LocalContainerEntityManagerFactoryBean:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 23:05:02 WARN  JpaBaseConfiguration$JpaWebConfiguration:219 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-05-05 23:05:03 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2023-05-05 23:05:03 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-05-05 23:05:03 INFO  AbstractGrpcServerFactory:115 - Registered gRPC service: ru.it.lab.UserService, bean: userServerService, class: ru.it.lab.service.UserServerService
+2023-05-05 23:05:03 INFO  GrpcServerLifecycle:91 - gRPC Server started, listening on address: *, port: 16608
+2023-05-05 23:05:04 INFO  UserMicroserviceMain:61 - Started UserMicroserviceMain in 7.499 seconds (JVM running for 8.36)
+2023-05-05 23:05:26 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 14100 (D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 23:05:26 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 23:05:26 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 23:05:26 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 23:05:26 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 23:05:27 INFO  RepositoryConfigurationDelegate:132 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-05-05 23:05:27 INFO  RepositoryConfigurationDelegate:201 - Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
+2023-05-05 23:05:28 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 23:05:28 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 23:05:28 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 23:05:28 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 23:05:28 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 1935 ms
+2023-05-05 23:05:28 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Unsatisfied dependency expressed through method 'dataSourceScriptDatabaseInitializer' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.zaxxer.hikari.HikariDataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+2023-05-05 23:05:28 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 23:05:28 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 23:05:28 ERROR LoggingFailureAnalysisReporter:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine a suitable driver class
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (no profiles are currently active).
+
+2023-05-05 23:06:56 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 19156 (D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 23:06:56 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 23:06:56 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 23:06:56 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 23:06:56 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 23:06:58 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8080 (http)
+2023-05-05 23:06:58 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 23:06:58 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 23:06:58 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 23:06:58 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 2002 ms
+2023-05-05 23:07:00 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3c5e58b8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1cc61caf, org.springframework.security.web.context.SecurityContextPersistenceFilter@31a8cfc6, org.springframework.security.web.header.HeaderWriterFilter@71d98a2b, org.springframework.security.web.authentication.logout.LogoutFilter@6e2d4e29, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@34203371, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6d22761f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@78b8a60b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7fd9c50f, org.springframework.security.web.session.SessionManagementFilter@1a163973, org.springframework.security.web.access.ExceptionTranslationFilter@2dccc787, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@dba6faa]
+2023-05-05 23:07:00 WARN  OptionalLiveReloadServer:61 - Unable to start LiveReload server
+2023-05-05 23:07:01 WARN  AnnotationConfigServletWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2023-05-05 23:07:01 INFO  StandardService:173 - Stopping service [Tomcat]
+2023-05-05 23:07:01 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-05-05 23:07:01 ERROR LoggingFailureAnalysisReporter:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2023-05-05 23:07:48 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 15568 (D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 23:07:48 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 23:07:48 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 23:07:48 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 23:07:48 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 23:07:50 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8090 (http)
+2023-05-05 23:07:50 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 23:07:50 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 23:07:50 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 23:07:50 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 2476 ms
+2023-05-05 23:07:52 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@54b83c71, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@45d97498, org.springframework.security.web.context.SecurityContextPersistenceFilter@5b714ed9, org.springframework.security.web.header.HeaderWriterFilter@43b02bf, org.springframework.security.web.authentication.logout.LogoutFilter@13440f3b, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@332fb9a3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ff623a0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@21566e4a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@528539d7, org.springframework.security.web.session.SessionManagementFilter@3ccca5fd, org.springframework.security.web.access.ExceptionTranslationFilter@638d314f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4e00f749]
+2023-05-05 23:07:52 WARN  OptionalLiveReloadServer:61 - Unable to start LiveReload server
+2023-05-05 23:07:52 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8090 (http) with context path ''
+2023-05-05 23:07:52 INFO  Main:61 - Started Main in 5.006 seconds (JVM running for 5.643)
+2023-05-05 23:13:13 INFO  [/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-05-05 23:13:13 INFO  DispatcherServlet:525 - Initializing Servlet 'dispatcherServlet'
+2023-05-05 23:13:13 INFO  DispatcherServlet:547 - Completed initialization in 18 ms
+2023-05-05 23:14:31 INFO  Main:55 - Starting Main using Java 17.0.1 on DESKTOP-RGGTMQN with PID 16912 (D:\Java Projects\NewAfisha\Afisha\api-gateway\target\classes started by desertfox in D:\Java Projects\NewAfisha\Afisha)
+2023-05-05 23:14:31 INFO  Main:634 - No active profile set, falling back to 1 default profile: "default"
+2023-05-05 23:14:31 INFO  ChangeableUrls:255 - The Class-Path manifest attribute in C:\Users\desertfox\.m2\repository\io\grpc\grpc-netty-shaded\1.30.0\grpc-netty-shaded-1.30.0.jar referenced one or more files that do not exist: file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-core-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-api-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/gson-2.8.6.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/annotations-4.1.1.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/animal-sniffer-annotations-1.18.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/error_prone_annotations-2.3.4.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/guava-28.2-android.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/perfmark-api-0.19.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/jsr305-3.0.2.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/grpc-context-1.30.0.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/failureaccess-1.0.1.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/desertfox/.m2/repository/io/grpc/grpc-netty-shaded/1.30.0/j2objc-annotations-1.3.jar
+2023-05-05 23:14:31 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-05-05 23:14:31 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-05-05 23:14:33 INFO  TomcatWebServer:108 - Tomcat initialized with port(s): 8090 (http)
+2023-05-05 23:14:33 INFO  StandardService:173 - Starting service [Tomcat]
+2023-05-05 23:14:33 INFO  StandardEngine:173 - Starting Servlet engine: [Apache Tomcat/9.0.63]
+2023-05-05 23:14:33 INFO  [/]:173 - Initializing Spring embedded WebApplicationContext
+2023-05-05 23:14:33 INFO  ServletWebServerApplicationContext:292 - Root WebApplicationContext: initialization completed in 1858 ms
+2023-05-05 23:14:34 INFO  DefaultSecurityFilterChain:55 - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@23526ada, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@12889651, org.springframework.security.web.context.SecurityContextPersistenceFilter@3716456b, org.springframework.security.web.header.HeaderWriterFilter@5ee4833e, org.springframework.security.web.authentication.logout.LogoutFilter@148510f4, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@20b553b2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@71dd53e1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1a163973, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@17cfed3d, org.springframework.security.web.session.SessionManagementFilter@239e61a9, org.springframework.security.web.access.ExceptionTranslationFilter@651ba2a0, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@650165f4]
+2023-05-05 23:14:34 WARN  OptionalLiveReloadServer:61 - Unable to start LiveReload server
+2023-05-05 23:14:35 INFO  TomcatWebServer:220 - Tomcat started on port(s): 8090 (http) with context path ''
+2023-05-05 23:14:35 INFO  Main:61 - Started Main in 3.925 seconds (JVM running for 4.565)
+2023-05-05 23:14:59 INFO  [/]:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-05-05 23:14:59 INFO  DispatcherServlet:525 - Initializing Servlet 'dispatcherServlet'
+2023-05-05 23:14:59 INFO  DispatcherServlet:547 - Completed initialization in 1 ms
+2023-05-05 23:15:00 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: Этот хост неизвестен (grpc-users-service)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: Этот хост неизвестен (grpc-users-service)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:933)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1519)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:00 ERROR [dispatcherServlet]:175 - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is io.grpc.StatusRuntimeException: UNAVAILABLE: Unable to resolve host grpc-users-service] with root cause
+java.net.UnknownHostException: Этот хост неизвестен (grpc-users-service)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:933)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1519)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-05-05 23:15:01 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: grpc-users-service
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: grpc-users-service
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:02 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: grpc-users-service
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: grpc-users-service
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:05 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: grpc-users-service
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: grpc-users-service
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:09 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: grpc-users-service
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: grpc-users-service
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:17 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: Этот хост неизвестен (grpc-users-service)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: Этот хост неизвестен (grpc-users-service)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:933)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1519)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:26 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: grpc-users-service
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: grpc-users-service
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:41 WARN  ManagedChannelImpl:1482 - [Channel<1>: (grpc-users-service)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host grpc-users-service, cause=java.lang.RuntimeException: java.net.UnknownHostException: Этот хост неизвестен (grpc-users-service)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:224)
+	at io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:283)
+	at io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:319)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.net.UnknownHostException: Этот хост неизвестен (grpc-users-service)
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:933)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1519)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1509)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1367)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1301)
+	at io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:632)
+	at io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:220)
+	... 5 more
+}
+2023-05-05 23:15:48 INFO  GrpcServerLifecycle:116 - gRPC server shutdown.
+2023-05-05 23:15:48 INFO  LocalContainerEntityManagerFactoryBean:651 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-05-05 23:15:48 INFO  HikariDataSource:350 - HikariPool-1 - Shutdown initiated...
+2023-05-05 23:15:48 INFO  HikariDataSource:352 - HikariPool-1 - Shutdown completed.

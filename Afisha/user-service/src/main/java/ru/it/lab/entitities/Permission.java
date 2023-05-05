@@ -5,15 +5,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.it.lab.enums.PermissionType;
 
+import javax.persistence.*;
+
 
 @Getter
 @Setter
+@Entity
 @NoArgsConstructor
+@Table(name = "permissions")
 public class Permission extends AbstractEntity {
-    private PermissionType name;
-    private Role role;
 
-    public Permission(PermissionType name) {
-        this.name = name;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column
+    private PermissionType name;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 }

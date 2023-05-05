@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -34,18 +34,29 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/Java Projects/NewAfisha/Afisha/api-gateway/src/main/java/ru/it/lab/entitities"
+    "jdk.selected.JAVA_MODULE": "17",
+    "last_opened_file_path": "D:/Java Projects/NewAfisha/Afisha/user-service/src/main/resources"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Java Projects\NewAfisha\Afisha\user-service\src\main\resources" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\user-service\src\main\java\ru\it\lab" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\api-gateway\src\main\java\ru\it\lab\entitities" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ru.it.lab.configuration" />
+      <recent name="ru.it.lab.exceptions" />
+      <recent name="ru.it.lab.dao" />
+      <recent name="ru.it.lab" />
       <recent name="ru.it.lab.enums" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.it.lab.Main" />
       <module name="api-gateway" />
@@ -59,9 +70,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UserMicroserviceMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.it.lab.UserMicroserviceMain" />
+      <module name="user-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.it.lab.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.UserMicroserviceMain" />
       </list>
     </recent_temporary>
   </component>

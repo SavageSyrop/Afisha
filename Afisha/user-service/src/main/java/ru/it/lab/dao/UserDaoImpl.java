@@ -2,7 +2,6 @@ package ru.it.lab.dao;
 
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import ru.it.lab.entitities.User;
 
@@ -21,7 +20,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     private EntityManager entityManager;
 
     @Override
-    public UserDetails getByUsername(String username) {
+    public User getByUsername(String username) {
         Class entityClass = getEntityClass();
         EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();

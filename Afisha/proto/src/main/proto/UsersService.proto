@@ -1,0 +1,31 @@
+syntax = "proto3";
+package ru.it.lab;
+option java_multiple_files=true;
+
+message UserProto {
+  int64 id = 1;
+  string password = 2;
+  string username = 3;
+  string email = 4;
+  int32 age = 5;
+  int64 role_id = 6;
+  bool is_open_profile=7;
+  Role role = 8;
+}
+
+
+message RegisterResponse {
+  int32 status = 1;
+}
+message Role {
+  repeated Permission permission=1;
+}
+
+message Permission {
+  string name=1;
+}
+
+service UserService {
+  rpc registerUser(UserProto) returns (RegisterResponse);
+  rpc login(UserProto) returns (UserProto);
+}

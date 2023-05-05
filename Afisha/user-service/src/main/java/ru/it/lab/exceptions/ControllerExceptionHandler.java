@@ -1,4 +1,4 @@
-package ru.it.lab.exceptions.handlers;
+package ru.it.lab.exceptions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,9 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.it.lab.exceptions.AuthorizationErrorException;
+
 import ru.it.lab.exceptions.ExceptionDTO;
 
 import javax.persistence.EntityNotFoundException;
@@ -24,11 +23,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({EntityNotFoundException.class})
     public ResponseEntity<Object> handleEntityNotFoundException(Exception exception, HttpServletRequest request) {
         return constructResponseEntity(exception, HttpStatus.NOT_FOUND, request);
-    }
-
-    @ExceptionHandler({AuthorizationErrorException.class})
-    public ResponseEntity<Object> handleAuthorizationFail(Exception exception, HttpServletRequest request) {
-        return constructResponseEntity(exception, HttpStatus.UNAUTHORIZED, request);
     }
 
     private ResponseEntity<Object> constructResponseEntity(Exception exception, HttpStatus httpStatus, HttpServletRequest request) {
