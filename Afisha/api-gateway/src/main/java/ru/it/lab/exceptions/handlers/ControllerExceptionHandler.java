@@ -13,6 +13,7 @@ import ru.it.lab.exceptions.AuthorizationErrorException;
 import ru.it.lab.exceptions.ExceptionDTO;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -21,16 +22,16 @@ import java.util.Date;
 @Slf4j
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({EntityNotFoundException.class, AuthorizationErrorException.class})
-    public ResponseEntity<Object> handleEntityNotFoundException(Exception exception, WebRequest request) {
-        return constructResponseEntity(exception, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Object> handleEntityNotFoundException(Exception exception, HttpServletRequest request) {
+        return constructResponseEntity(exception, HttpStatus.NOT_FOUND, request);
     }
 
 
 
 
-    private ResponseEntity<Object> constructResponseEntity(Exception exception, HttpStatus httpStatus) {
+    private ResponseEntity<Object> constructResponseEntity(Exception exception, HttpStatus httpStatus, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(gson.toJson(new ExceptionDTO(httpStatus.toString(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()),exception.getMessage())), httpStatus);
+        return new ResponseEntity<>(gson.toJson(new ExceptionDTO(httpStatus.value(), httpStatus.name(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()),exception.getMessage(), request.getRequestURI())), httpStatus);
     }
 }

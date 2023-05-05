@@ -21,9 +21,9 @@ import java.util.Date;
 public class DelegatedAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.UNAUTHORIZED.toString(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()), "Authentication failed");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        ExceptionDTO exceptionDTO = new ExceptionDTO(response.getStatus(), HttpStatus.valueOf(response.getStatus()).getReasonPhrase(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()), "Authentication failed", request.getRequestURI());
         OutputStream responseStream = response.getOutputStream();
         ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(responseStream, exceptionDTO);

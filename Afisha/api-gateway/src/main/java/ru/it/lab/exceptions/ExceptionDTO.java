@@ -15,8 +15,10 @@ import java.util.Date;
 @Getter
 public class ExceptionDTO {
     @Enumerated(EnumType.STRING)
-    private String status;
+    private Integer status;
+    private String error;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss")
     private Date date;
     private String message;
+    private String path;
 }

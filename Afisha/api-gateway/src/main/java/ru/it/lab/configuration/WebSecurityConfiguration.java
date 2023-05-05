@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AuthorizationServiceException;
@@ -47,15 +48,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         try {
             authorizationService.setAuthenticationManager(customAuthenticationManager());
-            http.csrf().disable()
-                    .cors().and()
-                    .authorizeRequests()
+            http.authorizeRequests()
                     .antMatchers("/user/all","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search","/", "/registration").permitAll()
                     .antMatchers(HttpMethod.GET,"/login", "/css/*", "/images/*").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .formLogin()
-                    .loginPage("/login")
+                    .httpBasic()
+                    .and()
+                    .logout()
                     .permitAll()
                     .and()
                     .logout().permitAll()
@@ -67,6 +67,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                    .addFilter(new JWTAuthenticationFilter(authenticationManager(), accessDeniedHandler, userService))
 //                    .addFilter(new JWTAuthorizationFilter(authenticationManager(), accessDeniedHandler, userService))
 //                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            http.csrf().disable();
         } catch (Exception exception) {
             log.error(exception.getMessage());
             throw new AuthorizationServiceException(exception.getMessage());
