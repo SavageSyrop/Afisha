@@ -26,6 +26,7 @@ public class Authorization extends AbstractEntity implements UserDetails {
 
     private Role role;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.it.lab.entitities.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;

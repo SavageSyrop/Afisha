@@ -1,5 +1,6 @@
 package ru.it.lab.service;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,6 +47,14 @@ public class AuthorizationServiceImpl implements AuthorizationService{
         }
         temp = null;
         throw new AuthorizationErrorException("Error during login");
+    }
+
+    public BCryptPasswordEncoder getEncoder() {
+        return encoder;
+    }
+
+    public void setEncoder(BCryptPasswordEncoder encoder) {
+        this.encoder = encoder;
     }
 
     @Override

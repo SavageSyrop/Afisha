@@ -7,16 +7,16 @@ message UserProto {
   string password = 2;
   string username = 3;
   string email = 4;
-  int32 age = 5;
-  int64 role_id = 6;
-  bool is_open_profile=7;
-  Role role = 8;
+  string gender_type = 5;
+  int64 date_of_birth = 6;
+  int64 role_id = 7;
+  bool is_open_profile=8;
+  Role role = 9;
+  string activation_code=10;
+  string restore_password_code=11;
+  bool isBanned=12;
 }
 
-
-message RegisterResponse {
-  int32 status = 1;
-}
 message Role {
   string name = 1;
   repeated Permission permission=2;
@@ -26,11 +26,20 @@ message Permission {
   string name=1;
 }
 
+message Info {
+  string info = 1;
+}
 
+message Empty {
+
+}
 
 service UserService {
-  rpc registerUser(UserProto) returns (RegisterResponse);
   rpc login(UserProto) returns (UserProto);
   rpc getUserByUsername(UserProto) returns (UserProto);
-
+  rpc registerUser(UserProto) returns (Info);
+  rpc changeUserData(UserProto) returns (Empty);
+  rpc changePassword(UserProto) returns(Empty);
+  rpc getPrivacy(UserProto) returns(Info);
+  rpc togglePrivacy(UserProto) returns(Info);
 }

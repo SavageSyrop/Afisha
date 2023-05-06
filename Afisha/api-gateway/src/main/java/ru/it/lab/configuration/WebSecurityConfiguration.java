@@ -49,7 +49,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         try {
             authorizationService.setAuthenticationManager(customAuthenticationManager());
             http.authorizeRequests()
-                    .antMatchers("/user/all","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search","/", "/registration").permitAll()
+                    .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search","/", "/registration").permitAll()
                     .antMatchers(HttpMethod.GET,"/login", "/css/*", "/images/*").permitAll()
                     .anyRequest().authenticated()
                     .and()
@@ -58,7 +58,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .logout()
                     .permitAll()
                     .and()
-                    .logout().permitAll()
+                    .logout()
+                    .logoutUrl("/perform_logout")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll()
                     .and()
                     .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler())
