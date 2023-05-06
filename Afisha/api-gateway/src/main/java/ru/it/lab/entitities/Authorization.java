@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Authorization extends AbstractEntity implements UserDetails {
+    private Long id;
 
     private String username;
 

@@ -1,8 +1,11 @@
 package ru.it.lab.controller;
 
+
+import com.google.protobuf.InvalidProtocolBufferException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
@@ -13,7 +16,7 @@ import ru.it.lab.entitities.Permission;
 import ru.it.lab.entitities.Role;
 import ru.it.lab.enums.PermissionType;
 import ru.it.lab.service.AuthorizationService;
-
+import com.google.protobuf.util.JsonFormat;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ import java.util.List;
 public class UsersController {
 
     @GrpcClient("grpc-users-service")
-    UserServiceGrpc.UserServiceBlockingStub userService;
+    private UserServiceGrpc.UserServiceBlockingStub userService;
 
 
     @Autowired
@@ -35,6 +38,7 @@ public class UsersController {
     public void login(@RequestBody LoginDTO loginDto, HttpServletResponse httpResponse) throws IOException {
         UserProto proto = userService.login(UserProto.newBuilder().setUsername(loginDto.getUsername()).build());
         Authorization authorization = new Authorization();
+        authorization.setId(proto.getId());
         authorization.setPassword(proto.getPassword());
         authorization.setUsername(proto.getUsername());
         Role role = new Role();
@@ -44,7 +48,7 @@ public class UsersController {
         }
         role.setPermissions(permissionList);
         authorization.setRole(role);
-        authorizationService.login(authorization, loginDto.getPassword());
+        authorizationService.login(authorization, loginDto.getUsername(), loginDto.getPassword());
         httpResponse.sendRedirect("/user/myprofile");
     }
 
@@ -62,14 +66,18 @@ public class UsersController {
 
     @GetMapping("user/myprofile")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getMyProfile() {
-        return "sas";
+    public String getMyProfile() throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build()));
     }
 
 
-//
+
 //    @GetMapping("/{userId}/profile}")
-//    public ResponseEntity<UserDTO> getUserInfo(@PathVariable Long userId) {
+//    public ResponseEntity<UserDTO> getUserInfo(@PathVariable String username) {
 //        return ResponseEntity.ok();
 //    }
+
+private String getCurrentUserName() {
+    return SecurityContextHolder.getContext().getAuthentication().getName();
+}
 }

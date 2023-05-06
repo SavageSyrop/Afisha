@@ -33,10 +33,10 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
             throw new EntityNotFoundException("User with username " + request.getUsername() + " doesn't exist");
         }
         ru.it.lab.Role.Builder role = ru.it.lab.Role.newBuilder();
-        int count = 1;
+
         for (Permission per: userDetails.getRole().getPermissions()) {
-            role.setPermission(count, ru.it.lab.Permission.newBuilder().setName(per.getName().name()).build());
-            count++;
+            ru.it.lab.Permission permission = ru.it.lab.Permission.newBuilder().setName(per.getName().name()).build();
+            role.addPermission(permission);
         }
         responseObserver.onNext(UserProto.newBuilder().setUsername(userDetails.getUsername()).setPassword(userDetails.getPassword()).setRole(role.build()).build());
         responseObserver.onCompleted();
@@ -54,6 +54,17 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
             responseObserver.onNext(RegisterResponse.newBuilder()
                     .setStatus(200).build());
         }
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getUserByUsername(UserProto request, StreamObserver<UserProto> responseObserver) {
+        User user = userDao.getByUsername(request.getUsername());
+        responseObserver.onNext(UserProto.newBuilder()
+                .setUsername(user.getUsername())
+                .setEmail(user.getEmail())
+                .setAge(user.getAge())
+                .setRole(ru.it.lab.Role.newBuilder().setName(user.getRole().getName().name()).build()).build());
         responseObserver.onCompleted();
     }
 }

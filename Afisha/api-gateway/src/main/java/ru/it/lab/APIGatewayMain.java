@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         HibernateJpaAutoConfiguration.class
 })
 @EnableTransactionManagement
-public class Main {
+public class APIGatewayMain {
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(APIGatewayMain.class, args);
     }
 }

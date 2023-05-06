@@ -19,6 +19,6 @@ public class Role extends AbstractEntity {
     @Column
     private RoleType name;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private List<Permission> permissions;
 }

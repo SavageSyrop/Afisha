@@ -21,6 +21,7 @@ public class AuthorizationServiceImpl implements AuthorizationService{
 
     private AuthenticationManager authenticationManager;
 
+    private Authorization temp;
 
     @Override
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
@@ -28,20 +29,27 @@ public class AuthorizationServiceImpl implements AuthorizationService{
     }
 
     @Override
-    public void login(Authorization authorization, String password) {
-        if (encoder.matches(password, authorization.getPassword())) {
+    public void login(Authorization authorization, String username, String password) {
+        temp = authorization;
+        if (encoder.matches(password, authorization.getPassword()) && authorization.getUsername().equals(username)) {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(authorization, password, authorization.getAuthorities());
-            authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-            if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                return;
+            try {
+                authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+                if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    return;
+                }
+            } catch (Exception e) {
+                throw new AuthorizationErrorException(e.getMessage());
             }
+
         }
+        temp = null;
         throw new AuthorizationErrorException("Error during login");
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return temp;
     }
 }
