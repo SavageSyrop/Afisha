@@ -34,7 +34,6 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        response.getWriter().write(gson.toJson(new ExceptionDTO(HttpStatus.FORBIDDEN.toString(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()),exception.getMessage())));
+        response.getWriter().write(gson.toJson(new ExceptionDTO(response.getStatus(), HttpStatus.valueOf(response.getStatus()).getReasonPhrase(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()),exception.getMessage(),request.getRequestURI())));
     }
 }

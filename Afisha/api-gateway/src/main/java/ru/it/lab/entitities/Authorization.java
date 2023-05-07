@@ -1,34 +1,39 @@
 package ru.it.lab.entitities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-@Entity
-@Table(name="users")
+
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends AbstractEntity implements UserDetails {
-    @Column
+public class Authorization extends AbstractEntity implements UserDetails {
+    private Long id;
+
     private String username;
-    @Column
-    @JsonIgnore
+
     private String password;
-    @Column
+
     private Boolean isOpenProfile;
+
+    private Role role;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Permission permission : this.getRole().getPermissions()) {
+            authorities.add(new SimpleGrantedAuthority(permission.getName().name()));
+        }
+        return authorities;
     }
 
     @Override
