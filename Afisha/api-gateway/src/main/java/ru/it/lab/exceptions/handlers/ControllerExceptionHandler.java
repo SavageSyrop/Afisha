@@ -40,6 +40,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return constructResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR,request);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegal(IllegalArgumentException e, HttpServletRequest request) {
+        return constructResponseEntity(e,HttpStatus.BAD_REQUEST,request);
+    }
+
 
     private ResponseEntity<Object> constructResponseEntity(Exception exception, HttpStatus httpStatus, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

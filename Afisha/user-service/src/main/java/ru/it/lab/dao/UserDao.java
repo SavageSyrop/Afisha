@@ -5,4 +5,8 @@ import ru.it.lab.entitities.User;
 
 public interface UserDao extends AbstractDao<User>{
     User getByUsername(String username);
+
+    User getByActivationCode(String activationCode);
+
+    User getByResetCode(String code);
 }

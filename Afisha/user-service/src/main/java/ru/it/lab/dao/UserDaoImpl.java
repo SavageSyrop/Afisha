@@ -39,4 +39,44 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
         }
         return foundUsers.getSingleResult();
     }
+
+    @Override
+    public User getByActivationCode(String activationCode) {
+        Class entityClass = User.class;
+        EntityManager entityManager = getEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<User> rootEntry = criteriaQuery.from(entityClass);
+
+        CriteriaQuery<User> crit = criteriaQuery.select(rootEntry)
+                .where(criteriaBuilder.equal(
+                        rootEntry.get("activationCode"),
+                        activationCode)
+                );
+        TypedQuery<User> foundUsers = entityManager.createQuery(crit);
+        if (foundUsers.getResultList().size() == 0) {
+            return null;
+        }
+        return foundUsers.getSingleResult();
+    }
+
+    @Override
+    public User getByResetCode(String code) {
+        Class entityClass = User.class;
+        EntityManager entityManager = getEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<User> rootEntry = criteriaQuery.from(entityClass);
+
+        CriteriaQuery<User> crit = criteriaQuery.select(rootEntry)
+                .where(criteriaBuilder.equal(
+                        rootEntry.get("restorePasswordCode"),
+                        code)
+                );
+        TypedQuery<User> foundUsers = entityManager.createQuery(crit);
+        if (foundUsers.getResultList().size() == 0) {
+            return null;
+        }
+        return foundUsers.getSingleResult();
+    }
 }

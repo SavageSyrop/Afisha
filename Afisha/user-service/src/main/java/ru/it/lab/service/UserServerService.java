@@ -5,10 +5,7 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.it.lab.Empty;
-import ru.it.lab.Info;
-import ru.it.lab.UserProto;
-import ru.it.lab.UserServiceGrpc;
+import ru.it.lab.*;
 import ru.it.lab.dao.RoleDao;
 import ru.it.lab.dao.UserDao;
 import ru.it.lab.entitities.Permission;
@@ -52,13 +49,14 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
                 .setPassword(userDetails.getPassword())
                 .setRole(role.build())
                 .setIsBanned(userDetails.getIsBanned());
-        if (userDetails.getActivationCode()==null) {
+        if (userDetails.getIsBanned() == null) {
+
+        }
+        if (userDetails.getActivationCode() == null) {
             user.clearActivationCode();
         } else {
             user.setActivationCode(userDetails.getActivationCode());
         }
-
-
         responseObserver.onNext(user.build());
         responseObserver.onCompleted();
     }
@@ -68,39 +66,64 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         Role role = roleDao.getById(request.getRoleId());
         User user = new User(request.getUsername(), request.getPassword(), request.getEmail(), new Date(request.getDateOfBirth()), GenderType.valueOf(request.getGenderType()), role, request.getIsOpenProfile());
         try {
-            validateEmail(request);
-            validateUsername(request);
-        } catch (IllegalStateException e) {
-            responseObserver.onError(e);
+            validateEmail(request.getEmail());
+            validateUsername(request.getUsername());
+        } catch (IllegalArgumentException e) {
+            responseObserver.onError(new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription(e.getMessage())));
             return;
         }
         user.setActivationCode(UUID.randomUUID().toString());
-        user = userDao.create(user);
+        user.setIsBanned(false);
+        try {
+            user = userDao.create(user);
+        } catch (Exception e) {
+            responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("User with username " + user.getUsername() + " already exists")));
+        }
         mailService.sendActivationEmail(user);
         responseObserver.onNext(Info.newBuilder().setInfo("To complete registration follow instructions in mail sent at " + user.getEmail()).build());
         responseObserver.onCompleted();
     }
 
     @Override
-    public void changeUserData(UserProto request, StreamObserver<Empty> responseObserver) {
-        User user = userDao.getByUsername(request.getUsername());
-        if (!request.getUsername().isEmpty()) {
-            validateUsername(request);
-            user.setUsername(request.getUsername());
+    public void changeUserData(ChangeUserRequest request, StreamObserver<Empty> responseObserver) {
+        User user = userDao.getByUsername(request.getOldUsername());
+        boolean emailChanged = false;
+        if (!request.getNewUsername().isEmpty()) {
+            try {
+                validateUsername(request.getNewUsername());
+            } catch (IllegalArgumentException e) {
+                responseObserver.onError(new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription(e.getMessage())));
+
+            }
+            user.setUsername(request.getNewUsername());
         }
         if (!request.getEmail().isEmpty()) {
-            validateEmail(request);
-            user.setEmail(request.getEmail());
+            try {
+                validateEmail(request.getEmail());
+            } catch (IllegalArgumentException e) {
+                responseObserver.onError(new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription(e.getMessage())));
 
+            }
+            user.setEmail(request.getEmail());
             user.setActivationCode(UUID.randomUUID().toString());
+            emailChanged = true;
         }
-        if (request.getDateOfBirth()!=0) {
+        if (request.getDateOfBirth() != 0) {
             user.setDateOfBirth(new Date(request.getDateOfBirth()));
         }
         if (!request.getGenderType().equals("")) {
             user.setGenderType(GenderType.valueOf(request.getGenderType()));
         }
-        userDao.update(user);
+        try {
+            userDao.update(user);
+        } catch (Exception e) {
+            responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("User with username " + user.getUsername() + " already exists")));
+        }
+        if (emailChanged) {
+            mailService.sendActivationEmail(user);
+        }
+        responseObserver.onNext(Empty.newBuilder().build());
+        responseObserver.onCompleted();
     }
 
 
@@ -113,17 +136,17 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     }
 
 
-
     @Override
     public void getPrivacy(UserProto request, StreamObserver<Info> responseObserver) {
         User user = userDao.getByUsername(request.getUsername());
         String info = "Your profile is ";
         if (user.getIsOpenProfile()) {
-            info+=" open";
+            info += " open";
         } else {
-            info+="private";
+            info += "private";
         }
         responseObserver.onNext(Info.newBuilder().setInfo(info).build());
+        responseObserver.onCompleted();
     }
 
     @Override
@@ -131,20 +154,21 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         User user = userDao.getByUsername(request.getUsername());
         String info = "Your profile is now ";
         if (!user.getIsOpenProfile()) {
-            info+=" open";
+            info += " open";
             user.setIsOpenProfile(true);
         } else {
-            info+="private";
+            info += "private";
             user.setIsOpenProfile(false);
         }
         userDao.update(user);
         responseObserver.onNext(Info.newBuilder().setInfo(info).build());
+        responseObserver.onCompleted();
     }
 
     @Override
     public void getUserByUsername(UserProto request, StreamObserver<UserProto> responseObserver) {
         User user = userDao.getByUsername(request.getUsername());
-        if (user==null) {
+        if (user == null) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("User with username " + request.getUsername() + " not found")));
             return;
         }
@@ -159,24 +183,61 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
-    private boolean validateEmail(UserProto proto) {
+
+    @Override
+    public void activateAccount(Info request, StreamObserver<Info> responseObserver) {
+        User user = userDao.getByActivationCode(request.getInfo());
+        if (user == null) {
+            responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("Invalid activation code")));
+        }
+        user.setActivationCode(null);
+        userDao.update(user);
+        responseObserver.onNext(Info.newBuilder().setInfo("Your account has been activated! Go ahead and login!").build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordRequest request, StreamObserver<Info> responseObserver) {
+        User user = userDao.getByResetCode(request.getCode());
+        if (user == null) {
+            responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("Invalid reset code")));
+        }
+        user.setPassword(request.getNewPassword());
+        user.setRestorePasswordCode(null);
+        userDao.update(user);
+        responseObserver.onNext(Info.newBuilder().setInfo("New password is set! Go ahead and login!").build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void forgotPassword(Info request, StreamObserver<Info> responseObserver) {
+        User user = userDao.getByUsername(request.getInfo());
+        if (user == null) {
+            responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("User " + request.getInfo() + " not found")));
+        }
+        user.setRestorePasswordCode(UUID.randomUUID().toString());
+        userDao.update(user);
+        mailService.sendForgotPasswordEmail(user);
+        responseObserver.onNext(Info.newBuilder().setInfo("To reset password follow instructions in email sent to you " + user.getEmail()).build());
+        responseObserver.onCompleted();
+    }
+
+    private boolean validateEmail(String email) {
         String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
-        if (!proto.getEmail().matches(emailPattern)) {
+        if (!email.matches(emailPattern)) {
             throw new IllegalArgumentException("Invalid email");
         }
 
         return true;
     }
 
-    private boolean validateUsername(UserProto proto) {
+    private boolean validateUsername(String username) {
         String usernamePattern = "^[a-zA-Z0-9_.]{5,20}$";
-        if (!proto.getUsername().matches(usernamePattern)) {
+        if (!username.matches(usernamePattern)) {
             throw new IllegalArgumentException("Invalid username");
         }
         return true;
     }
-
-
 }

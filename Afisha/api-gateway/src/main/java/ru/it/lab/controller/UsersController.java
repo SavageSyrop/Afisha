@@ -9,9 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.it.lab.Info;
-import ru.it.lab.UserProto;
-import ru.it.lab.UserServiceGrpc;
+import ru.it.lab.*;
 import ru.it.lab.dto.LoginDTO;
 import ru.it.lab.dto.UserDTO;
 import ru.it.lab.entitities.Authorization;
@@ -71,7 +69,7 @@ public class UsersController {
     }
 
     @PostMapping("sign_up")
-    public void signUp(@RequestBody UserDTO userDTO, HttpServletResponse httpResponse) throws IOException {
+    public String signUp(@RequestBody UserDTO userDTO, HttpServletResponse httpResponse) throws IOException {
         validatePassword(userDTO.getPassword());
         UserProto userReq = UserProto.newBuilder()
                 .setUsername(userDTO.getUsername())
@@ -81,7 +79,8 @@ public class UsersController {
                 .setEmail(userDTO.getEmail())
                 .setRoleId(userDTO.getRoleId())
                 .setIsOpenProfile(userDTO.getIsOpenProfile()).build();
-        httpResponse.sendRedirect("user/myprofile");
+        return (JsonFormat.printer().print(userService.registerUser(userReq)));
+
     }
 
     @GetMapping("user/myprofile")
@@ -93,13 +92,23 @@ public class UsersController {
     @PostMapping("user/myprofile")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public void changeMyProfileInfo(@RequestBody UserDTO userDTO, HttpServletResponse httpServletResponse) throws IOException {
-        UserProto.Builder user = UserProto.newBuilder();
-        user
-                .setUsername(userDTO.getUsername())
-                .setEmail(userDTO.getEmail())
-                .setDateOfBirth(userDTO.getDateOfBirth().getTime())
-                .setIsOpenProfile(userDTO.getIsOpenProfile());
+        ChangeUserRequest.Builder user = ChangeUserRequest.newBuilder();
+        user.setOldUsername(getCurrentUserName());
+        if (userDTO.getUsername()!=null) {
+            user.setNewUsername(userDTO.getUsername());
+        }
 
+        if (userDTO.getEmail()!=null) {
+            user.setEmail(userDTO.getEmail());
+        }
+        if (userDTO.getDateOfBirth()!=null){
+            user.setDateOfBirth(userDTO.getDateOfBirth().getTime());
+        }
+
+        if (userDTO.getGenderType()!=null) {
+            user.setGenderType(userDTO.getGenderType());
+        }
+        userService.changeUserData(user.build());
         if (userDTO.getUsername()!=null || user.getEmail()!=null) {
             httpServletResponse.sendRedirect("/perform_logout");
         }
@@ -140,6 +149,25 @@ public class UsersController {
             return JsonFormat.printer().print(Info.newBuilder().setInfo("This user has private profile"));
         }
         return JsonFormat.printer().print(userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build()));
+    }
+
+
+
+    @GetMapping("forgot_password")
+    public String forgotPassword(@RequestParam String username) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(userService.forgotPassword(Info.newBuilder().setInfo(username).build()));
+    }
+
+    @GetMapping("reset_password/{code}")
+    public String resetPassword(@PathVariable String code,@RequestParam String newPassword) throws InvalidProtocolBufferException {
+        validatePassword(newPassword);
+        return JsonFormat.printer().print(userService.resetPassword(ResetPasswordRequest.newBuilder().setCode(code).setNewPassword(new BCryptPasswordEncoder().encode(newPassword)).build()));
+    }
+
+
+    @GetMapping("activate/{code}")
+    public String activateAccount(@PathVariable String code) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(userService.activateAccount(Info.newBuilder().setInfo(code).build()));
     }
 
     private String getCurrentUserName() {

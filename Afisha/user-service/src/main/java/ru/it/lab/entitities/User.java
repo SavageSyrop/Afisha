@@ -3,6 +3,7 @@ package ru.it.lab.entitities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import ru.it.lab.enums.GenderType;
 
 import javax.persistence.*;
@@ -42,6 +43,7 @@ public class User extends AbstractEntity {
     private String restorePasswordCode;
 
     @Column
+    @ColumnDefault(value = "false")
     private Boolean isBanned;
 
     public User(String username, String password, String email, Date dateOfBirth, GenderType genderType, Role role, Boolean isOpenProfile) {

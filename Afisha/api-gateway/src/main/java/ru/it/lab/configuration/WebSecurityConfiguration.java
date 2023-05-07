@@ -49,14 +49,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         try {
             authorizationService.setAuthenticationManager(customAuthenticationManager());
             http.authorizeRequests()
-                    .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search","/", "/registration").permitAll()
-                    .antMatchers(HttpMethod.GET,"/login", "/css/*", "/images/*").permitAll()
+                    .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .httpBasic()
+                    .rememberMe().rememberMeCookieName("JSESSIONID").tokenValiditySeconds(604800)
                     .and()
-                    .logout()
-                    .permitAll()
+                    .httpBasic()
                     .and()
                     .logout()
                     .logoutUrl("/perform_logout")
