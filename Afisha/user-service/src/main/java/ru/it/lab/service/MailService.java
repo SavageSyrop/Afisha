@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import ru.it.lab.entitities.User;
+import ru.it.lab.entities.User;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

@@ -5,16 +5,25 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.it.lab.*;
+import ru.it.lab.AuthenticateAndGet;
+import ru.it.lab.ChangeUserRequest;
+import ru.it.lab.Empty;
+import ru.it.lab.Info;
+import ru.it.lab.ResetPasswordRequest;
+import ru.it.lab.UserProto;
+import ru.it.lab.UserServiceGrpc;
 import ru.it.lab.dao.RoleDao;
+import ru.it.lab.dao.SupportRequestDao;
 import ru.it.lab.dao.UserDao;
-import ru.it.lab.entitities.Permission;
-import ru.it.lab.entitities.Role;
-import ru.it.lab.entitities.User;
+import ru.it.lab.entities.Permission;
+import ru.it.lab.entities.Role;
+import ru.it.lab.entities.SupportRequest;
+import ru.it.lab.entities.User;
 import ru.it.lab.enums.GenderType;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -26,6 +35,9 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
 
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private SupportRequestDao supportRequestDao;
 
     @Autowired
     private MailService mailService;
@@ -221,6 +233,40 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(Info.newBuilder().setInfo("To reset password follow instructions in email sent to you " + user.getEmail()).build());
         responseObserver.onCompleted();
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public void requestRole(UserProto request, StreamObserver<Info> responseObserver) {
+
+    }
+
+    @Override
+    public void requestSupport(SupportRequest request, StreamObserver<Info> responseObserver) {
+
+    }
+
+    @Override
+    public void getSupportRequests(AuthenticateAndGet request, StreamObserver<ru.it.lab.SupportRequest> responseObserver) {
+        List<SupportRequest> supportRequestList = supportRequestDao.getAll();
+        for (SupportRequest req: supportRequestList) {
+            ru.it.lab.SupportRequest.Builder response = ru.it.lab.SupportRequest.newBuilder();
+            response.setId(req.getId());
+            response.setUserId(req.getUser().getId());
+            if (req.getAdmin()!=null) {
+                response.setAdminId(req.getAdmin().getId());
+            }
+            response.set(req.getQuestion());
+            response.set
+            responseObserver.onNext(response.build());
+        }
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getSupportRequest(AuthenticateAndGet request, StreamObserver<SupportRequest> responseObserver) {
+
+    }
+
 
     private boolean validateEmail(String email) {
         String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"

@@ -1,6 +1,5 @@
 package ru.it.lab.service;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.it.lab.entitities.Authorization;
+import ru.it.lab.entities.Authorization;
 import ru.it.lab.exceptions.AuthorizationErrorException;
 
 @Component

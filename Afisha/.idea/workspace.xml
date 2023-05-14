@@ -13,8 +13,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -35,26 +36,43 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/Java Projects/NewAfisha"
+    "last_opened_file_path": "D:/Java Projects/NewAfisha/Afisha/proto/src/main/proto",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "google.protobuf.language"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="ru.it.lab.dao" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Java Projects\NewAfisha\Afisha\user-service\src\main\resources" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\user-service\src\main\java\ru\it\lab" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\api-gateway\src\main\java\ru\it\lab\entitities" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\shared\src\main\java\ru\it\lab" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\chat-service\src\main\java\ru\it\lab\entitites" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\chat-service\src\main\java\ru\it\lab\dao" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\chat-service\src\main\resources" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\event-service\src\main\java\ru\it\lab" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\java\ru\it\lab\proto" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\java" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\proto" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\resources\proto" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="ru.it.lab.configuration" />
-      <recent name="ru.it.lab.service" />
-      <recent name="ru.it.lab.exceptions" />
-      <recent name="ru.it.lab.dao" />
+      <recent name="ru.it.lab.entities" />
+      <recent name="ru.it.lab.enums" />
+      <recent name="ru.it.lab.entitites" />
       <recent name="ru.it.lab" />
+      <recent name="ru.it.lab.configuration" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install -U" />
+    </option>
   </component>
   <component name="RunManager" selected="Application.UserMicroserviceMain">
     <configuration name="APIGatewayMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -117,22 +135,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>129</line>
+          <line>139</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>140</line>
+          <line>152</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>65</line>
+          <line>77</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>74</line>
+          <line>86</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -142,30 +160,34 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>88</line>
+          <line>100</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>94</line>
+          <line>104</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>96</line>
+          <line>106</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>110</line>
+          <line>120</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>116</line>
+          <line>128</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

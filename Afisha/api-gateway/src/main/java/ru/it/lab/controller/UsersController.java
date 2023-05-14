@@ -3,18 +3,24 @@ package ru.it.lab.controller;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.AccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import ru.it.lab.*;
+import ru.it.lab.ChangeUserRequest;
+import ru.it.lab.EventServiceGrpc;
+import ru.it.lab.Info;
+import ru.it.lab.ResetPasswordRequest;
+import ru.it.lab.UserProto;
+import ru.it.lab.UserServiceGrpc;
 import ru.it.lab.dto.LoginDTO;
 import ru.it.lab.dto.UserDTO;
-import ru.it.lab.entitities.Authorization;
-import ru.it.lab.entitities.Permission;
-import ru.it.lab.entitities.Role;
+import ru.it.lab.entities.Authorization;
+import ru.it.lab.entities.Permission;
+import ru.it.lab.entities.Role;
 import ru.it.lab.enums.PermissionType;
 import ru.it.lab.service.AuthorizationService;
 import com.google.protobuf.util.JsonFormat;
@@ -31,10 +37,14 @@ public class UsersController {
     @GrpcClient("grpc-users-service")
     private UserServiceGrpc.UserServiceBlockingStub userService;
 
+    @GrpcClient("grpc-events-service")
+    private EventServiceGrpc.EventServiceBlockingStub eventService;
 
     @Autowired
     private AuthorizationService authorizationService;
 
+    @Autowired
+    private RabbitTemplate template;
 
     @GetMapping("login")
     public String login(@RequestBody LoginDTO loginDto, HttpServletResponse httpResponse) throws IOException {
@@ -168,6 +178,55 @@ public class UsersController {
     @GetMapping("activate/{code}")
     public String activateAccount(@PathVariable String code) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.activateAccount(Info.newBuilder().setInfo(code).build()));
+    }
+
+    @PostMapping("user/request_role")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String requestRole() {
+//        userService.
+//        template.convertAndSend(MQRoleConfig.EXCHANGE, MQRoleConfig.KEY,);
+    }
+
+    @GetMapping("user/request_support")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getSupportRequests() {
+
+    }
+
+    @GetMapping("user/request_support/{idRequest}")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getSupportRequestsById(@PathVariable Long idRequest) {
+
+    }
+
+    @DeleteMapping("user/request_support/{idRequest}")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String deleteSupportRequestsById(@PathVariable Long idRequest) {
+
+    }
+
+    @PostMapping("user/request_support")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String createSupportRequest() {
+
+    }
+
+    @GetMapping("user/{userId}/favorites")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getFavorites(@PathVariable Long userId) {
+
+    }
+
+    @GetMapping("user/{userId}/votes")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getVotes(@PathVariable Long userId) {
+
+    }
+
+    @GetMapping("user/{userId}/comments")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getComments(@PathVariable Long userId) {
+
     }
 
     private String getCurrentUserName() {

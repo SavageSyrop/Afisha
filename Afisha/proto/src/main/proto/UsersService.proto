@@ -47,6 +47,24 @@ message Empty {
 
 }
 
+message SupportRequest {
+  int64 id = 1;
+  int64 user_id=2;
+  int64 admin_id=3;
+  string question=4;
+  string answer=5;
+  int64 creation_time=6;
+  int64 answered_time=7;
+}
+
+
+message AuthenticateAndGet {
+  int64 searched_id = 1;
+  string username = 2;
+}
+
+
+
 service UserService {
   rpc login(UserProto) returns (UserProto);
   rpc getUserByUsername(UserProto) returns (UserProto);
@@ -58,4 +76,10 @@ service UserService {
   rpc activateAccount(Info) returns(Info);
   rpc resetPassword(ResetPasswordRequest) returns(Info);
   rpc forgotPassword(Info) returns(Info);
+
+  rpc requestRole(UserProto) returns(Info);
+  rpc requestSupport(SupportRequest) returns (Info);
+  rpc getSupportRequests(AuthenticateAndGet) returns (stream SupportRequest);
+  rpc getSupportRequest(AuthenticateAndGet) returns (SupportRequest);
+
 }

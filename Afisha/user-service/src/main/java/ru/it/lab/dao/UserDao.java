@@ -1,7 +1,7 @@
 package ru.it.lab.dao;
 
 
-import ru.it.lab.entitities.User;
+import ru.it.lab.entities.User;
 
 public interface UserDao extends AbstractDao<User>{
     User getByUsername(String username);

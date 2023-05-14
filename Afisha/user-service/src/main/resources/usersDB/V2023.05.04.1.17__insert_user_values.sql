@@ -1,11 +1,15 @@
 INSERT INTO roles (name) values
 ('ADMIN'),
-('USER');
+('USER'),
+('ORGANIZER')
 
 INSERT INTO permissions (name, role_id) values
 ('AUTHORIZED_ACTIONS', 1),
 ('AUTHORIZED_ACTIONS', 2),
-('ADMIN_ACTIONS', 1);
+('AUTHORIZED_ACTIONS',3),
+('ADMIN_ACTIONS', 1),
+('CREATING_ACTIONS',1),
+('CREATING_ACTIONS',3);
 
 
 INSERT INTO users(username, password, email, gender_type, date_of_birth, role_id, is_open_profile) values
