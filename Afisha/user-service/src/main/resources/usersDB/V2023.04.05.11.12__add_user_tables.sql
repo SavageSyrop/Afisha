@@ -11,10 +11,10 @@ role_id bigint NOT NULL REFERENCES roles(id) ON DELETE NO ACTION,
 CONSTRAINT permissions_pk PRIMARY KEY (id)
 );
 
-CREATE TYPE gender_type as enum {
+CREATE TYPE gender_type as enum (
 'MALE',
 'FEMALE'
-}
+);
 
 CREATE TABLE users (
 id BIGSERIAL NOT NULL,
@@ -32,9 +32,7 @@ CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
 
-
-
-CREATE TABLE support_questions (
+CREATE TABLE support_requests (
 id BIGSERIAL NOT NULL,
 user_id bigint REFERENCES users(id) NOT NULL,
 admin_id bigint REFERENCES users(id),

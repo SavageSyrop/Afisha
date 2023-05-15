@@ -1,7 +1,8 @@
 syntax = "proto3";
+import "UsersService.proto";
 package ru.it.lab;
 option java_multiple_files = true;
 
 service AdminService {
-
+  rpc requestSupport(SupportRequest) returns (Info);
 }

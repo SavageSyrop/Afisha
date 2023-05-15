@@ -13,9 +13,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -36,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/Java Projects/NewAfisha/Afisha/proto/src/main/proto",
+    "last_opened_file_path": "D:/Java Projects/NewAfisha",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -48,25 +48,25 @@
       <recent name="ru.it.lab.dao" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Java Projects\NewAfisha\Afisha\api-gateway\src\main\java\ru\it\lab\entities" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\user-service\src\main\java\ru\it\lab\entities" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\shared\src\main\java\ru\it\lab\dao" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\admin-service\src\main\resources" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\shared\src\main\java\ru\it\lab" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\chat-service\src\main\java\ru\it\lab\entitites" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\chat-service\src\main\java\ru\it\lab\dao" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\chat-service\src\main\resources" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\event-service\src\main\java\ru\it\lab" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Java Projects\NewAfisha\Afisha\admin-service\src\main\resources\adminDB" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\java\ru\it\lab\proto" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\java" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\proto" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main\resources\proto" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="ru.it.lab.configuration" />
+      <recent name="ru.it.lab.config" />
+      <recent name="ru.it.lab.service" />
       <recent name="ru.it.lab.entities" />
       <recent name="ru.it.lab.enums" />
-      <recent name="ru.it.lab.entitites" />
-      <recent name="ru.it.lab" />
-      <recent name="ru.it.lab.configuration" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -74,10 +74,23 @@
       <command value="mvn clean install -U" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserMicroserviceMain">
+  <component name="RunManager" selected="Application.AdminMain">
     <configuration name="APIGatewayMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.it.lab.APIGatewayMain" />
       <module name="api-gateway" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.it.lab.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdminMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.it.lab.AdminMain" />
+      <module name="admin-service" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ru.it.lab.*" />
@@ -103,6 +116,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AdminMain" />
         <item itemvalue="Application.UserMicroserviceMain" />
         <item itemvalue="Application.APIGatewayMain" />
       </list>
@@ -135,22 +149,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>139</line>
+          <line>145</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>152</line>
+          <line>162</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>77</line>
+          <line>87</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>86</line>
+          <line>96</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -160,28 +174,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>100</line>
+          <line>110</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>104</line>
+          <line>110</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>106</line>
+          <line>112</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>120</line>
+          <line>126</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>128</line>
+          <line>138</line>
           <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

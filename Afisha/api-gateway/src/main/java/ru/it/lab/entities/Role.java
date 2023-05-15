@@ -6,7 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.it.lab.enums.RoleType;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity

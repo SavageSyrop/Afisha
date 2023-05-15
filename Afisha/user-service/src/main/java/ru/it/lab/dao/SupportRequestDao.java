@@ -7,5 +7,5 @@ import ru.it.lab.entities.SupportRequest;
 import java.util.List;
 
 public interface SupportRequestDao extends AbstractDao<SupportRequest>{
-    List<SupportRequest> getAllByUserId(Long userId);
+    List<SupportRequest> getAllByUser(String username);
 }

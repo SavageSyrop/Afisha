@@ -13,8 +13,10 @@ import java.util.List;
 
 @Component
 public class SupportRequestDaoImpl extends AbstractDaoImpl<SupportRequest> implements SupportRequestDao {
+
+
     @Override
-    public List<SupportRequest> getAllByUserId(Long userId) {
+    public List<SupportRequest> getAllByUser(String username) {
         Class entityClass = getEntityClass();
         EntityManager entityManager = getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -23,7 +25,7 @@ public class SupportRequestDaoImpl extends AbstractDaoImpl<SupportRequest> imple
 
         CriteriaQuery<SupportRequest> crit = criteriaQuery.select(rootEntry)
                 .where(
-                        criteriaBuilder.equal(rootEntry.get("user").get("id"), userId)
+                        criteriaBuilder.equal(rootEntry.get("user").get("username"), username)
                 );
         TypedQuery<SupportRequest> found = entityManager.createQuery(crit);
         return found.getResultList();

@@ -4,17 +4,21 @@ import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.it.lab.AuthenticateAndGet;
 import ru.it.lab.ChangeUserRequest;
 import ru.it.lab.Empty;
 import ru.it.lab.Info;
 import ru.it.lab.ResetPasswordRequest;
+import ru.it.lab.SupportRequestsStream;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
+import ru.it.lab.configuration.MQRoleConfig;
 import ru.it.lab.dao.RoleDao;
 import ru.it.lab.dao.SupportRequestDao;
 import ru.it.lab.dao.UserDao;
+import ru.it.lab.dto.RoleRequestDTO;
 import ru.it.lab.entities.Permission;
 import ru.it.lab.entities.Role;
 import ru.it.lab.entities.SupportRequest;
@@ -22,8 +26,11 @@ import ru.it.lab.entities.User;
 import ru.it.lab.enums.GenderType;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -41,6 +48,9 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public void login(UserProto request, StreamObserver<UserProto> responseObserver) {
@@ -234,39 +244,75 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public void requestRole(UserProto request, StreamObserver<Info> responseObserver) {
 
-    }
-
-    @Override
-    public void requestSupport(SupportRequest request, StreamObserver<Info> responseObserver) {
-
-    }
+//    @Override
+//    public void requestSupport(ru.it.lab.SupportRequest request, StreamObserver<Info> responseObserver) {
+//        SupportRequest supportRequest = new SupportRequest();
+//        User user = userDao.getById(request.getUserId());
+//        supportRequest.setUser(user);
+//
+//    }
 
     @Override
-    public void getSupportRequests(AuthenticateAndGet request, StreamObserver<ru.it.lab.SupportRequest> responseObserver) {
-        List<SupportRequest> supportRequestList = supportRequestDao.getAll();
-        for (SupportRequest req: supportRequestList) {
-            ru.it.lab.SupportRequest.Builder response = ru.it.lab.SupportRequest.newBuilder();
-            response.setId(req.getId());
-            response.setUserId(req.getUser().getId());
-            if (req.getAdmin()!=null) {
-                response.setAdminId(req.getAdmin().getId());
+    public void getSupportRequests(AuthenticateAndGet request, StreamObserver<SupportRequestsStream> responseObserver) {
+        List<SupportRequest> supportRequestList = supportRequestDao.getAllByUser(request.getUsername());
+        SupportRequestsStream.Builder stream = SupportRequestsStream.newBuilder();
+        for (SupportRequest req : supportRequestList) {
+            ru.it.lab.SupportRequest.Builder reqBuilder = ru.it.lab.SupportRequest.newBuilder();
+            reqBuilder.setId(req.getId());
+            reqBuilder.setUserId(req.getUser().getId());
+            if (req.getAdmin() != null) {
+                reqBuilder.setAdminId(req.getAdmin().getId());
             }
-            response.set(req.getQuestion());
-            response.set
-            responseObserver.onNext(response.build());
+            reqBuilder.setQuestion(req.getQuestion());
+            if (req.getAnswer() != null) {
+                reqBuilder.setAnswer(req.getAnswer());
+            }
+            reqBuilder.setCreationTime(req.getCreationTime().atZone(ZoneId.systemDefault()).toEpochSecond());
+            if (req.getCloseTime() != null) {
+                reqBuilder.setAnsweredTime(req.getCloseTime().atZone(ZoneId.systemDefault()).toEpochSecond());
+            }
+            stream.addRequests(reqBuilder.build());
+
         }
+        responseObserver.onNext(stream.build());
         responseObserver.onCompleted();
     }
 
     @Override
-    public void getSupportRequest(AuthenticateAndGet request, StreamObserver<SupportRequest> responseObserver) {
-
+    public void getSupportRequest(AuthenticateAndGet request, StreamObserver<ru.it.lab.SupportRequest> responseObserver) {
+        ru.it.lab.SupportRequest.Builder response = ru.it.lab.SupportRequest.newBuilder();
+        try {
+            SupportRequest supportRequest = supportRequestDao.getById(request.getSearchedId());
+            if (!Objects.equals(supportRequest.getUser().getUsername(), request.getUsername())) {
+                responseObserver.onError(new StatusRuntimeException(Status.UNAUTHENTICATED.withDescription("You can not access that support request")));
+            }
+            response.setId(supportRequest.getId());
+            response.setUserId(supportRequest.getUser().getId());
+            if (supportRequest.getAdmin() != null) {
+                response.setAdminId(supportRequest.getAdmin().getId());
+            }
+            response.setQuestion(supportRequest.getQuestion());
+            if (supportRequest.getAnswer() != null) {
+                response.setAnswer(supportRequest.getAnswer());
+            }
+            response.setCreationTime(supportRequest.getCreationTime().atZone(ZoneId.systemDefault()).toEpochSecond());
+            if (supportRequest.getCloseTime() != null) {
+                response.setAnsweredTime(supportRequest.getCloseTime().atZone(ZoneId.systemDefault()).toEpochSecond());
+            }
+        } catch (EntityNotFoundException e) {
+            responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("Support request no found")));
+        }
+        responseObserver.onNext(response.build());
+        responseObserver.onCompleted();
     }
 
+    @Override
+    public void requestRole(UserProto request, StreamObserver<Info> responseObserver) {
+        rabbitTemplate.convertAndSend(MQRoleConfig.EXCHANGE, MQRoleConfig.KEY, new RoleRequestDTO(request.getUsername(), LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond(),request.getRoleId()));
+        responseObserver.onNext(Info.newBuilder().setInfo("Request added!").build());
+        responseObserver.onCompleted();
+    }
 
     private boolean validateEmail(String email) {
         String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"

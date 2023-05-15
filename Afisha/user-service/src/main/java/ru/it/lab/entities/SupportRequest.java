@@ -1,13 +1,14 @@
 package ru.it.lab.entities;
 
+import com.sun.istack.NotNull;
 import lombok.*;
-import ru.it.lab.enums.SupportRequestStatus;
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="support_questions")
+@Table(name="support_requests")
 @Getter
 @Setter
 @ToString

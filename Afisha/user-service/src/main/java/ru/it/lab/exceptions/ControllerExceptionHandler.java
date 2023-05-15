@@ -2,6 +2,7 @@ package ru.it.lab.exceptions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.grpc.StatusRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,9 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return constructResponseEntity(exception, HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Object> handleRuntime(Exception exception, HttpServletRequest request) {
-        return constructResponseEntity(exception, HttpStatus.INTERNAL_SERVER_ERROR, request);
+    @ExceptionHandler(StatusRuntimeException.class)
+    public ResponseEntity<Object> handleGRPCException(StatusRuntimeException e, HttpServletRequest request) {
+        return constructResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR,request);
     }
 
     private ResponseEntity<Object> constructResponseEntity(Exception exception, HttpStatus httpStatus, HttpServletRequest request) {

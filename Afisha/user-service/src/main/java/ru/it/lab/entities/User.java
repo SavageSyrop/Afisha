@@ -27,7 +27,7 @@ public class User extends AbstractEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @JsonProperty("dateOfBirth")
     private Date dateOfBirth;
-    @Column
+    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private GenderType genderType;
     @OneToOne

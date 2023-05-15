@@ -2,14 +2,21 @@ package ru.it.lab.controller;
 
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.util.JsonFormat;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.AccessException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import ru.it.lab.AuthenticateAndGet;
 import ru.it.lab.ChangeUserRequest;
 import ru.it.lab.EventServiceGrpc;
 import ru.it.lab.Info;
@@ -22,8 +29,8 @@ import ru.it.lab.entities.Authorization;
 import ru.it.lab.entities.Permission;
 import ru.it.lab.entities.Role;
 import ru.it.lab.enums.PermissionType;
+import ru.it.lab.enums.RoleType;
 import ru.it.lab.service.AuthorizationService;
-import com.google.protobuf.util.JsonFormat;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -43,8 +50,7 @@ public class UsersController {
     @Autowired
     private AuthorizationService authorizationService;
 
-    @Autowired
-    private RabbitTemplate template;
+
 
     @GetMapping("login")
     public String login(@RequestBody LoginDTO loginDto, HttpServletResponse httpResponse) throws IOException {
@@ -182,52 +188,53 @@ public class UsersController {
 
     @PostMapping("user/request_role")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String requestRole() {
-//        userService.
-//        template.convertAndSend(MQRoleConfig.EXCHANGE, MQRoleConfig.KEY,);
+    public String requestRole(@RequestParam String roleType) throws InvalidProtocolBufferException {
+        RoleType role = RoleType.valueOf(roleType);
+        return JsonFormat.printer().print(userService.requestRole(UserProto.newBuilder().setUsername(getCurrentUserName()).setRoleId(role.id).build()));
     }
 
-    @GetMapping("user/request_support")
+
+//    @PostMapping("user/support_request")
+//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+//    public String createSupportRequest() {
+//
+//    }
+
+    @GetMapping("user/support_request")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getSupportRequests() {
-
+    public String getSupportRequests() throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(userService.getSupportRequests(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).build()));
     }
 
-    @GetMapping("user/request_support/{idRequest}")
+    @GetMapping("user/support_request/{idRequest}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getSupportRequestsById(@PathVariable Long idRequest) {
-
+    public String getSupportRequestsById(@PathVariable Long idRequest) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(userService.getSupportRequest(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).setSearchedId(idRequest).build()));
     }
-
-    @DeleteMapping("user/request_support/{idRequest}")
-    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String deleteSupportRequestsById(@PathVariable Long idRequest) {
-
-    }
-
-    @PostMapping("user/request_support")
-    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String createSupportRequest() {
-
-    }
-
-    @GetMapping("user/{userId}/favorites")
-    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getFavorites(@PathVariable Long userId) {
-
-    }
-
-    @GetMapping("user/{userId}/votes")
-    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getVotes(@PathVariable Long userId) {
-
-    }
-
-    @GetMapping("user/{userId}/comments")
-    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getComments(@PathVariable Long userId) {
-
-    }
+//
+//    @DeleteMapping("user/support_request/{idRequest}")
+//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+//    public String deleteSupportRequestsById(@PathVariable Long idRequest) {
+//
+//    }
+//
+//    @GetMapping("user/{userId}/favorites")
+//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+//    public String getFavorites(@PathVariable Long userId) {
+//
+//    }
+//
+//    @GetMapping("user/{userId}/votes")
+//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+//    public String getVotes(@PathVariable Long userId) {
+//
+//    }
+//
+//    @GetMapping("user/{userId}/comments")
+//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+//    public String getComments(@PathVariable Long userId) {
+//
+//    }
 
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();

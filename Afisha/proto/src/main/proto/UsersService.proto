@@ -57,6 +57,10 @@ message SupportRequest {
   int64 answered_time=7;
 }
 
+message SupportRequestsStream {
+  repeated SupportRequest requests=1;
+}
+
 
 message AuthenticateAndGet {
   int64 searched_id = 1;
@@ -78,8 +82,7 @@ service UserService {
   rpc forgotPassword(Info) returns(Info);
 
   rpc requestRole(UserProto) returns(Info);
-  rpc requestSupport(SupportRequest) returns (Info);
-  rpc getSupportRequests(AuthenticateAndGet) returns (stream SupportRequest);
+  rpc getSupportRequests(AuthenticateAndGet) returns (SupportRequestsStream);
   rpc getSupportRequest(AuthenticateAndGet) returns (SupportRequest);
 
 }
