@@ -26,6 +26,10 @@ public class Authorization extends AbstractEntity implements UserDetails {
 
     private Role role;
 
+    private String activationCode;
+
+    private Boolean isBanned;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

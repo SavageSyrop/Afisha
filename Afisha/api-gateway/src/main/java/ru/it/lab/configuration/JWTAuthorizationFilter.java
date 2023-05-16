@@ -71,8 +71,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(cookieAuthValue);
-        if (authentication == null) {
+        Authorization authorization = getAuthorization(cookieAuthValue);
+        if (authorization==null) {
             AccessDeniedException accessDeniedException = new AccessDeniedException("JWT token stores invalid data! Please login again and receive new token!");
             found.setMaxAge(0);
             res.addCookie(found);
@@ -85,9 +85,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(authentication.getName()).build());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(authorization.getUsername(), authorization.getPassword(), authorization.getAuthorities());
 
-        if (user.getIsBanned()) {
+
+
+
+        if (authorization.getIsBanned()) {
             AccessDeniedException accessDeniedException = new AccessDeniedException("You are banned from Sunshine!");
             log.error(accessDeniedException.getMessage());
             try {
@@ -98,8 +101,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        if (!user.getActivationCode().equals("")) {
-            AccessDeniedException accessDeniedException = new AccessDeniedException("Please activate your account! We have send a letter at " + user.getEmail());
+        if (!authorization.getActivationCode().equals("")) {
+            AccessDeniedException accessDeniedException = new AccessDeniedException("Please activate your account! We have send a letter at your email!");
             log.error(accessDeniedException.getMessage());
             try {
                 accessDeniedHandler.handle(req, res, accessDeniedException);
@@ -118,15 +121,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
     }
 
-    private UsernamePasswordAuthenticationToken getAuthentication(String token) {
+    private Authorization getAuthorization(String token) {
             try {
                 String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
                         .build()
                         .verify(token)
                         .getSubject();
                 if (user != null) {
-                    Authorization authorization = getAuthorization(user);
-                    return new UsernamePasswordAuthenticationToken(authorization.getUsername(), authorization.getPassword(), authorization.getAuthorities());
+                    return getUserData(user);
                 }
             } catch (TokenExpiredException tokenExpiredException) {
                 return null;
@@ -134,7 +136,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return null;
     }
 
-    private Authorization getAuthorization(String username) {
+    private Authorization getUserData(String username) {
         UserProto userProto =  userService.getLoginData(UserProto.newBuilder().setUsername(username).build());
         Authorization authorization = new Authorization();
         authorization.setUsername(userProto.getUsername());
@@ -148,6 +150,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         authRole.setName(RoleType.valueOf(role.getName()));
         authRole.setPermissions(permissionList);
         authorization.setRole(authRole);
+        authorization.setIsBanned(userProto.getIsBanned());
+        authorization.setActivationCode(userProto.getActivationCode());
         return authorization;
     }
 }

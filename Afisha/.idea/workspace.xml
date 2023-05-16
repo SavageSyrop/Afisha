@@ -38,7 +38,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/Java Projects/NewAfisha/Afisha/api-gateway/src/main/java/ru/it/lab/configuration",
+    "last_opened_file_path": "D:/Java Projects/NewAfisha",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -76,7 +76,7 @@
       <command value="mvn clean install -U" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.APIGatewayMain">
+  <component name="RunManager" selected="Application.UserMicroserviceMain">
     <configuration name="APIGatewayMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.it.lab.APIGatewayMain" />
       <module name="api-gateway" />
@@ -118,9 +118,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.APIGatewayMain" />
         <item itemvalue="Application.UserMicroserviceMain" />
         <item itemvalue="Application.AdminMain" />
+        <item itemvalue="Application.APIGatewayMain" />
       </list>
     </recent_temporary>
   </component>
@@ -151,7 +151,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>144</line>
+          <line>146</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -181,17 +181,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>109</line>
+          <line>111</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>111</line>
+          <line>113</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>125</line>
+          <line>127</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -201,23 +201,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>190</line>
+          <line>192</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/configuration/JWTAuthorizationFilter.java</url>
-          <line>50</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/configuration/JWTAuthorizationFilter.java</url>
-          <line>74</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/configuration/JWTAuthorizationFilter.java</url>
-          <line>137</line>
+          <line>139</line>
           <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/configuration/JWTAuthorizationFilter.java</url>
+          <line>125</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/configuration/JWTAuthorizationFilter.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/service/AuthorizationServiceImpl.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
+          <line>105</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -225,5 +250,10 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Afisha$UserMicroserviceMain.ic" NAME="UserMicroserviceMain Coverage Results" MODIFIED="1684262034213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ru.it.lab.*</FILTER>
+    </SUITE>
   </component>
 </project>

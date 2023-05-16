@@ -11,17 +11,14 @@ role_id bigint NOT NULL REFERENCES roles(id) ON DELETE NO ACTION,
 CONSTRAINT permissions_pk PRIMARY KEY (id)
 );
 
-CREATE TYPE gender_type as enum (
-'MALE',
-'FEMALE'
-);
+
 
 CREATE TABLE users (
 id BIGSERIAL NOT NULL,
 username VARCHAR (128) UNIQUE NOT NULL,
 password VARCHAR (128) NOT NULL,
 email VARCHAR (128) NOT NULL,
-gender gender_type NOT NULL,
+gender varchar(128) NOT NULL,
 date_of_birth timestamp NOT NULL,
 role_id bigint REFERENCES roles(id),
 is_open_profile boolean NOT NULL,

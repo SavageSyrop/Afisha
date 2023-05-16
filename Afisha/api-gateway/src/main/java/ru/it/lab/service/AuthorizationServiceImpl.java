@@ -26,7 +26,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private AuthenticationManager authenticationManager;
 
-    private Authorization temp;
+    private Authorization temp = new Authorization();
 
     @Override
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {

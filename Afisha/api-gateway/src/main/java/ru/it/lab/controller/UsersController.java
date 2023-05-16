@@ -54,7 +54,7 @@ public class UsersController {
     private AuthorizationService authorizationService;
 
 
-    @GetMapping("login")
+    @PostMapping("login")
     public String login(@RequestBody LoginDTO loginDto, HttpServletRequest req, HttpServletResponse httpResponse) throws IOException {
         UserProto proto = userService.getLoginData(UserProto.newBuilder().setUsername(loginDto.getUsername()).build());
         Authorization authorization = new Authorization();
@@ -68,13 +68,15 @@ public class UsersController {
         }
         role.setPermissions(permissionList);
         authorization.setRole(role);
+        authorization.setIsBanned(proto.getIsBanned());
+        authorization.setActivationCode(proto.getActivationCode());
         String token = authorizationService.login(authorization, loginDto.getUsername(), loginDto.getPassword());
         Cookie cookie = new Cookie(SecurityConstants.AUTHORIZATION_COOKIE,token);
-        cookie.setMaxAge(16000);
+        cookie.setMaxAge((int) SecurityConstants.EXPIRATION_TIME);
         cookie.setHttpOnly(false);
         cookie.setPath("/");
         httpResponse.addCookie(cookie);
-//        httpResponse.sendRedirect("/user/myprofile");
+        httpResponse.sendRedirect("/user/myprofile");
         return "";
     }
 

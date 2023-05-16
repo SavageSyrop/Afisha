@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -54,12 +55,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             authorizationService.setAuthenticationManager(customAuthenticationManager());
             http.csrf().disable()
                     .cors().and().authorizeRequests()
-                    .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()
+                    .antMatchers("/perform_logout","/sign_up", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()
+                    .antMatchers(HttpMethod.POST, "/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .httpBasic()
-                    .and()
-                    .formLogin().loginProcessingUrl("/login").permitAll()
                     .and()
                     .logout()
                     .logoutUrl("/perform_logout")
@@ -73,9 +73,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and()
                     .addFilter(new JWTAuthorizationFilter(authenticationManager(), accessDeniedHandler,userService))
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-
-
 //            http.csrf().disable();
 //            http.authorizeRequests()
 //                    .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()

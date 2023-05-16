@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import ru.it.lab.enums.GenderType;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
