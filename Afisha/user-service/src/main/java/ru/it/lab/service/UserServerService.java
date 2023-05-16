@@ -53,13 +53,14 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public void login(UserProto request, StreamObserver<UserProto> responseObserver) {
+    public void getLoginData(UserProto request, StreamObserver<UserProto> responseObserver) {
         User userDetails = userDao.getByUsername(request.getUsername());
         if (userDetails == null) {
             responseObserver.onError(new EntityNotFoundException("User with username " + request.getUsername() + " doesn't exist"));
             throw new EntityNotFoundException("User with username " + request.getUsername() + " doesn't exist");
         }
         ru.it.lab.Role.Builder role = ru.it.lab.Role.newBuilder();
+        role.setName(userDetails.getRole().getName().name());
 
         for (Permission per : userDetails.getRole().getPermissions()) {
             ru.it.lab.Permission permission = ru.it.lab.Permission.newBuilder().setName(per.getName().name()).build();
@@ -72,7 +73,9 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
                 .setRole(role.build())
                 .setIsBanned(userDetails.getIsBanned());
         if (userDetails.getIsBanned() == null) {
-
+            user.clearIsBanned();
+        } else {
+            user.setIsBanned(userDetails.getIsBanned());
         }
         if (userDetails.getActivationCode() == null) {
             user.clearActivationCode();
@@ -313,6 +316,18 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(Info.newBuilder().setInfo("Request added!").build());
         responseObserver.onCompleted();
     }
+
+    @Override
+    public void setRole(UserProto request, StreamObserver<Info> responseObserver) {
+        User user = userDao.getByUsername(request.getUsername());
+        Role role = roleDao.getById(request.getRoleId());
+        user.setRole(role);
+        userDao.update(user);
+        responseObserver.onNext(Info.newBuilder().setInfo(user.getUsername() + " is now " + role.getName().toString()).build());
+        responseObserver.onCompleted();
+    }
+
+
 
     private boolean validateEmail(String email) {
         String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"

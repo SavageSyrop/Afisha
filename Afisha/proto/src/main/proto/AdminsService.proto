@@ -3,6 +3,22 @@ import "UsersService.proto";
 package ru.it.lab;
 option java_multiple_files = true;
 
+
+message RoleRequest {
+  int64 id=1;
+  string username=2;
+  int64 creation_time=3;
+  int64 role_id=4;
+}
+
+message RoleRequestList {
+  repeated RoleRequest requests=1;
+}
+
+
+
 service AdminService {
-  rpc requestSupport(SupportRequest) returns (Info);
+  rpc getAllRoleRequests(Empty) returns (RoleRequestList);
+  rpc acceptRoleRequest(RoleRequest) returns (Info);
+  rpc declineRoleRequest(RoleRequest) returns (Info);
 }

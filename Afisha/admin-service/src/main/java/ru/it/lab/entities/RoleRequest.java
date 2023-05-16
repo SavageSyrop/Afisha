@@ -1,6 +1,7 @@
 package ru.it.lab.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "role_requests")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class RoleRequest extends AbstractEntity {
     @Column
     private String username;

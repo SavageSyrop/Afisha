@@ -70,7 +70,7 @@ message AuthenticateAndGet {
 
 
 service UserService {
-  rpc login(UserProto) returns (UserProto);
+  rpc getLoginData(UserProto) returns (UserProto);
   rpc getUserByUsername(UserProto) returns (UserProto);
   rpc registerUser(UserProto) returns (Info);
   rpc changeUserData(ChangeUserRequest) returns (Empty);
@@ -82,6 +82,10 @@ service UserService {
   rpc forgotPassword(Info) returns(Info);
 
   rpc requestRole(UserProto) returns(Info);
+  rpc setRole(UserProto) returns(Info);
+
+
+
   rpc getSupportRequests(AuthenticateAndGet) returns (SupportRequestsStream);
   rpc getSupportRequest(AuthenticateAndGet) returns (SupportRequest);
 

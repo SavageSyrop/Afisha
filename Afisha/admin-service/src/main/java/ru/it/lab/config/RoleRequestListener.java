@@ -1,6 +1,8 @@
 package ru.it.lab.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.it.lab.configuration.MQRoleConfig;
@@ -21,6 +23,11 @@ public class RoleRequestListener {
     public void listener(RoleRequestDTO requestDTO) {
         LocalDateTime time = LocalDateTime.ofInstant(Instant.ofEpochMilli(requestDTO.getCreation_time()),
                 TimeZone.getDefault().toZoneId());
-        requestDao.create(new RoleRequest(requestDTO.getUsername(), time, requestDTO.getRoleId()));
+        try {
+            requestDao.create(new RoleRequest(requestDTO.getUsername(), time, requestDTO.getRoleId()));
+        } catch (RuntimeException ignored) {
+
+        }
+
     }
 }

@@ -23,6 +23,7 @@ import ru.it.lab.Info;
 import ru.it.lab.ResetPasswordRequest;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
+import ru.it.lab.configuration.SecurityConstants;
 import ru.it.lab.dto.LoginDTO;
 import ru.it.lab.dto.UserDTO;
 import ru.it.lab.entities.Authorization;
@@ -32,6 +33,8 @@ import ru.it.lab.enums.PermissionType;
 import ru.it.lab.enums.RoleType;
 import ru.it.lab.service.AuthorizationService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,18 +54,9 @@ public class UsersController {
     private AuthorizationService authorizationService;
 
 
-
     @GetMapping("login")
-    public String login(@RequestBody LoginDTO loginDto, HttpServletResponse httpResponse) throws IOException {
-        UserProto proto = userService.login(UserProto.newBuilder().setUsername(loginDto.getUsername()).build());
-        if (proto.getIsBanned()) {
-            httpResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return JsonFormat.printer().print(Info.newBuilder().setInfo("You are banned from this resource"));
-        }
-        if (!proto.getActivationCode().equals("")) {
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return JsonFormat.printer().print(Info.newBuilder().setInfo("Activate your account by following instructions in email sent to you!"));
-        }
+    public String login(@RequestBody LoginDTO loginDto, HttpServletRequest req, HttpServletResponse httpResponse) throws IOException {
+        UserProto proto = userService.getLoginData(UserProto.newBuilder().setUsername(loginDto.getUsername()).build());
         Authorization authorization = new Authorization();
         authorization.setId(proto.getId());
         authorization.setPassword(proto.getPassword());
@@ -74,8 +68,13 @@ public class UsersController {
         }
         role.setPermissions(permissionList);
         authorization.setRole(role);
-        authorizationService.login(authorization, loginDto.getUsername(), loginDto.getPassword());
-        httpResponse.sendRedirect("/user/myprofile");
+        String token = authorizationService.login(authorization, loginDto.getUsername(), loginDto.getPassword());
+        Cookie cookie = new Cookie(SecurityConstants.AUTHORIZATION_COOKIE,token);
+        cookie.setMaxAge(16000);
+        cookie.setHttpOnly(false);
+        cookie.setPath("/");
+        httpResponse.addCookie(cookie);
+//        httpResponse.sendRedirect("/user/myprofile");
         return "";
     }
 
@@ -190,6 +189,10 @@ public class UsersController {
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String requestRole(@RequestParam String roleType) throws InvalidProtocolBufferException {
         RoleType role = RoleType.valueOf(roleType);
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        if (user.getRole().getName().equals(role.toString()) || user.getRole().getName().equals(RoleType.USER.name())) {
+            throw new IllegalArgumentException("You already have this role!");
+        }
         return JsonFormat.printer().print(userService.requestRole(UserProto.newBuilder().setUsername(getCurrentUserName()).setRoleId(role.id).build()));
     }
 

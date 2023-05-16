@@ -2,12 +2,11 @@ package ru.it.lab.configuration;
 
 
 import lombok.extern.slf4j.Slf4j;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,15 +14,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import ru.it.lab.UserServiceGrpc;
 import ru.it.lab.exceptions.handlers.CustomAccessDeniedHandler;
 import ru.it.lab.exceptions.handlers.DelegatedAuthenticationEntryPoint;
 import ru.it.lab.service.AuthorizationService;
-import ru.it.lab.service.AuthorizationServiceImpl;
 
 @Slf4j
 @Configuration
@@ -40,24 +40,26 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomAccessDeniedHandler accessDeniedHandler;
 
+    @GrpcClient("grpc-users-service")
+    private UserServiceGrpc.UserServiceBlockingStub userService;
+
     @Autowired
     @Qualifier("delegatedAuthenticationEntryPoint")
     private DelegatedAuthenticationEntryPoint authenticationEntryPoint;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         try {
             authorizationService.setAuthenticationManager(customAuthenticationManager());
-            http.authorizeRequests()
+            http.csrf().disable()
+                    .cors().and().authorizeRequests()
                     .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .rememberMe()
-                    .rememberMeCookieName("JSESSIONID")
-                    .tokenValiditySeconds(604800)
-                    .key("InsureValidityAfterRestart")
-                    .and()
                     .httpBasic()
+                    .and()
+                    .formLogin().loginProcessingUrl("/login").permitAll()
                     .and()
                     .logout()
                     .logoutUrl("/perform_logout")
@@ -67,12 +69,38 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and()
                     .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler())
-                    .authenticationEntryPoint(authenticationEntryPoint);
+                    .authenticationEntryPoint(authenticationEntryPoint)
+                    .and()
+                    .addFilter(new JWTAuthorizationFilter(authenticationManager(), accessDeniedHandler,userService))
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
+
+//            http.csrf().disable();
+//            http.authorizeRequests()
+//                    .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()
+//                    .anyRequest().authenticated()
 //                    .and()
-//                    .addFilter(new JWTAuthenticationFilter(authenticationManager(), accessDeniedHandler, userService))
-//                    .addFilter(new JWTAuthorizationFilter(authenticationManager(), accessDeniedHandler, userService))
+////                    .rememberMe()
+////                    .tokenValiditySeconds(86400)
+////                    .rememberMeCookieName("rememberme")
+////                    .alwaysRemember(true)
+////                    .userDetailsService(authorizationService)
+////                    .and()
+//                    .httpBasic()
+//                    .and()
+//                    .logout()
+//                    .logoutUrl("/perform_logout")
+//                    .invalidateHttpSession(true)
+//                    .deleteCookies("JSESSIONID")
+//                    .permitAll()
+//                    .and()
+//                    .exceptionHandling()
+//                    .accessDeniedHandler(accessDeniedHandler())
+//                    .authenticationEntryPoint(authenticationEntryPoint)
+//                    .and()
+//                    .addFilter(new JWTAuthorizationFilter(authenticationManager(), accessDeniedHandler))
 //                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            http.csrf().disable();
         } catch (Exception exception) {
             log.error(exception.getMessage());
             throw new AuthorizationServiceException(exception.getMessage());
