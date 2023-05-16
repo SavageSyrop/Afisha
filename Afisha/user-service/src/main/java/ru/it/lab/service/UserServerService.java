@@ -11,6 +11,7 @@ import ru.it.lab.ChangeUserRequest;
 import ru.it.lab.Empty;
 import ru.it.lab.Info;
 import ru.it.lab.ResetPasswordRequest;
+
 import ru.it.lab.SupportRequestsStream;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
@@ -24,6 +25,7 @@ import ru.it.lab.entities.Role;
 import ru.it.lab.entities.SupportRequest;
 import ru.it.lab.entities.User;
 import ru.it.lab.enums.GenderType;
+import ru.it.lab.enums.RoleType;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -248,16 +250,57 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     }
 
 
-//    @Override
-//    public void requestSupport(ru.it.lab.SupportRequest request, StreamObserver<Info> responseObserver) {
-//        SupportRequest supportRequest = new SupportRequest();
-//        User user = userDao.getById(request.getUserId());
-//        supportRequest.setUser(user);
-//
-//    }
+    @Override
+    public void requestRole(UserProto request, StreamObserver<Info> responseObserver) {
+        rabbitTemplate.convertAndSend(MQRoleConfig.EXCHANGE, MQRoleConfig.KEY, new RoleRequestDTO(request.getUsername(), LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond(),request.getRoleId()));
+        responseObserver.onNext(Info.newBuilder().setInfo("Request added!").build());
+        responseObserver.onCompleted();
+    }
 
     @Override
-    public void getSupportRequests(AuthenticateAndGet request, StreamObserver<SupportRequestsStream> responseObserver) {
+    public void setRole(UserProto request, StreamObserver<Info> responseObserver) {
+        User user = userDao.getByUsername(request.getUsername());
+        Role role = roleDao.getById(request.getRoleId());
+        user.setRole(role);
+        userDao.update(user);
+        responseObserver.onNext(Info.newBuilder().setInfo(user.getUsername() + " is now " + role.getName().toString()).build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void banUser(UserProto request, StreamObserver<Info> responseObserver) {
+        User user = userDao.getById(request.getId());
+        if (user.getRole().getName()==RoleType.ADMIN) {
+            responseObserver.onError(new StatusRuntimeException(Status.CANCELLED.withDescription("Admin can not be banned")));
+            return;
+        }
+        if (user.getIsBanned()) {
+            responseObserver.onError(new StatusRuntimeException(Status.CANCELLED.withDescription("User is already banned")));
+            return;
+        }
+        user.setIsBanned(true);
+        userDao.update(user);
+        responseObserver.onNext(Info.newBuilder().setInfo("User "+user.getUsername()+" is banned!").build());
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void unbanUser(UserProto request, StreamObserver<Info> responseObserver) {
+        User user = userDao.getById(request.getId());
+        if (!user.getIsBanned()) {
+            responseObserver.onError(new StatusRuntimeException(Status.CANCELLED.withDescription("User is not banned")));
+        }
+        user.setIsBanned(false);
+        userDao.update(user);
+        responseObserver.onNext(Info.newBuilder().setInfo("User "+user.getUsername()+" is unbanned!").build());
+        responseObserver.onCompleted();
+    }
+
+
+
+
+    @Override
+    public void getSupportRequestsByUsername(AuthenticateAndGet request, StreamObserver<SupportRequestsStream> responseObserver) {
         List<SupportRequest> supportRequestList = supportRequestDao.getAllByUser(request.getUsername());
         SupportRequestsStream.Builder stream = SupportRequestsStream.newBuilder();
         for (SupportRequest req : supportRequestList) {
@@ -283,7 +326,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     }
 
     @Override
-    public void getSupportRequest(AuthenticateAndGet request, StreamObserver<ru.it.lab.SupportRequest> responseObserver) {
+    public void getSupportRequestById(AuthenticateAndGet request, StreamObserver<ru.it.lab.SupportRequest> responseObserver) {
         ru.it.lab.SupportRequest.Builder response = ru.it.lab.SupportRequest.newBuilder();
         try {
             SupportRequest supportRequest = supportRequestDao.getById(request.getSearchedId());
@@ -311,23 +354,52 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     }
 
     @Override
-    public void requestRole(UserProto request, StreamObserver<Info> responseObserver) {
-        rabbitTemplate.convertAndSend(MQRoleConfig.EXCHANGE, MQRoleConfig.KEY, new RoleRequestDTO(request.getUsername(), LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond(),request.getRoleId()));
-        responseObserver.onNext(Info.newBuilder().setInfo("Request added!").build());
+    public void createSupportRequest(ru.it.lab.SupportRequest request, StreamObserver<Info> responseObserver) {
+        SupportRequest supportRequest = new SupportRequest();
+        User user = userDao.getByUsername(request.getUsername());
+        if (user==null) {
+            responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("User not found")));
+            return;
+        }
+        supportRequest.setUser(user);
+        supportRequest.setQuestion(request.getQuestion());
+        supportRequest.setCreationTime(LocalDateTime.now());
+        supportRequestDao.create(supportRequest);
+        responseObserver.onNext(Info.newBuilder().setInfo("Support request created").build());
         responseObserver.onCompleted();
     }
 
     @Override
-    public void setRole(UserProto request, StreamObserver<Info> responseObserver) {
-        User user = userDao.getByUsername(request.getUsername());
-        Role role = roleDao.getById(request.getRoleId());
-        user.setRole(role);
-        userDao.update(user);
-        responseObserver.onNext(Info.newBuilder().setInfo(user.getUsername() + " is now " + role.getName().toString()).build());
+    public void closeSupportRequest(ru.it.lab.SupportRequest request, StreamObserver<Info> responseObserver) {
+        SupportRequest supportRequest = supportRequestDao.getById(request.getId());
+        if (supportRequest.getCloseTime()!=null) {
+            responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("Support request already closed")));
+            return;
+        }
+        User admin = userDao.getByUsername(request.getUsername());
+        supportRequest.setAdmin(admin);
+        supportRequest.setAnswer(request.getAnswer());
+        supportRequest.setCloseTime(LocalDateTime.now());
+        supportRequestDao.update(supportRequest);
+        responseObserver.onNext(Info.newBuilder().setInfo("Support request closed").build());
         responseObserver.onCompleted();
     }
 
-
+    @Override
+    public void getAllOpenSupportRequests(Empty request, StreamObserver<SupportRequestsStream> responseObserver) {
+        List<SupportRequest> supportRequestList = supportRequestDao.getAllOpenRequests();
+        SupportRequestsStream.Builder stream = SupportRequestsStream.newBuilder();
+        for (SupportRequest req : supportRequestList) {
+            ru.it.lab.SupportRequest.Builder reqBuilder = ru.it.lab.SupportRequest.newBuilder();
+            reqBuilder.setId(req.getId());
+            reqBuilder.setUserId(req.getUser().getId());
+            reqBuilder.setQuestion(req.getQuestion());
+            reqBuilder.setCreationTime(req.getCreationTime().atZone(ZoneId.systemDefault()).toEpochSecond());
+            stream.addRequests(reqBuilder.build());
+        }
+        responseObserver.onNext(stream.build());
+        responseObserver.onCompleted();
+    }
 
     private boolean validateEmail(String email) {
         String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"

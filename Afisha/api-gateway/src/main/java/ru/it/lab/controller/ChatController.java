@@ -1,6 +1,7 @@
 package ru.it.lab.controller;
 
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.it.lab.ChatServiceGrpc;
@@ -32,5 +33,8 @@ public class ChatController {
 //
 //    }
 
+    private String getCurrentUserName() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
 
 }

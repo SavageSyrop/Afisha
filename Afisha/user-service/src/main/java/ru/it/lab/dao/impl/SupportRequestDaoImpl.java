@@ -30,4 +30,20 @@ public class SupportRequestDaoImpl extends AbstractDaoImpl<SupportRequest> imple
         TypedQuery<SupportRequest> found = entityManager.createQuery(crit);
         return found.getResultList();
     }
+
+    @Override
+    public List<SupportRequest> getAllOpenRequests() {
+        Class entityClass = getEntityClass();
+        EntityManager entityManager = getEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<SupportRequest> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<SupportRequest> rootEntry = criteriaQuery.from(entityClass);
+
+        CriteriaQuery<SupportRequest> crit = criteriaQuery.select(rootEntry)
+                .where(
+                        criteriaBuilder.isNull(rootEntry.get("admin"))
+                );
+        TypedQuery<SupportRequest> found = entityManager.createQuery(crit);
+        return found.getResultList();
+    }
 }

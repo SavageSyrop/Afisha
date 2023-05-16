@@ -4,10 +4,14 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.it.lab.AdminServiceGrpc;
 import ru.it.lab.Empty;
 import ru.it.lab.RoleRequest;
+import ru.it.lab.SupportRequest;
+import ru.it.lab.UserProto;
+import ru.it.lab.dto.SupportRequestDTO;
 
 
 @RestController
@@ -16,7 +20,7 @@ public class AdminsController {
 
 
     @GrpcClient("grpc-admin-service")
-    private  AdminServiceGrpc.AdminServiceBlockingStub adminService;
+    private AdminServiceGrpc.AdminServiceBlockingStub adminService;
 
 
     @GetMapping("/role_requests")
@@ -29,7 +33,7 @@ public class AdminsController {
     @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
     public String declineRequest(@PathVariable Long roleRequestId) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(adminService.declineRoleRequest(RoleRequest.newBuilder()
-                        .setId(roleRequestId)
+                .setId(roleRequestId)
                 .build()));
     }
 
@@ -41,11 +45,34 @@ public class AdminsController {
                 .build()));
     }
 
-//    @GetMapping("/grantRole/{userId}")
-//    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
-//    public String grandRole(@PathVariable Long userId) {
-//
-//    }
+    @PostMapping("/user/{userId}/ban")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String banUser(@PathVariable Long userId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.banUser(UserProto.newBuilder().setId(userId).build()));
+    }
+
+    @PostMapping("/user/{userId}/unban")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String unbanUser(@PathVariable Long userId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.unbanUser(UserProto.newBuilder().setId(userId).build()));
+    }
+
+    @GetMapping("/support_requests/open")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String getAllOpenSupportRequests() throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.getAllOpenSupportRequests(Empty.newBuilder().build()));
+    }
+
+    @PostMapping("/support_request/{requestId}/close")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String closeSupportRequest(@RequestBody SupportRequestDTO supportRequestDTO, @PathVariable Long requestId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.closeSupportRequest(SupportRequest.newBuilder()
+                .setAnswer(supportRequestDTO.getAnswer())
+                .setId(requestId)
+                .setUsername(getCurrentUserName())
+                .build()));
+    }
+
 //
 //
 //    @DeleteMapping("/delete/event/{eventId}")
@@ -60,16 +87,9 @@ public class AdminsController {
 //
 //    }
 //
-//    @PostMapping("/user/{userId}/ban")
-//    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
-//    public String banUser(@PathVariable Long id) {
-//
-//    }
-//
-//    @PostMapping("/user/{userId}/unban")
-//    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
-//    public String unbanUser(@PathVariable Long id) {
-//
-//    }
+
+    private String getCurrentUserName() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
 
 }

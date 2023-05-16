@@ -21,9 +21,11 @@ import ru.it.lab.ChangeUserRequest;
 import ru.it.lab.EventServiceGrpc;
 import ru.it.lab.Info;
 import ru.it.lab.ResetPasswordRequest;
+import ru.it.lab.SupportRequest;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
 import ru.it.lab.configuration.SecurityConstants;
+import ru.it.lab.dto.SupportRequestDTO;
 import ru.it.lab.dto.LoginDTO;
 import ru.it.lab.dto.UserDTO;
 import ru.it.lab.entities.Authorization;
@@ -199,29 +201,27 @@ public class UsersController {
     }
 
 
-//    @PostMapping("user/support_request")
-//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-//    public String createSupportRequest() {
-//
-//    }
-
-    @GetMapping("user/support_request")
+    @GetMapping("user/my_support_request/all")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getSupportRequests() throws InvalidProtocolBufferException {
-        return JsonFormat.printer().print(userService.getSupportRequests(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).build()));
+        return JsonFormat.printer().print(userService.getSupportRequestsByUsername(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).build()));
     }
 
-    @GetMapping("user/support_request/{idRequest}")
+    @GetMapping("user/my_support_request/{idRequest}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getSupportRequestsById(@PathVariable Long idRequest) throws InvalidProtocolBufferException {
-        return JsonFormat.printer().print(userService.getSupportRequest(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).setSearchedId(idRequest).build()));
+        return JsonFormat.printer().print(userService.getSupportRequestById(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).setSearchedId(idRequest).build()));
     }
-//
-//    @DeleteMapping("user/support_request/{idRequest}")
-//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-//    public String deleteSupportRequestsById(@PathVariable Long idRequest) {
-//
-//    }
+
+    @PostMapping("user/support_request")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String createSupportRequest(@RequestBody SupportRequestDTO supportRequestDTO) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(userService.createSupportRequest(SupportRequest.newBuilder()
+                        .setQuestion(supportRequestDTO.getQuestion())
+                        .setUsername(getCurrentUserName())
+                .build()));
+    }
+
 //
 //    @GetMapping("user/{userId}/favorites")
 //    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")

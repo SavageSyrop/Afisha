@@ -4,12 +4,15 @@ package ru.it.lab.service;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.it.lab.AdminServiceGrpc;
 import ru.it.lab.Empty;
 import ru.it.lab.Info;
+import ru.it.lab.SupportRequest;
+import ru.it.lab.SupportRequestsStream;
 import ru.it.lab.UserProto;
 import ru.it.lab.entities.RoleRequest;
 import ru.it.lab.RoleRequestList;
@@ -21,6 +24,7 @@ import java.time.ZoneId;
 
 
 @GrpcService
+@Slf4j
 public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
 
     @GrpcClient("grpc-users-service")
@@ -50,6 +54,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
             Info info = userService.setRole(UserProto.newBuilder().setUsername(roleRequest.getUsername()).setRoleId(roleRequest.getRoleId()).build());
             requestDao.deleteById(request.getId());
             responseObserver.onNext(info);
+            log.info("Admin action: Role is given");
             responseObserver.onCompleted();
         } catch (EntityNotFoundException e) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription(e.getMessage())));
@@ -64,9 +69,35 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription(e.getMessage())));
         }
         responseObserver.onNext(Info.newBuilder().setInfo("Role request denied!").build());
+        log.info("Admin action: Role request declined");
         responseObserver.onCompleted();
     }
 
 
+    @Override
+    public void banUser(UserProto request, StreamObserver<Info> responseObserver) {
+        responseObserver.onNext(userService.banUser(request));
+        log.info("Admin action: User " + request.getUsername() + " is banned");
+        responseObserver.onCompleted();
+    }
 
+    @Override
+    public void unbanUser(UserProto request, StreamObserver<Info> responseObserver) {
+        responseObserver.onNext(userService.unbanUser(request));
+        log.info("Admin action: User " + request.getUsername() + " is unbanned");
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getAllOpenSupportRequests(Empty request, StreamObserver<SupportRequestsStream> responseObserver) {
+        responseObserver.onNext(userService.getAllOpenSupportRequests(Empty.newBuilder().build()));
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void closeSupportRequest(SupportRequest request, StreamObserver<Info> responseObserver) {
+        responseObserver.onNext(userService.closeSupportRequest(request));
+        log.info("Admin action: Support request closed");
+        responseObserver.onCompleted();
+    }
 }

@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea1f581f-9483-4ddc-9385-9a9f0700606c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../logfile.log" beforeDir="false" afterPath="$PROJECT_DIR$/../logfile.log" afterDir="false" />
-    </list>
+    <list default="true" id="ea1f581f-9483-4ddc-9385-9a9f0700606c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -151,22 +149,22 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>146</line>
+          <line>148</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>165</line>
+          <line>167</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>90</line>
+          <line>92</line>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>99</line>
+          <line>101</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -176,32 +174,32 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>113</line>
+          <line>115</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>111</line>
+          <line>113</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>113</line>
+          <line>115</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>127</line>
+          <line>129</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>141</line>
+          <line>143</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>192</line>
+          <line>194</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -221,7 +219,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>58</line>
+          <line>60</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -231,17 +229,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>56</line>
+          <line>58</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>105</line>
+          <line>107</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>59</line>
+          <line>61</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>

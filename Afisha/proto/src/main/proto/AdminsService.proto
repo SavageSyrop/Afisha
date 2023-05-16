@@ -21,4 +21,11 @@ service AdminService {
   rpc getAllRoleRequests(Empty) returns (RoleRequestList);
   rpc acceptRoleRequest(RoleRequest) returns (Info);
   rpc declineRoleRequest(RoleRequest) returns (Info);
+
+  rpc banUser(UserProto) returns (Info);
+  rpc unbanUser(UserProto) returns (Info);
+
+  rpc getAllOpenSupportRequests(Empty) returns (SupportRequestsStream);
+  rpc closeSupportRequest(SupportRequest) returns (Info);
+
 }
