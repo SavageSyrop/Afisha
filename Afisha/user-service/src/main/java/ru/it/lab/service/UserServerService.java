@@ -15,7 +15,7 @@ import ru.it.lab.ResetPasswordRequest;
 import ru.it.lab.SupportRequestsStream;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
-import ru.it.lab.configuration.MQRoleConfig;
+import ru.it.lab.config.MQConfig;
 import ru.it.lab.dao.RoleDao;
 import ru.it.lab.dao.SupportRequestDao;
 import ru.it.lab.dao.UserDao;
@@ -252,7 +252,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void requestRole(UserProto request, StreamObserver<Info> responseObserver) {
-        rabbitTemplate.convertAndSend(MQRoleConfig.EXCHANGE, MQRoleConfig.KEY, new RoleRequestDTO(request.getUsername(), LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond(),request.getRoleId()));
+        rabbitTemplate.convertAndSend(MQConfig.EXCHANGE_ROLE, MQConfig.KEY_ROLE, new RoleRequestDTO(request.getUsername(), LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond(), request.getRoleId()));
         responseObserver.onNext(Info.newBuilder().setInfo("Request added!").build());
         responseObserver.onCompleted();
     }
@@ -270,7 +270,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void banUser(UserProto request, StreamObserver<Info> responseObserver) {
         User user = userDao.getById(request.getId());
-        if (user.getRole().getName()==RoleType.ADMIN) {
+        if (user.getRole().getName() == RoleType.ADMIN) {
             responseObserver.onError(new StatusRuntimeException(Status.CANCELLED.withDescription("Admin can not be banned")));
             return;
         }
@@ -280,7 +280,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         }
         user.setIsBanned(true);
         userDao.update(user);
-        responseObserver.onNext(Info.newBuilder().setInfo("User "+user.getUsername()+" is banned!").build());
+        responseObserver.onNext(Info.newBuilder().setInfo("User " + user.getUsername() + " is banned!").build());
         responseObserver.onCompleted();
     }
 
@@ -292,11 +292,9 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         }
         user.setIsBanned(false);
         userDao.update(user);
-        responseObserver.onNext(Info.newBuilder().setInfo("User "+user.getUsername()+" is unbanned!").build());
+        responseObserver.onNext(Info.newBuilder().setInfo("User " + user.getUsername() + " is unbanned!").build());
         responseObserver.onCompleted();
     }
-
-
 
 
     @Override
@@ -357,7 +355,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     public void createSupportRequest(ru.it.lab.SupportRequest request, StreamObserver<Info> responseObserver) {
         SupportRequest supportRequest = new SupportRequest();
         User user = userDao.getByUsername(request.getUsername());
-        if (user==null) {
+        if (user == null) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("User not found")));
             return;
         }
@@ -372,7 +370,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void closeSupportRequest(ru.it.lab.SupportRequest request, StreamObserver<Info> responseObserver) {
         SupportRequest supportRequest = supportRequestDao.getById(request.getId());
-        if (supportRequest.getCloseTime()!=null) {
+        if (supportRequest.getCloseTime() != null) {
             responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("Support request already closed")));
             return;
         }

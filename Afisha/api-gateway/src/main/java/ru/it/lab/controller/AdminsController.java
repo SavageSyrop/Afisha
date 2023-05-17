@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.it.lab.AdminServiceGrpc;
 import ru.it.lab.Empty;
+import ru.it.lab.Id;
 import ru.it.lab.RoleRequest;
 import ru.it.lab.SupportRequest;
 import ru.it.lab.UserProto;
@@ -23,7 +24,7 @@ public class AdminsController {
     private AdminServiceGrpc.AdminServiceBlockingStub adminService;
 
 
-    @GetMapping("/role_requests")
+    @GetMapping("/role_requests/all")
     @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
     public String getAllRoleRequests() throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(adminService.getAllRoleRequests(Empty.newBuilder().build()));
@@ -72,21 +73,32 @@ public class AdminsController {
                 .setUsername(getCurrentUserName())
                 .build()));
     }
+////////////////////////////////////////////////////////////////
+    @GetMapping("/event_requests/all")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String getAllWaitingForApprovalEvents() throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.getAllWaitingForApprovalEvents(Empty.newBuilder().build()));
+    }
 
-//
-//
-//    @DeleteMapping("/delete/event/{eventId}")
-//    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
-//    public String deleteEvent(@PathVariable Long eventId) {
-//
-//    }
-//
-//    @DeleteMapping("/delete/comment/{id}")
-//    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
-//    public String deleteComment(@PathVariable Long id) {
-//
-//    }
-//
+
+    @PostMapping("/event_requests/{eventRequestId}")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String acceptEventRequest(@PathVariable Long eventRequestId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.acceptEventRequest(Id.newBuilder().setId(eventRequestId).build()));
+    }
+
+    @DeleteMapping("/event_requests/{eventRequestId}")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String declineEventRequest(@PathVariable Long eventRequestId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.declineEventRequest(Id.newBuilder().setId(eventRequestId).build()));
+    }
+
+    @DeleteMapping("/events/{eventId}")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String deleteEvent(@PathVariable Long eventId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.deleteEvent(Id.newBuilder().setId(eventId).build()));
+    }
+
 
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();

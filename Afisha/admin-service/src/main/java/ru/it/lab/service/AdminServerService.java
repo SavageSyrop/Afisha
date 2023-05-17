@@ -1,6 +1,7 @@
 package ru.it.lab.service;
 
 
+import com.sun.jdi.request.EventRequest;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
@@ -36,7 +37,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
     @GrpcClient("grpc-users-service")
     private UserServiceGrpc.UserServiceBlockingStub userService;
 
-    @GrpcClient("grpc-event-service")
+    @GrpcClient("grpc-events-service")
     private EventServiceGrpc.EventServiceBlockingStub eventService;
 
     @Autowired
@@ -130,22 +131,30 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
 
     @Override
     public void acceptEventRequest(Id request, StreamObserver<Info> responseObserver) {
-        responseObserver.onNext(eventService.acceptEvent(Id.newBuilder().setId(request.getId()).build()));
-        eventRequestDao.deleteById(request.getId());
+        EventApprovalRequest eventRequest = eventRequestDao.getById(request.getId());
+        responseObserver.onNext(eventService.acceptEvent(Id.newBuilder().setId(eventRequest.getEventId()).build()));
+        eventRequestDao.deleteById(eventRequest.getId());
         responseObserver.onCompleted();
     }
 
     @Override
     public void declineEventRequest(Id request, StreamObserver<Info> responseObserver) {
         EventApprovalRequest eventApprovalRequest = eventRequestDao.getById(request.getId());
-        eventRequestDao.deleteById(eventApprovalRequest.getId());
         responseObserver.onNext(eventService.deleteEventById(Id.newBuilder().setId(eventApprovalRequest.getEventId()).build()));
+        eventRequestDao.deleteById(eventApprovalRequest.getId());
         responseObserver.onCompleted();
     }
 
     @Override
     public void deleteEvent(Id request, StreamObserver<Info> responseObserver) {
+        EventApprovalRequest eventApprovalRequest = eventRequestDao.getByEventId(request.getId());
+        if (eventApprovalRequest!=null) {
+            eventRequestDao.deleteById(eventApprovalRequest.getId());
+        }
         responseObserver.onNext(eventService.deleteEventById(Id.newBuilder().setId(request.getId()).build()));
         responseObserver.onCompleted();
     }
+
+
+
 }

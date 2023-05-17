@@ -3,6 +3,8 @@ package ru.it.lab.controller;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
+import io.grpc.Status;
+import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.AccessException;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.it.lab.AuthenticateAndGet;
 import ru.it.lab.ChangeUserRequest;
 import ru.it.lab.EventServiceGrpc;
+import ru.it.lab.Id;
 import ru.it.lab.Info;
 import ru.it.lab.ResetPasswordRequest;
 import ru.it.lab.SupportRequest;
@@ -73,12 +76,12 @@ public class UsersController {
         authorization.setIsBanned(proto.getIsBanned());
         authorization.setActivationCode(proto.getActivationCode());
         String token = authorizationService.login(authorization, loginDto.getUsername(), loginDto.getPassword());
-        Cookie cookie = new Cookie(SecurityConstants.AUTHORIZATION_COOKIE,token);
+        Cookie cookie = new Cookie(SecurityConstants.AUTHORIZATION_COOKIE, token);
         cookie.setMaxAge((int) SecurityConstants.EXPIRATION_TIME);
         cookie.setHttpOnly(false);
         cookie.setPath("/");
         httpResponse.addCookie(cookie);
-        httpResponse.sendRedirect("/user/myprofile");
+        httpResponse.sendRedirect("/user/my_profile");
         return "";
     }
 
@@ -102,40 +105,40 @@ public class UsersController {
 
     }
 
-    @GetMapping("user/myprofile")
+    @GetMapping("user/my_profile")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getMyProfile() throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build()));
     }
 
-    @PostMapping("user/myprofile")
+    @PostMapping("user/my_profile")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public void changeMyProfileInfo(@RequestBody UserDTO userDTO, HttpServletResponse httpServletResponse) throws IOException {
         ChangeUserRequest.Builder user = ChangeUserRequest.newBuilder();
         user.setOldUsername(getCurrentUserName());
-        if (userDTO.getUsername()!=null) {
+        if (userDTO.getUsername() != null) {
             user.setNewUsername(userDTO.getUsername());
         }
 
-        if (userDTO.getEmail()!=null) {
+        if (userDTO.getEmail() != null) {
             user.setEmail(userDTO.getEmail());
         }
-        if (userDTO.getDateOfBirth()!=null){
+        if (userDTO.getDateOfBirth() != null) {
             user.setDateOfBirth(userDTO.getDateOfBirth().getTime());
         }
 
-        if (userDTO.getGenderType()!=null) {
+        if (userDTO.getGenderType() != null) {
             user.setGenderType(userDTO.getGenderType());
         }
         userService.changeUserData(user.build());
-        if (userDTO.getUsername()!=null || user.getEmail()!=null) {
+        if (userDTO.getUsername() != null || user.getEmail() != null) {
             httpServletResponse.sendRedirect("/perform_logout");
         }
     }
 
-    @PostMapping("user/myprofile/password")
+    @PostMapping("user/my_profile/password")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public void changeMyPassword(@RequestParam String newPassword,  HttpServletResponse httpServletResponse) throws IOException {
+    public void changeMyPassword(@RequestParam String newPassword, HttpServletResponse httpServletResponse) throws IOException {
         UserProto.Builder user = UserProto.newBuilder();
         validatePassword(newPassword);
         user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
@@ -143,7 +146,7 @@ public class UsersController {
         httpServletResponse.sendRedirect("/perform_logout");
     }
 
-    @GetMapping("user/myprofile/privacy")
+    @GetMapping("user/my_profile/privacy")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getProfilePrivacyStatus() throws InvalidProtocolBufferException {
         UserProto.Builder user = UserProto.newBuilder();
@@ -151,7 +154,7 @@ public class UsersController {
         return JsonFormat.printer().print(userService.getPrivacy(user.build()));
     }
 
-    @PostMapping("user/myprofile/privacy")
+    @PostMapping("user/my_profile/privacy")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String toggleProfilePrivacyStatus() throws InvalidProtocolBufferException {
         UserProto.Builder user = UserProto.newBuilder();
@@ -171,14 +174,13 @@ public class UsersController {
     }
 
 
-
     @GetMapping("forgot_password")
     public String forgotPassword(@RequestParam String username) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.forgotPassword(Info.newBuilder().setInfo(username).build()));
     }
 
     @GetMapping("reset_password/{code}")
-    public String resetPassword(@PathVariable String code,@RequestParam String newPassword) throws InvalidProtocolBufferException {
+    public String resetPassword(@PathVariable String code, @RequestParam String newPassword) throws InvalidProtocolBufferException {
         validatePassword(newPassword);
         return JsonFormat.printer().print(userService.resetPassword(ResetPasswordRequest.newBuilder().setCode(code).setNewPassword(new BCryptPasswordEncoder().encode(newPassword)).build()));
     }
@@ -194,7 +196,7 @@ public class UsersController {
     public String requestRole(@RequestParam String roleType) throws InvalidProtocolBufferException {
         RoleType role = RoleType.valueOf(roleType);
         UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
-        if (user.getRole().getName().equals(role.toString()) || user.getRole().getName().equals(RoleType.USER.name())) {
+        if (user.getRole().getName().equals(role.name())) {
             throw new IllegalArgumentException("You already have this role!");
         }
         return JsonFormat.printer().print(userService.requestRole(UserProto.newBuilder().setUsername(getCurrentUserName()).setRoleId(role.id).build()));
@@ -217,17 +219,32 @@ public class UsersController {
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String createSupportRequest(@RequestBody SupportRequestDTO supportRequestDTO) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.createSupportRequest(SupportRequest.newBuilder()
-                        .setQuestion(supportRequestDTO.getQuestion())
-                        .setUsername(getCurrentUserName())
+                .setQuestion(supportRequestDTO.getQuestion())
+                .setUsername(getCurrentUserName())
                 .build()));
     }
 
-//
-//    @GetMapping("user/{userId}/favorites")
-//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-//    public String getFavorites(@PathVariable Long userId) {
-//
-//    }
+
+    @GetMapping("user/{username}/favorites")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getFavorites(@PathVariable String username) throws InvalidProtocolBufferException {
+        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
+        if (userProto.getIsOpenProfile()) {
+            return JsonFormat.printer().print(eventService.getFavorites(Id.newBuilder().setId(userProto.getId()).build()));
+        } else {
+            throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("This user has closed profile"));
+        }
+    }
+
+    @GetMapping("user/my_favorites")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getMyFavorites() throws InvalidProtocolBufferException {
+        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.getFavorites(Id.newBuilder().setId(userProto.getId()).build()));
+    }
+
+
+
 //
 //    @GetMapping("user/{userId}/votes")
 //    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")

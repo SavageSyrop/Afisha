@@ -53,10 +53,11 @@ message CommentsList {
 }
 
 service EventService {
-  rpc getEventByIdWithOrganizerCheck(EventProto) returns (EventProto);
+  rpc getEventById(Id) returns (EventProto);
+  rpc getMyCreatedEvents(Id) returns (EventsList);
   rpc getNotApprovedEventById(Id) returns (EventProto);
-  rpc getEventsByType(EventProto) returns (EventsList);
-  rpc getAllEvents(Empty) returns (EventsList);
+  rpc getApprovedEventsByType(EventProto) returns (EventsList);
+  rpc getAllApprovedEvents(Empty) returns (EventsList);
 
   rpc createEvent(EventProto) returns (Info);
   rpc acceptEvent(Id) returns (Info);

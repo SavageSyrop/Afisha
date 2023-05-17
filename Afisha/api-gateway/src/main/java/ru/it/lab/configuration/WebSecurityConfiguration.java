@@ -55,7 +55,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             authorizationService.setAuthenticationManager(customAuthenticationManager());
             http.csrf().disable()
                     .cors().and().authorizeRequests()
-                    .antMatchers("/perform_logout","/sign_up", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()
+                    .antMatchers("/perform_logout","/sign_up", "/forgot_password", "/reset_password/*", "/activate/*","/events/all", "/events/type").permitAll()
                     .antMatchers(HttpMethod.POST, "/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
@@ -64,7 +64,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutUrl("/perform_logout")
                     .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID")
+                    .deleteCookies("Authorization")
                     .permitAll()
                     .and()
                     .exceptionHandling()

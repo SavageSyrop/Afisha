@@ -91,7 +91,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 
         if (authorization.getIsBanned()) {
-            AccessDeniedException accessDeniedException = new AccessDeniedException("You are banned from Sunshine!");
+            AccessDeniedException accessDeniedException = new AccessDeniedException("You are banned!");
             log.error(accessDeniedException.getMessage());
             try {
                 accessDeniedHandler.handle(req, res, accessDeniedException);

@@ -50,6 +50,5 @@ public class Event extends AbstractEntity{
     @Column
     private Float rating;
     @Column
-    @ColumnDefault(value = "false")
     private Boolean isAccepted;
 }

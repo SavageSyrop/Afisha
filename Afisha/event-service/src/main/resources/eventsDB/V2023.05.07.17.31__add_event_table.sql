@@ -11,26 +11,26 @@ CREATE TYPE event_type as enum (
     'OTHER'
 );
 
-CREATE TABLE event_participations (
-id BIGSERIAL NOT NULL,
-user_id bigint NOT NULL,
-event_id bigint NOT NULL references events(id) ON DELETE CASCADE,
-participation participation_type NOT NULL,
-CONSTRAINT event_participations_pk PRIMARY KEY (id)
-);
-
 create table events (
 id BIGSERIAL NOT NULL,
 organizer_id bigint NOT NULL,
 type event_type NOT NULL,
 name varchar (128) not null,
 info varchar (255) not null,
-price int not null default 0,
+price int default 0,
 start_time timestamp NOT NULL,
 location varchar (128) NOT NULL,
-rating float not null default 0,
+rating float default 0,
 is_accepted boolean default false,
 CONSTRAINT events_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE event_participations (
+id BIGSERIAL NOT NULL,
+user_id bigint NOT NULL,
+event_id bigint NOT NULL references events(id) ON DELETE CASCADE,
+participation participation_type NOT NULL,
+CONSTRAINT event_participations_pk PRIMARY KEY (id)
 );
 
 create table event_votes (
