@@ -36,7 +36,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "17",
-    "last_opened_file_path": "D:/Java Projects/NewAfisha",
+    "last_opened_file_path": "D:/Java Projects/NewAfisha/Afisha/api-gateway/src/main/java/ru/it/lab/entities",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -45,14 +45,15 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
+      <recent name="ru.it.lab.dao.impl" />
       <recent name="ru.it.lab.dao" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Java Projects\NewAfisha\Afisha\api-gateway\src\main\java\ru\it\lab\configuration" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\api-gateway\src\main\java\ru\it\lab\entities" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\user-service\src\main\java\ru\it\lab\entities" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\shared\src\main\java\ru\it\lab\entities" />
+      <recent name="D:\Java Projects\NewAfisha\Afisha\api-gateway\src\main\java\ru\it\lab\configuration" />
       <recent name="D:\Java Projects\NewAfisha\Afisha\shared\src\main\java\ru\it\lab\dao" />
-      <recent name="D:\Java Projects\NewAfisha\Afisha\admin-service\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Java Projects\NewAfisha\Afisha\admin-service\src\main\resources\adminDB" />
@@ -62,10 +63,10 @@
       <recent name="D:\Java Projects\NewAfisha\Afisha\proto\src\main" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="ru.it.lab.configuration" />
       <recent name="ru.it.lab.config" />
-      <recent name="ru.it.lab.service" />
       <recent name="ru.it.lab.entities" />
+      <recent name="ru.it.lab.configuration" />
+      <recent name="ru.it.lab.service" />
       <recent name="ru.it.lab.enums" />
     </key>
   </component>
@@ -74,7 +75,7 @@
       <command value="mvn clean install -U" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserMicroserviceMain">
+  <component name="RunManager" selected="Application.EventMicroserviceMain">
     <configuration name="APIGatewayMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.it.lab.APIGatewayMain" />
       <module name="api-gateway" />
@@ -101,6 +102,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EventMicroserviceMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.it.lab.EventMicroserviceMain" />
+      <module name="event-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ru.it.lab.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UserMicroserviceMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.it.lab.UserMicroserviceMain" />
       <module name="user-service" />
@@ -116,6 +130,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.EventMicroserviceMain" />
         <item itemvalue="Application.UserMicroserviceMain" />
         <item itemvalue="Application.AdminMain" />
         <item itemvalue="Application.APIGatewayMain" />

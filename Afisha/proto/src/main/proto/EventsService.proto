@@ -1,34 +1,69 @@
 syntax = "proto3";
 import "UsersService.proto";
+import "google/protobuf/wrappers.proto";
 package ru.it.lab;
 option java_multiple_files = true;
 
-message Vote {
+message VoteProto {
   int64 id =1;
   int64 user_id=2;
 }
 
-message Comment {
+message CommentProto {
   int64 id=1;
   int64 user_id=2;
   string info=3;
   int64 creation_time=4;
 }
 
-message Event {
+message EventProto {
   int64 id = 1;
-  int64 organiser_id=2;
+  int64 organizer_id=2;
   string event_type=3;
-  string info=4;
-  int32 price=5;
-  int64 start_time=6;
-  string location=7;
-  float rating=8;
+  string name=4;
+  string info=5;
+  google.protobuf.Int32Value price=6;
+  int64 start_time=7;
+  string location=8;
+  float rating=9;
+  bool isAccepted=10;
 }
 
+message EventParticipation {
+  int64 id=1;
+  int64 userId=2;
+  int64 eventId=3;
+  string participationType=4;
+}
+
+message EventParticipationsList {
+  repeated EventParticipation participations=1;
+}
+
+message EventsList {
+  repeated EventProto events=1;
+}
+
+message VotesList {
+  repeated VoteProto votes=1;
+}
+
+message CommentsList {
+  repeated CommentProto comment=1;
+}
 
 service EventService {
-  rpc getVotes(AuthenticateAndGet) returns (stream Vote);
-  rpc getFavorites(AuthenticateAndGet) returns (stream Event);
-  rpc getComments(AuthenticateAndGet) returns (stream Comment);
+  rpc getEventByIdWithOrganizerCheck(EventProto) returns (EventProto);
+  rpc getNotApprovedEventById(Id) returns (EventProto);
+  rpc getEventsByType(EventProto) returns (EventsList);
+  rpc getAllEvents(Empty) returns (EventsList);
+
+  rpc createEvent(EventProto) returns (Info);
+  rpc acceptEvent(Id) returns (Info);
+  rpc organizerUpdateEvent(EventProto) returns (Info);
+  rpc deleteEventById(Id) returns (Info);
+
+  rpc getVotes(Id) returns (VotesList);
+  rpc getFavorites(Id) returns (EventParticipationsList);
+  rpc getComments(Id) returns (CommentsList);
 }

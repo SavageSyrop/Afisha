@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "UsersService.proto";
+import "EventsService.proto";
 package ru.it.lab;
 option java_multiple_files = true;
 
@@ -15,7 +16,16 @@ message RoleRequestList {
   repeated RoleRequest requests=1;
 }
 
+message EventApprovalRequestProto {
+  int64 id=1;
+  int64 eventId=2;
+  int64 organizerId=3;
+  int64 creationTime=4;
+}
 
+message EventApprovalRequestList {
+  repeated EventApprovalRequestProto requests=1;
+}
 
 service AdminService {
   rpc getAllRoleRequests(Empty) returns (RoleRequestList);
@@ -27,5 +37,10 @@ service AdminService {
 
   rpc getAllOpenSupportRequests(Empty) returns (SupportRequestsStream);
   rpc closeSupportRequest(SupportRequest) returns (Info);
+
+  rpc getAllWaitingForApprovalEvents(Empty) returns (EventApprovalRequestList);
+  rpc acceptEventRequest(Id) returns (Info);
+  rpc declineEventRequest(Id) returns (Info);
+  rpc deleteEvent(Id) returns (Info);
 
 }

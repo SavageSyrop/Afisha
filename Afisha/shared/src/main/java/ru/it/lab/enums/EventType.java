@@ -4,5 +4,6 @@ public enum EventType {
     MOVIE,
     THEATER,
     CONCERT,
-    EXPOSITION
+    EXPOSITION,
+    OTHER
 }

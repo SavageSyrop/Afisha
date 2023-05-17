@@ -52,6 +52,10 @@ message AuthenticateAndGet {
   string username = 2;
 }
 
+message Id {
+  int64 id=1;
+}
+
 message SupportRequest {
   int64 id = 1;
   int64 user_id=2;

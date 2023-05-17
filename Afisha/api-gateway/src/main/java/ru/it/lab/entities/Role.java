@@ -1,6 +1,7 @@
 package ru.it.lab.entities;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,16 +16,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
-@Entity
-@Table(name="roles")
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role extends AbstractEntity {
-    @Enumerated(EnumType.STRING)
-    @Column
+
     private RoleType name;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     private List<Permission> permissions;
 }
