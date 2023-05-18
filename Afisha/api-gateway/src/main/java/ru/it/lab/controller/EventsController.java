@@ -1,11 +1,14 @@
 package ru.it.lab.controller;
 
 import com.google.protobuf.Int32Value;
+import com.google.protobuf.Int64Value;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.StringValue;
 import com.google.protobuf.util.JsonFormat;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,12 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.it.lab.Empty;
+import ru.it.lab.EventParticipation;
 import ru.it.lab.EventProto;
 import ru.it.lab.EventServiceGrpc;
 import ru.it.lab.Id;
+import ru.it.lab.SearchProto;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
+import ru.it.lab.VoteProto;
 import ru.it.lab.dto.EventDTO;
+import ru.it.lab.dto.SearchDTO;
 import ru.it.lab.enums.EventType;
 
 import java.time.ZoneId;
@@ -34,7 +41,6 @@ public class EventsController {
     @GrpcClient("grpc-users-service")
     private UserServiceGrpc.UserServiceBlockingStub userService;
 
-    ///////////////////////////////////
 
     @GetMapping("/{eventId}")
     public String getEventById(@PathVariable Long eventId) throws InvalidProtocolBufferException {
@@ -53,16 +59,7 @@ public class EventsController {
         return JsonFormat.printer().print(eventService.getAllApprovedEvents(Empty.newBuilder().build()));
     }
 
-    @GetMapping("/type")
-    public String getApprovedEventsByType(@RequestParam String type) throws InvalidProtocolBufferException {
-        EventType eventType = null;
-        try {
-            eventType = EventType.valueOf(type);
-        } catch (RuntimeException e) {
-            eventType = EventType.OTHER;
-        }
-        return JsonFormat.printer().print(eventService.getApprovedEventsByType(EventProto.newBuilder().setEventType(eventType.name()).build()));
-    }
+
 
     @PostMapping("/my_created_events")
     @PreAuthorize("hasAuthority('CREATING_ACTIONS')")
@@ -107,6 +104,66 @@ public class EventsController {
                         .setStartTime(eventDTO.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                         .setLocation(eventDTO.getLocation())
                         .build()));
+    }
+////////////////////////////////////////
+    @PostMapping("/{eventId}/favorites")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String addToFavorites(@PathVariable Long eventId) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.addFavorites(EventParticipation.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
+    }
+
+    @DeleteMapping("/{eventId}/favorites")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String deleteFavorites(@PathVariable Long eventId) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.deleteFromFavorites(EventParticipation.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
+    }
+
+
+    @GetMapping("/search")
+    public String search(@RequestBody SearchDTO searchDTO) throws InvalidProtocolBufferException {
+        SearchProto.Builder searchProto = SearchProto.newBuilder();
+        if (searchDTO.getType()!=null) {
+            EventType eventType = null;
+            try {
+                eventType = EventType.valueOf(searchDTO.getType());
+            } catch (RuntimeException runtimeException) {
+                eventType = EventType.OTHER;
+            }
+            searchProto.setType(StringValue.newBuilder().setValue(eventType.name()));
+        }
+
+        if (searchDTO.getTo()!=null) {
+            searchProto.setTo(Int64Value.newBuilder().setValue(searchDTO.getTo().getTime()).build());
+        }
+
+        if (searchDTO.getFrom()!=null) {
+            searchProto.setFrom(Int64Value.newBuilder().setValue(searchDTO.getFrom().getTime()).build());
+        }
+
+        if (searchDTO.getSelectedDate()!=null) {
+            searchProto.clearFrom();
+            searchProto.clearTo();
+            searchProto.setSelectedDate(Int64Value.newBuilder().setValue(searchDTO.getSelectedDate().getTime()).build());
+        }
+
+        return JsonFormat.printer().print(eventService.getApprovedEventsWithPeriodAndType(searchProto.build()));
+    }
+
+
+    @PostMapping("/{eventId}/vote")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String voteEvent(@PathVariable Long eventId, @RequestParam Integer vote) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.voteEvent(VoteProto.newBuilder().setEventId(eventId).setValue(vote).setUserId(user.getId()).build()));
+    }
+
+    @DeleteMapping("/{eventId}/vote")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String deleteVoteEvent(@PathVariable Long eventId) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.deleteVoteFromEvent(VoteProto.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
 
 

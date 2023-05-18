@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface EventParticipationDao extends AbstractDao<EventParticipation>{
     List<EventParticipation> getFavoritesByUserId(long id);
+
+    EventParticipation getParticipationByUserAndEventId(long eventId, long userId);
 }

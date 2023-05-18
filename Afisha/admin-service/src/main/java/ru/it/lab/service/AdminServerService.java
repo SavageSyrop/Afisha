@@ -132,7 +132,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
     @Override
     public void acceptEventRequest(Id request, StreamObserver<Info> responseObserver) {
         EventApprovalRequest eventRequest = eventRequestDao.getById(request.getId());
-        responseObserver.onNext(eventService.acceptEvent(Id.newBuilder().setId(eventRequest.getEventId()).build()));
+        responseObserver.onNext(eventService.acceptEventById(Id.newBuilder().setId(eventRequest.getEventId()).build()));
         eventRequestDao.deleteById(eventRequest.getId());
         responseObserver.onCompleted();
     }

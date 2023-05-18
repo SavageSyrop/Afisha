@@ -78,7 +78,7 @@
       <command value="mvn clean install -U" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserMicroserviceMain">
+  <component name="RunManager" selected="Application.AdminMain">
     <configuration name="APIGatewayMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.it.lab.APIGatewayMain" />
       <module name="api-gateway" />
@@ -133,10 +133,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.UserMicroserviceMain" />
-        <item itemvalue="Application.APIGatewayMain" />
         <item itemvalue="Application.AdminMain" />
+        <item itemvalue="Application.APIGatewayMain" />
         <item itemvalue="Application.EventMicroserviceMain" />
+        <item itemvalue="Application.UserMicroserviceMain" />
       </list>
     </recent_temporary>
   </component>
@@ -247,18 +247,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/EventsController.java</url>
-          <line>69</line>
+          <line>66</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/event-service/src/main/java/ru/it/lab/service/EventServerService.java</url>
-          <line>149</line>
+          <line>136</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/event-service/src/main/java/ru/it/lab/service/EventServerService.java</url>
-          <line>210</line>
+          <line>197</line>
           <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/event-service/src/main/java/ru/it/lab/dao/impl/EventDaoImpl.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/EventsController.java</url>
+          <line>125</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

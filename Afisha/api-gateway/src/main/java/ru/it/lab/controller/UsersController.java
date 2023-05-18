@@ -224,13 +224,13 @@ public class UsersController {
                 .build()));
     }
 
-
+/////////////////////
     @GetMapping("user/{username}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getFavorites(@PathVariable String username) throws InvalidProtocolBufferException {
         UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
         if (userProto.getIsOpenProfile()) {
-            return JsonFormat.printer().print(eventService.getFavorites(Id.newBuilder().setId(userProto.getId()).build()));
+            return JsonFormat.printer().print(eventService.getFavoritesByUserId(Id.newBuilder().setId(userProto.getId()).build()));
         } else {
             throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("This user has closed profile"));
         }
@@ -240,17 +240,26 @@ public class UsersController {
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getMyFavorites() throws InvalidProtocolBufferException {
         UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
-        return JsonFormat.printer().print(eventService.getFavorites(Id.newBuilder().setId(userProto.getId()).build()));
+        return JsonFormat.printer().print(eventService.getFavoritesByUserId(Id.newBuilder().setId(userProto.getId()).build()));
     }
 
 
+    @GetMapping("user/{username}/votes")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getVotes(@PathVariable String username) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
+        if (!user.getIsOpenProfile()) {
+            throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("User has private profile!"));
+        }
+        return JsonFormat.printer().print(eventService.getVotesByUserId(Id.newBuilder().setId(user.getId()).build()));
+    }
 
-//
-//    @GetMapping("user/{userId}/votes")
-//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-//    public String getVotes(@PathVariable Long userId) {
-//
-//    }
+    @GetMapping("user/my_votes")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String myVotes() throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.getVotesByUserId(Id.newBuilder().setId(user.getId()).build()));
+    }
 //
 //    @GetMapping("user/{userId}/comments")
 //    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")

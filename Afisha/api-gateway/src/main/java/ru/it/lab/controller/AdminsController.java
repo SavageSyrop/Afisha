@@ -73,7 +73,7 @@ public class AdminsController {
                 .setUsername(getCurrentUserName())
                 .build()));
     }
-////////////////////////////////////////////////////////////////
+
     @GetMapping("/event_requests/all")
     @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
     public String getAllWaitingForApprovalEvents() throws InvalidProtocolBufferException {
