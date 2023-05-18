@@ -42,5 +42,5 @@ service AdminService {
   rpc acceptEventRequest(Id) returns (Info);
   rpc declineEventRequest(Id) returns (Info);
   rpc deleteEvent(Id) returns (Info);
-
+  rpc deleteComment(Id) returns (Info);
 }

@@ -224,7 +224,7 @@ public class UsersController {
                 .build()));
     }
 
-/////////////////////
+
     @GetMapping("user/{username}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getFavorites(@PathVariable String username) throws InvalidProtocolBufferException {
@@ -260,12 +260,23 @@ public class UsersController {
         UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
         return JsonFormat.printer().print(eventService.getVotesByUserId(Id.newBuilder().setId(user.getId()).build()));
     }
-//
-//    @GetMapping("user/{userId}/comments")
-//    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-//    public String getComments(@PathVariable Long userId) {
-//
-//    }
+
+    @GetMapping("user/{username}/comments")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getComments(@PathVariable String username) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
+        if (!user.getIsOpenProfile()) {
+            throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("User has private profile!"));
+        }
+        return JsonFormat.printer().print(eventService.getCommentsByUserId(Id.newBuilder().setId(user.getId()).build()));
+    }
+
+    @GetMapping("user/my_comments")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String getMyComments() throws InvalidProtocolBufferException {
+        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.getCommentsByUserId(Id.newBuilder().setId(userProto.getId()).build()));
+    }
 
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();

@@ -99,6 +99,11 @@ public class AdminsController {
         return JsonFormat.printer().print(adminService.deleteEvent(Id.newBuilder().setId(eventId).build()));
     }
 
+    @DeleteMapping("/events/comments/{commentId}")
+    @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
+    public String deleteComment(@PathVariable Long commentId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(adminService.deleteComment(Id.newBuilder().setId(commentId).build()));
+    }
 
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.it.lab.CommentProto;
 import ru.it.lab.Empty;
 import ru.it.lab.EventParticipation;
 import ru.it.lab.EventProto;
@@ -105,7 +106,7 @@ public class EventsController {
                         .setLocation(eventDTO.getLocation())
                         .build()));
     }
-////////////////////////////////////////
+
     @PostMapping("/{eventId}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String addToFavorites(@PathVariable Long eventId) throws InvalidProtocolBufferException {
@@ -165,6 +166,34 @@ public class EventsController {
         UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
         return JsonFormat.printer().print(eventService.deleteVoteFromEvent(VoteProto.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
+
+
+    //////////////////////////////////////////
+
+
+    @GetMapping("/{eventId}/comments")
+    public String getCommentsByEvent(@PathVariable Long eventId) throws InvalidProtocolBufferException {
+        return JsonFormat.printer().print(eventService.getCommentsByEventId(Id.newBuilder().setId(eventId).build()));
+    }
+
+    @PostMapping("/{eventId}/comments")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String createComment(@PathVariable Long eventId, @RequestParam String comment) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.createComment(CommentProto.newBuilder()
+                        .setUserId(user.getId())
+                        .setEventId(eventId)
+                        .setInfo(comment)
+                .build()));
+    }
+
+    @PostMapping("/{eventId}/comments/{commentId}")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String editComment(@PathVariable Long commentId,@RequestParam String newComment) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        return JsonFormat.printer().print(eventService.editComment(CommentProto.newBuilder().setId(commentId).setInfo(newComment).setUserId(user.getId()).build()));
+    }
+
 
 
     private String getCurrentUserName() {

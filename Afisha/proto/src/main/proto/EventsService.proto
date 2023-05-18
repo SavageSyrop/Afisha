@@ -14,8 +14,9 @@ message VoteProto {
 message CommentProto {
   int64 id=1;
   int64 user_id=2;
-  string info=3;
-  int64 creation_time=4;
+  int64 event_id=3;
+  string info=4;
+  int64 creation_time=5;
 }
 
 message EventProto {
@@ -87,6 +88,10 @@ service EventService {
   rpc deleteVoteFromEvent(VoteProto) returns (Info);
 
   rpc getCommentsByUserId(Id) returns (CommentsList);
+  rpc createComment(CommentProto) returns (Info);
+  rpc editComment(CommentProto) returns (Info);
+  rpc deleteComment(Id) returns (Info);
+  rpc getCommentsByEventId(Id) returns (CommentsList);
 
 
 }

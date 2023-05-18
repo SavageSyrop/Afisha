@@ -134,6 +134,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
         EventApprovalRequest eventRequest = eventRequestDao.getById(request.getId());
         responseObserver.onNext(eventService.acceptEventById(Id.newBuilder().setId(eventRequest.getEventId()).build()));
         eventRequestDao.deleteById(eventRequest.getId());
+        log.info("Admin action: Event request accepted");
         responseObserver.onCompleted();
     }
 
@@ -142,6 +143,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
         EventApprovalRequest eventApprovalRequest = eventRequestDao.getById(request.getId());
         responseObserver.onNext(eventService.deleteEventById(Id.newBuilder().setId(eventApprovalRequest.getEventId()).build()));
         eventRequestDao.deleteById(eventApprovalRequest.getId());
+        log.info("Admin action: Event request closed");
         responseObserver.onCompleted();
     }
 
@@ -152,9 +154,14 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
             eventRequestDao.deleteById(eventApprovalRequest.getId());
         }
         responseObserver.onNext(eventService.deleteEventById(Id.newBuilder().setId(request.getId()).build()));
+        log.info("Admin action: Event deleted");
         responseObserver.onCompleted();
     }
 
-
-
+    @Override
+    public void deleteComment(Id request, StreamObserver<Info> responseObserver) {
+        responseObserver.onNext(eventService.deleteComment(request));
+        log.info("Admin action: Comment deleted");
+        responseObserver.onCompleted();
+    }
 }
