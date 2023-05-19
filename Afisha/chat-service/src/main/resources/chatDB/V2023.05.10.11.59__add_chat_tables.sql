@@ -15,7 +15,7 @@ chat_id bigint REFERENCES chats(id) not null
 create TABLE chat_participations (
 id bigserial PRIMARY KEY NOT NULL,
 user_id bigint not null,
-chat_id bigint not null
+chat_id bigint references chats(id) not null
 );
 
 
