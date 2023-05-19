@@ -13,9 +13,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class Message extends AbstractEntity {
-    @OneToOne
-    @JoinColumn(columnDefinition = "sender_id")
-    private User sender;
+    @Column
+    private Long senderId;
 
     @Column
     private String text;
@@ -26,16 +25,4 @@ public class Message extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
-
-
-    public Message(User sender, String text, Chat chat) {
-        this.sender = sender;
-        this.text = text;
-        this.sendingTime = LocalDateTime.now();
-        this.chat = chat;
-    }
-
-    public String getSenderName() {
-        return this.sender.getUsername();
-    }
 }

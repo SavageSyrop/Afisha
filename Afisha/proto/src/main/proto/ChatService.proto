@@ -1,12 +1,44 @@
 syntax = "proto3";
+import "UsersService.proto";
+import "google/protobuf/wrappers.proto";
 package ru.it.lab;
 option java_multiple_files = true;
 
-message Chat {
+message ChatProto {
+  int64 id=1;
+  string name=2;
+  int64 participantId=3;
+}
 
+message MessageProto {
+  int64 id=1;
+  int64 senderId=2;
+  string text=3;
+  int64 sendingTime=4;
+  google.protobuf.Int64Value chatId=5;
+  google.protobuf.Int64Value recipientId=6;
+}
+
+message ChatParticipationProto {
+  int64 id=1;
+  int64 userId=2;
+  int64 chatId=3;
+  string chatName=4;
+}
+
+message ChatParticipationsList {
+  repeated ChatParticipationProto chats=1;
+}
+
+message MessagesList {
+  repeated MessageProto messages=1;
 }
 
 
 service ChatService {
-
+  rpc writeUser(MessageProto) returns (Info);
+  rpc getChat(ChatParticipationProto) returns (ChatProto);
+  rpc getChats(ChatParticipationProto) returns (ChatParticipationsList);
+  rpc getMessagesFromChat(ChatParticipationProto) returns (MessagesList);
+  rpc renameChat(ChatParticipationProto) returns (Info);
 }

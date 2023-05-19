@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.it.lab.AuthenticateAndGet;
 import ru.it.lab.ChangeUserRequest;
 import ru.it.lab.Empty;
+import ru.it.lab.Id;
 import ru.it.lab.Info;
 import ru.it.lab.ResetPasswordRequest;
 
@@ -87,6 +88,8 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(user.build());
         responseObserver.onCompleted();
     }
+
+
 
     @Override
     public void registerUser(UserProto request, StreamObserver<Info> responseObserver) {
@@ -210,6 +213,19 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void getUserById(Id request, StreamObserver<UserProto> responseObserver) {
+        User user = userDao.getById(request.getId());
+        responseObserver.onNext(UserProto.newBuilder()
+                .setId(user.getId())
+                .setUsername(user.getUsername())
+                .setEmail(user.getEmail())
+                .setGenderType(user.getGenderType().name())
+                .setDateOfBirth(user.getDateOfBirth().getTime())
+                .setIsOpenProfile(user.getIsOpenProfile())
+                .setRole(ru.it.lab.Role.newBuilder().setName(user.getRole().getName().name()).build()).build());
+        responseObserver.onCompleted();
+    }
 
     @Override
     public void activateAccount(Info request, StreamObserver<Info> responseObserver) {
@@ -379,6 +395,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         supportRequest.setAnswer(request.getAnswer());
         supportRequest.setCloseTime(LocalDateTime.now());
         supportRequestDao.update(supportRequest);
+        mailService.sendAnswerEmail(supportRequest.getUser(),supportRequest.getQuestion(),supportRequest.getAnswer());
         responseObserver.onNext(Info.newBuilder().setInfo("Support request closed").build());
         responseObserver.onCompleted();
     }

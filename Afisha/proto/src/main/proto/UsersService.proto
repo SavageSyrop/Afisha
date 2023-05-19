@@ -74,6 +74,7 @@ message SupportRequestsStream {
 service UserService {
   rpc getLoginData(UserProto) returns (UserProto);
   rpc getUserByUsername(UserProto) returns (UserProto);
+  rpc getUserById(Id) returns (UserProto);
   rpc registerUser(UserProto) returns (Info);
   rpc changeUserData(ChangeUserRequest) returns (Empty);
   rpc changePassword(UserProto) returns(Empty);

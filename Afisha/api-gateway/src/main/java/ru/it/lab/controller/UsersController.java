@@ -1,7 +1,9 @@
 package ru.it.lab.controller;
 
 
+import com.google.protobuf.Int64Value;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.StringValue;
 import com.google.protobuf.util.JsonFormat;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
@@ -20,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.it.lab.AuthenticateAndGet;
 import ru.it.lab.ChangeUserRequest;
+import ru.it.lab.ChatServiceGrpc;
 import ru.it.lab.EventServiceGrpc;
 import ru.it.lab.Id;
 import ru.it.lab.Info;
+import ru.it.lab.MessageProto;
 import ru.it.lab.ResetPasswordRequest;
 import ru.it.lab.SupportRequest;
 import ru.it.lab.UserProto;
@@ -55,9 +59,11 @@ public class UsersController {
     @GrpcClient("grpc-events-service")
     private EventServiceGrpc.EventServiceBlockingStub eventService;
 
+    @GrpcClient("grpc-chats-service")
+    private ChatServiceGrpc.ChatServiceBlockingStub chatService;
+
     @Autowired
     private AuthorizationService authorizationService;
-
 
     @PostMapping("login")
     public String login(@RequestBody LoginDTO loginDto, HttpServletRequest req, HttpServletResponse httpResponse) throws IOException {
@@ -163,15 +169,16 @@ public class UsersController {
     }
 
 
-    @GetMapping("user/{username}/profile")
+    @GetMapping("user/{userId}/profile")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getUserInfo(@PathVariable String username) throws AccessException, InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
+    public String getUserInfo(@PathVariable Long userId) throws AccessException, InvalidProtocolBufferException {
+        UserProto user = userService.getUserById(Id.newBuilder().setId(userId).build());
         if (!user.getIsOpenProfile() && !user.getUsername().equals(getCurrentUserName())) {
             return JsonFormat.printer().print(Info.newBuilder().setInfo("This user has private profile"));
         }
-        return JsonFormat.printer().print(userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build()));
+        return JsonFormat.printer().print(user);
     }
+
 
 
     @GetMapping("forgot_password")
@@ -225,10 +232,10 @@ public class UsersController {
     }
 
 
-    @GetMapping("user/{username}/favorites")
+    @GetMapping("user/{userId}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getFavorites(@PathVariable String username) throws InvalidProtocolBufferException {
-        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
+    public String getFavorites(@PathVariable Long userId) throws InvalidProtocolBufferException {
+        UserProto userProto = userService.getUserById(Id.newBuilder().setId(userId).build());
         if (userProto.getIsOpenProfile()) {
             return JsonFormat.printer().print(eventService.getFavoritesByUserId(Id.newBuilder().setId(userProto.getId()).build()));
         } else {
@@ -244,10 +251,10 @@ public class UsersController {
     }
 
 
-    @GetMapping("user/{username}/votes")
+    @GetMapping("user/{userId}/votes")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getVotes(@PathVariable String username) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
+    public String getVotes(@PathVariable Long userId) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserById(Id.newBuilder().setId(userId).build());
         if (!user.getIsOpenProfile()) {
             throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("User has private profile!"));
         }
@@ -261,10 +268,10 @@ public class UsersController {
         return JsonFormat.printer().print(eventService.getVotesByUserId(Id.newBuilder().setId(user.getId()).build()));
     }
 
-    @GetMapping("user/{username}/comments")
+    @GetMapping("user/{userId}/comments")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String getComments(@PathVariable String username) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(username).build());
+    public String getComments(@PathVariable Long userId) throws InvalidProtocolBufferException {
+        UserProto user = userService.getUserById(Id.newBuilder().setId(userId).build());
         if (!user.getIsOpenProfile()) {
             throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("User has private profile!"));
         }
@@ -277,6 +284,30 @@ public class UsersController {
         UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
         return JsonFormat.printer().print(eventService.getCommentsByUserId(Id.newBuilder().setId(userProto.getId()).build()));
     }
+
+/////////////////////////////////
+
+    @PostMapping("user/{userId}/write_message")
+    @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
+    public String writeUser(@PathVariable Long userId, @RequestParam String message) throws InvalidProtocolBufferException {
+        UserProto recipientUser = userService.getUserById(Id.newBuilder().setId(userId).build());
+        if (recipientUser.getUsername().equals(getCurrentUserName())) {
+            throw new IllegalArgumentException("You can not write yourself!");
+        }
+        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        if (!recipientUser.getIsOpenProfile()) {
+            throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("User has private profile!"));
+        }
+              return JsonFormat.printer().print(chatService.writeUser(MessageProto.newBuilder()
+                        .setRecipientId(Int64Value.newBuilder().setValue(recipientUser.getId()).build())
+                        .setSenderId(userProto.getId())
+                        .setText(message)
+                .build()));
+
+    }
+
+
+
 
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
