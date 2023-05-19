@@ -1,0 +1,97 @@
+syntax = "proto3";
+import "UsersService.proto";
+import "google/protobuf/wrappers.proto";
+package ru.it.lab;
+option java_multiple_files = true;
+
+message VoteProto {
+  int64 id =1;
+  int64 user_id=2;
+  int64 event_id=3;
+  int32 value=4;
+}
+
+message CommentProto {
+  int64 id=1;
+  int64 user_id=2;
+  int64 event_id=3;
+  string info=4;
+  int64 creation_time=5;
+}
+
+message EventProto {
+  int64 id = 1;
+  int64 organizer_id=2;
+  string event_type=3;
+  string name=4;
+  string info=5;
+  google.protobuf.Int32Value price=6;
+  int64 start_time=7;
+  string location=8;
+  float rating=9;
+  bool isAccepted=10;
+}
+
+message EventParticipation {
+  int64 id=1;
+  int64 userId=2;
+  int64 eventId=3;
+  string participationType=4;
+}
+
+message EventParticipationsList {
+  repeated EventParticipation participations=1;
+}
+
+message EventsList {
+  repeated EventProto events=1;
+}
+
+message VotesList {
+  repeated VoteProto votes=1;
+}
+
+message CommentsList {
+  repeated CommentProto comment=1;
+}
+
+message SearchProto {
+  google.protobuf.Int64Value from=1;
+  google.protobuf.Int64Value to=2;
+  google.protobuf.Int64Value selectedDate=3;
+  google.protobuf.StringValue type=4;
+
+}
+
+service EventService {
+  rpc getEventById(Id) returns (EventProto);
+  rpc getMyCreatedEvents(Id) returns (EventsList);
+  rpc getNotApprovedEventById(Id) returns (EventProto);
+
+
+  rpc createEvent(EventProto) returns (Info);
+  rpc acceptEventById(Id) returns (Info);
+  rpc organizerUpdateEvent(EventProto) returns (Info);
+  rpc deleteEventById(Id) returns (Info);
+
+  rpc addFavorites(EventParticipation) returns (Info);
+  rpc deleteFromFavorites(EventParticipation) returns (Info);
+
+  rpc getVotesByUserId(Id) returns (VotesList);
+  rpc getFavoritesByUserId(Id) returns (EventParticipationsList);
+
+  rpc getAllApprovedEvents(Empty) returns (EventsList);
+  rpc getApprovedEventsWithPeriodAndType(SearchProto) returns (EventsList);
+
+
+  rpc voteEvent(VoteProto) returns (Info);
+  rpc deleteVoteFromEvent(VoteProto) returns (Info);
+
+  rpc getCommentsByUserId(Id) returns (CommentsList);
+  rpc createComment(CommentProto) returns (Info);
+  rpc editComment(CommentProto) returns (Info);
+  rpc deleteComment(Id) returns (Info);
+  rpc getCommentsByEventId(Id) returns (CommentsList);
+
+
+}

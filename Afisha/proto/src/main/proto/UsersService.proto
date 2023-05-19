@@ -47,9 +47,34 @@ message Empty {
 
 }
 
+message AuthenticateAndGet {
+  int64 searched_id = 1;
+  string username = 2;
+}
+
+message Id {
+  int64 id=1;
+}
+
+message SupportRequest {
+  int64 id = 1;
+  int64 user_id=2;
+  string username=3;
+  int64 admin_id=4;
+  string question=5;
+  string answer=6;
+  int64 creation_time=7;
+  int64 answered_time=8;
+}
+
+message SupportRequestsStream {
+  repeated SupportRequest requests=1;
+}
+
 service UserService {
-  rpc login(UserProto) returns (UserProto);
+  rpc getLoginData(UserProto) returns (UserProto);
   rpc getUserByUsername(UserProto) returns (UserProto);
+  rpc getUserById(Id) returns (UserProto);
   rpc registerUser(UserProto) returns (Info);
   rpc changeUserData(ChangeUserRequest) returns (Empty);
   rpc changePassword(UserProto) returns(Empty);
@@ -58,4 +83,16 @@ service UserService {
   rpc activateAccount(Info) returns(Info);
   rpc resetPassword(ResetPasswordRequest) returns(Info);
   rpc forgotPassword(Info) returns(Info);
+
+  rpc requestRole(UserProto) returns(Info);
+  rpc setRole(UserProto) returns(Info);
+
+  rpc banUser(UserProto) returns(Info);
+  rpc unbanUser(UserProto) returns (Info);
+
+  rpc createSupportRequest(SupportRequest) returns (Info);
+  rpc getSupportRequestsByUsername(AuthenticateAndGet) returns (SupportRequestsStream);
+  rpc getSupportRequestById(AuthenticateAndGet) returns (SupportRequest);
+  rpc closeSupportRequest(SupportRequest) returns (Info);
+  rpc getAllOpenSupportRequests(Empty) returns (SupportRequestsStream);
 }

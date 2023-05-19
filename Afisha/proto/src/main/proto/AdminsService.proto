@@ -1,0 +1,46 @@
+syntax = "proto3";
+import "UsersService.proto";
+import "EventsService.proto";
+package ru.it.lab;
+option java_multiple_files = true;
+
+
+message RoleRequest {
+  int64 id=1;
+  string username=2;
+  int64 creation_time=3;
+  int64 role_id=4;
+}
+
+message RoleRequestList {
+  repeated RoleRequest requests=1;
+}
+
+message EventApprovalRequestProto {
+  int64 id=1;
+  int64 eventId=2;
+  int64 organizerId=3;
+  int64 creationTime=4;
+}
+
+message EventApprovalRequestList {
+  repeated EventApprovalRequestProto requests=1;
+}
+
+service AdminService {
+  rpc getAllRoleRequests(Empty) returns (RoleRequestList);
+  rpc acceptRoleRequest(RoleRequest) returns (Info);
+  rpc declineRoleRequest(RoleRequest) returns (Info);
+
+  rpc banUser(UserProto) returns (Info);
+  rpc unbanUser(UserProto) returns (Info);
+
+  rpc getAllOpenSupportRequests(Empty) returns (SupportRequestsStream);
+  rpc closeSupportRequest(SupportRequest) returns (Info);
+
+  rpc getAllWaitingForApprovalEvents(Empty) returns (EventApprovalRequestList);
+  rpc acceptEventRequest(Id) returns (Info);
+  rpc declineEventRequest(Id) returns (Info);
+  rpc deleteEvent(Id) returns (Info);
+  rpc deleteComment(Id) returns (Info);
+}

@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.it.lab.exceptions.AuthorizationErrorException;
 import ru.it.lab.exceptions.ExceptionDTO;
@@ -37,18 +35,18 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(StatusRuntimeException.class)
     public ResponseEntity<Object> handleGRPCException(StatusRuntimeException e, HttpServletRequest request) {
-        return constructResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR,request);
+        return constructResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleIllegal(IllegalArgumentException e, HttpServletRequest request) {
-        return constructResponseEntity(e,HttpStatus.BAD_REQUEST,request);
+        return constructResponseEntity(e, HttpStatus.BAD_REQUEST, request);
     }
 
 
     private ResponseEntity<Object> constructResponseEntity(Exception exception, HttpStatus httpStatus, HttpServletRequest request) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         log.error(exception.getMessage(), exception);
-        return new ResponseEntity<>(gson.toJson(new ExceptionDTO(httpStatus.value(), httpStatus.name(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()),exception.getMessage(), request.getRequestURI())), httpStatus);
+        return new ResponseEntity<>(gson.toJson(new ExceptionDTO(httpStatus.value(), httpStatus.name(), Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()), exception.getMessage(), request.getRequestURI())), httpStatus);
     }
 }
