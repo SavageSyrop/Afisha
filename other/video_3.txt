@@ -1,0 +1,31 @@
+ЧАСТЬ 3 Комментирование, оценивание, добавление в фавориты и чаты:
+
+/login aleoonka POST
+
+/user/my_comments
+/user/my_votes
+/user/my_favorites
+
+/events/1/vote vote=6 POST
+/event/1 GET
+/events/1/comments comment = "Nice film!" POST
+/events/1/comments GET
+/events/1/favorites POST
+
+/login desertfox
+/user/2/favoritees
+/login aleoonka
+/user/my_profile/privacy POST
+
+/login desertfox
+/user/2/favorites
+/user/2/votes
+/user/2/comments
+
+/chats/all GET
+/user/2/write_message message=Hi, I am desertfox! POST
+/login aleoonka
+/chats GET
+/chats/{chatId}/messages GET
+/chats/{chatId}/messages message=Hello, nice to meet you! POST
+/chats/{chatId}/messages GET

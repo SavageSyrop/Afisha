@@ -80,7 +80,7 @@
       <command value="mvn clean install -U" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.UserMicroserviceMain">
+  <component name="RunManager" selected="Application.EventMicroserviceMain">
     <configuration name="APIGatewayMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.it.lab.APIGatewayMain" />
       <module name="api-gateway" />
@@ -148,11 +148,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.UserMicroserviceMain" />
+        <item itemvalue="Application.EventMicroserviceMain" />
         <item itemvalue="Application.ChatMicroserviceMain" />
         <item itemvalue="Application.APIGatewayMain" />
         <item itemvalue="Application.AdminMain" />
-        <item itemvalue="Application.EventMicroserviceMain" />
+        <item itemvalue="Application.UserMicroserviceMain" />
       </list>
     </recent_temporary>
   </component>
@@ -237,43 +237,18 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>68</line>
-          <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/service/AuthorizationServiceImpl.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="41" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="42" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/UsersController.java</url>
-          <line>69</line>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/EventsController.java</url>
           <line>66</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/event-service/src/main/java/ru/it/lab/service/EventServerService.java</url>
-          <line>138</line>
+          <line>142</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/event-service/src/main/java/ru/it/lab/service/EventServerService.java</url>
-          <line>199</line>
+          <line>203</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -285,6 +260,26 @@
           <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/EventsController.java</url>
           <line>125</line>
           <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
+          <line>268</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/admin-service/src/main/java/ru/it/lab/service/AdminServerService.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/user-service/src/main/java/ru/it/lab/service/UserServerService.java</url>
+          <line>275</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/api-gateway/src/main/java/ru/it/lab/controller/AdminsController.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

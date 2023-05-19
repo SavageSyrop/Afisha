@@ -1,0 +1,11 @@
+ЧАСТЬ 4 Дополнительные функции администратора:
+
+/admin/user/2/ban POST
+/login aleoonka
+/perform_logout
+/admin/user/2/unban POST
+/events/5/comments GET
+/admin/events/comments/{commentId} DELETE
+/admin/events/1 DELETE
+/login aleoonka
+/events/all

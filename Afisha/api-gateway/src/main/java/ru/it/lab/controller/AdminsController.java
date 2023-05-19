@@ -69,7 +69,7 @@ public class AdminsController {
         return JsonFormat.printer().print(adminService.getAllOpenSupportRequests(Empty.newBuilder().build()));
     }
 
-    @PostMapping("/support_request/{requestId}/close")
+    @PostMapping("/support_requests/{requestId}/close")
     @PreAuthorize("hasAuthority('ADMIN_ACTIONS')")
     public String closeSupportRequest(@RequestBody SupportRequestDTO supportRequestDTO, @PathVariable Long requestId) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(adminService.closeSupportRequest(SupportRequest.newBuilder()

@@ -208,19 +208,19 @@ public class UsersController {
     }
 
 
-    @GetMapping("user/my_support_request/all")
+    @GetMapping("user/my_support_requests/all")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getSupportRequests() throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.getSupportRequestsByUsername(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).build()));
     }
 
-    @GetMapping("user/my_support_request/{idRequest}")
+    @GetMapping("user/my_support_requests/{idRequest}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getSupportRequestsById(@PathVariable Long idRequest) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.getSupportRequestById(AuthenticateAndGet.newBuilder().setUsername(getCurrentUserName()).setSearchedId(idRequest).build()));
     }
 
-    @PostMapping("user/support_request")
+    @PostMapping("user/support_requests")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String createSupportRequest(@RequestBody SupportRequestDTO supportRequestDTO) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.createSupportRequest(SupportRequest.newBuilder()

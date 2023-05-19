@@ -70,6 +70,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                    .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
             responseObserver.onCompleted();
@@ -89,6 +90,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                    .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
         }
@@ -108,6 +110,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                 .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                 .setLocation(event.getLocation())
                 .setRating(event.getRating())
+                .setEventType(event.getType().name())
                 .setIsAccepted(event.getIsAccepted())
                 .build());
         responseObserver.onCompleted();
@@ -127,6 +130,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                    .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
         }
@@ -271,6 +275,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                            .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
         }
