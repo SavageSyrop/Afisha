@@ -19,7 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="event_participations")
+@Table(name = "event_participations")
 @Getter
 @Setter
 @ToString
@@ -35,7 +35,7 @@ public class EventParticipation extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
-    @Type( type = "pgsql_enum" )
+    @Type(type = "pgsql_enum")
     @Column(name = "participation")
     @Enumerated(EnumType.STRING)
     private EventParticipationType participationType;

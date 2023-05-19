@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.TypeDef;
-import ru.it.lab.enums.PostgreSQLEnumType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,13 +15,13 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name="event_comments")
+@Table(name = "event_comments")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventComment extends AbstractEntity{
+public class EventComment extends AbstractEntity {
     @Column
     private Long userId;
     @ManyToOne

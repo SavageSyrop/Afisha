@@ -3,12 +3,9 @@ package ru.it.lab.exceptions;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor

@@ -1,6 +1,5 @@
 package ru.it.lab.service;
 
-import com.google.protobuf.Int32Value;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
@@ -11,8 +10,6 @@ import ru.it.lab.ChatParticipationProto;
 import ru.it.lab.ChatParticipationsList;
 import ru.it.lab.ChatProto;
 import ru.it.lab.ChatServiceGrpc;
-import ru.it.lab.EventProto;
-import ru.it.lab.EventsList;
 import ru.it.lab.Id;
 import ru.it.lab.Info;
 import ru.it.lab.MessageProto;
@@ -46,7 +43,7 @@ public class ChatServerService extends ChatServiceGrpc.ChatServiceImplBase {
 
     @Override
     public void writeUser(MessageProto request, StreamObserver<Info> responseObserver) {
-          if (request.hasChatId()) {  // когда поступил chatId
+        if (request.hasChatId()) {  // когда поступил chatId
             Chat chat = chatDao.getById(request.getChatId().getValue());    // проверка существования чата
             ChatParticipation senderParticipation = chatParticipationDao.getUserParticipationInChatByChatId(request.getChatId().getValue(), request.getSenderId());
             if (senderParticipation == null) {        // когда попытка доступа не в свой чат
@@ -65,7 +62,7 @@ public class ChatServerService extends ChatServiceGrpc.ChatServiceImplBase {
         } else {        // когда поступил recipientId
             Chat chat = chatParticipationDao.getChatBetweenCurrentAndRecipientUsers(request.getSenderId(), request.getRecipientId().getValue());
             UserProto recipient = userService.getUserById(Id.newBuilder().setId(request.getRecipientId().getValue()).build());
-              UserProto sender = userService.getUserById(Id.newBuilder().setId(request.getSenderId()).build());
+            UserProto sender = userService.getUserById(Id.newBuilder().setId(request.getSenderId()).build());
             if (chat == null) {   // еще не общались
                 chat = new Chat();
                 chat.setName(sender.getUsername() + " x " + recipient.getUsername());
@@ -93,7 +90,7 @@ public class ChatServerService extends ChatServiceGrpc.ChatServiceImplBase {
     @Override
     public void getChat(ChatParticipationProto request, StreamObserver<ChatProto> responseObserver) {
         ChatParticipation chatParticipation = chatParticipationDao.getUserParticipationInChatByChatId(request.getChatId(), request.getUserId());
-        if (chatParticipation==null) {
+        if (chatParticipation == null) {
             responseObserver.onError(new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("You are not participant in this chat")));
             return;
         }
@@ -108,9 +105,9 @@ public class ChatServerService extends ChatServiceGrpc.ChatServiceImplBase {
         ChatParticipationsList.Builder chatList = ChatParticipationsList.newBuilder();
         for (ChatParticipation participation : list) {
             chatList.addChats(ChatParticipationProto.newBuilder()
-                            .setId(participation.getId())
-                            .setUserId(participation.getUserId())
-                            .setChatName(participation.getChat().getName())
+                    .setId(participation.getId())
+                    .setUserId(participation.getUserId())
+                    .setChatName(participation.getChat().getName())
                     .build());
         }
         responseObserver.onNext(chatList.build());
@@ -120,13 +117,13 @@ public class ChatServerService extends ChatServiceGrpc.ChatServiceImplBase {
     @Override
     public void getMessagesFromChat(ChatParticipationProto request, StreamObserver<MessagesList> responseObserver) {
         ChatParticipation chatParticipation = chatParticipationDao.getUserParticipationInChatByChatId(request.getChatId(), request.getUserId());
-        if (chatParticipation==null) {
+        if (chatParticipation == null) {
             responseObserver.onError(new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("You are not participant in this chat")));
             return;
         }
         List<Message> messages = messageDao.getMessagesByChatId(request.getChatId());
         MessagesList.Builder messagesList = MessagesList.newBuilder();
-        for (Message message: messages) {
+        for (Message message : messages) {
             messagesList.addMessages(MessageProto.newBuilder()
                             .setId(message.getId())
                             .setSenderId(message.getSenderId())
@@ -141,7 +138,7 @@ public class ChatServerService extends ChatServiceGrpc.ChatServiceImplBase {
     @Override
     public void renameChat(ChatParticipationProto request, StreamObserver<Info> responseObserver) {
         ChatParticipation chatParticipation = chatParticipationDao.getUserParticipationInChatByChatId(request.getChatId(), request.getUserId());
-        if (chatParticipation==null) {
+        if (chatParticipation == null) {
             responseObserver.onError(new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("You are not participant in this chat")));
             return;
         }

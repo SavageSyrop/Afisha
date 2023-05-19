@@ -2,9 +2,7 @@ package ru.it.lab.dao.impl;
 
 import org.springframework.stereotype.Component;
 import ru.it.lab.dao.EventVoteDao;
-import ru.it.lab.entities.EventParticipation;
 import ru.it.lab.entities.EventVote;
-import ru.it.lab.enums.EventParticipationType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -20,9 +18,9 @@ public class EventVoteDaoImpl extends AbstractDaoImpl<EventVote> implements Even
     public Double getAverageVoteByEventId(Long eventId) {
         EntityManager entityManager = getEntityManager();
         Query query = entityManager.createNativeQuery("SELECT AVG(CAST(vote_value as float)) from event_votes where event_id=:param1");
-        query.setParameter("param1",eventId);
+        query.setParameter("param1", eventId);
         Double res = (Double) query.getSingleResult();
-        if (res==null) {
+        if (res == null) {
             return 0d;
         } else {
             return res;
@@ -40,7 +38,7 @@ public class EventVoteDaoImpl extends AbstractDaoImpl<EventVote> implements Even
 
         CriteriaQuery<EventVote> crit = criteriaQuery.select(rootEntry)
                 .where(
-                        criteriaBuilder.equal(rootEntry.get("userId"),id)
+                        criteriaBuilder.equal(rootEntry.get("userId"), id)
                 );
         TypedQuery<EventVote> found = entityManager.createQuery(crit);
         return found.getResultList();

@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.it.lab.ChatParticipationProto;
-import ru.it.lab.ChatProto;
 import ru.it.lab.ChatServiceGrpc;
-import ru.it.lab.Id;
 import ru.it.lab.MessageProto;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
@@ -31,11 +29,10 @@ public class ChatController {
     @GrpcClient("grpc-users-service")
     private UserServiceGrpc.UserServiceBlockingStub userService;
 
-    ////////////////////////////////////
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getChats() throws InvalidProtocolBufferException {
-        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto userProto = getCurrentUser();
         return JsonFormat.printer().print(chatService.getChats(ChatParticipationProto.newBuilder()
                 .setUserId(userProto.getId())
                 .build()));
@@ -45,7 +42,7 @@ public class ChatController {
     @GetMapping("/{chatId}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getChat(@PathVariable Long chatId) throws InvalidProtocolBufferException {
-        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto userProto = getCurrentUser();
         return JsonFormat.printer().print(chatService.getChat(ChatParticipationProto.newBuilder()
                 .setChatId(chatId)
                 .setUserId(userProto.getId())
@@ -55,7 +52,7 @@ public class ChatController {
     @GetMapping("/{chatId}/messages")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getMessages(@PathVariable Long chatId) throws InvalidProtocolBufferException {
-        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto userProto = getCurrentUser();
         return JsonFormat.printer().print(chatService.getMessagesFromChat(ChatParticipationProto.newBuilder()
                 .setChatId(chatId)
                 .setUserId(userProto.getId())
@@ -66,7 +63,7 @@ public class ChatController {
     @PostMapping("/{chatId}/messages")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String sendMessage(@PathVariable Long chatId, @RequestParam String message) throws InvalidProtocolBufferException {
-        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto userProto = getCurrentUser();
         return JsonFormat.printer().print(chatService.writeUser(MessageProto.newBuilder()
                 .setChatId(Int64Value.newBuilder().setValue(chatId).build())
                 .setSenderId(userProto.getId())
@@ -78,7 +75,7 @@ public class ChatController {
     @PostMapping("/{chatId}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String renameChat(@PathVariable Long chatId, @RequestParam String chatName) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user = getCurrentUser();
         return JsonFormat.printer().print(chatService.renameChat(ChatParticipationProto.newBuilder()
                 .setChatName(chatName)
                 .setChatId(chatId)
@@ -92,4 +89,7 @@ public class ChatController {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
+    private UserProto getCurrentUser() {
+        return userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+    }
 }

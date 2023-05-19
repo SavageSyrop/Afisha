@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ChatParticipationDao extends AbstractDao<ChatParticipation> {
     Chat getChatBetweenCurrentAndRecipientUsers(Long id, Long recId);
+
     ChatParticipation getUserParticipationInChatByChatId(Long chatId, Long userId);
 
     List<ChatParticipation> getChatParticipationsByUserId(long userId);

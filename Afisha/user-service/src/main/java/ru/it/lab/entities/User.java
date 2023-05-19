@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Getter
 @Setter
 @ToString

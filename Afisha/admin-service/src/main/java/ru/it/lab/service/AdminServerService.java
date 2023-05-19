@@ -1,7 +1,6 @@
 package ru.it.lab.service;
 
 
-import com.sun.jdi.request.EventRequest;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
@@ -49,7 +48,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
     @Override
     public void getAllRoleRequests(Empty request, StreamObserver<RoleRequestList> responseObserver) {
         RoleRequestList.Builder reqs = RoleRequestList.newBuilder();
-        for (RoleRequest roleRequest: roleRequestDao.getAll()) {
+        for (RoleRequest roleRequest : roleRequestDao.getAll()) {
             reqs.addRequests(ru.it.lab.RoleRequest.newBuilder()
                     .setRoleId(roleRequest.getRoleId())
                     .setId(roleRequest.getId())
@@ -117,12 +116,12 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
     @Override
     public void getAllWaitingForApprovalEvents(Empty request, StreamObserver<EventApprovalRequestList> responseObserver) {
         EventApprovalRequestList.Builder list = EventApprovalRequestList.newBuilder();
-        for (EventApprovalRequest eventApprovalRequest: eventRequestDao.getAll()) {
+        for (EventApprovalRequest eventApprovalRequest : eventRequestDao.getAll()) {
             list.addRequests(EventApprovalRequestProto.newBuilder()
-                            .setId(eventApprovalRequest.getId())
-                            .setCreationTime(eventApprovalRequest.getCreationTime().atZone(ZoneId.systemDefault()).toEpochSecond())
-                            .setOrganizerId(eventApprovalRequest.getOrganizerId())
-                            .setEventId(eventApprovalRequest.getEventId())
+                    .setId(eventApprovalRequest.getId())
+                    .setCreationTime(eventApprovalRequest.getCreationTime().atZone(ZoneId.systemDefault()).toEpochSecond())
+                    .setOrganizerId(eventApprovalRequest.getOrganizerId())
+                    .setEventId(eventApprovalRequest.getEventId())
                     .build());
         }
         responseObserver.onNext(list.build());
@@ -150,7 +149,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
     @Override
     public void deleteEvent(Id request, StreamObserver<Info> responseObserver) {
         EventApprovalRequest eventApprovalRequest = eventRequestDao.getByEventId(request.getId());
-        if (eventApprovalRequest!=null) {
+        if (eventApprovalRequest != null) {
             eventRequestDao.deleteById(eventApprovalRequest.getId());
         }
         responseObserver.onNext(eventService.deleteEventById(Id.newBuilder().setId(request.getId()).build()));

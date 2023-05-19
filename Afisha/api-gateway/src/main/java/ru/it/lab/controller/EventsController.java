@@ -51,7 +51,7 @@ public class EventsController {
     @GetMapping("/my_created_events")
     @PreAuthorize("hasAuthority('CREATING_ACTIONS')")
     public String getMyCreatedEvents() throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
         return JsonFormat.printer().print(eventService.getMyCreatedEvents(Id.newBuilder().setId(user.getId()).build()));
     }
 
@@ -59,7 +59,6 @@ public class EventsController {
     public String getApprovedEvents() throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(eventService.getAllApprovedEvents(Empty.newBuilder().build()));
     }
-
 
 
     @PostMapping("/my_created_events")
@@ -71,7 +70,7 @@ public class EventsController {
         } catch (RuntimeException e) {
             eventType = EventType.OTHER;
         }
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
 
         return JsonFormat.printer().print(eventService.createEvent(EventProto.newBuilder()
                 .setOrganizerId(user.getId())
@@ -87,7 +86,7 @@ public class EventsController {
     @PostMapping("/my_created_events/{eventId}/update")
     @PreAuthorize("hasAuthority('CREATING_ACTIONS')")
     public String updateEvent(@PathVariable Long eventId, @RequestBody EventDTO eventDTO) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
         EventType eventType = null;
         try {
             eventType = EventType.valueOf(eventDTO.getType());
@@ -110,14 +109,14 @@ public class EventsController {
     @PostMapping("/{eventId}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String addToFavorites(@PathVariable Long eventId) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
         return JsonFormat.printer().print(eventService.addFavorites(EventParticipation.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
 
     @DeleteMapping("/{eventId}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String deleteFavorites(@PathVariable Long eventId) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
         return JsonFormat.printer().print(eventService.deleteFromFavorites(EventParticipation.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
 
@@ -125,7 +124,7 @@ public class EventsController {
     @GetMapping("/search")
     public String search(@RequestBody SearchDTO searchDTO) throws InvalidProtocolBufferException {
         SearchProto.Builder searchProto = SearchProto.newBuilder();
-        if (searchDTO.getType()!=null) {
+        if (searchDTO.getType() != null) {
             EventType eventType = null;
             try {
                 eventType = EventType.valueOf(searchDTO.getType());
@@ -135,15 +134,15 @@ public class EventsController {
             searchProto.setType(StringValue.newBuilder().setValue(eventType.name()));
         }
 
-        if (searchDTO.getTo()!=null) {
+        if (searchDTO.getTo() != null) {
             searchProto.setTo(Int64Value.newBuilder().setValue(searchDTO.getTo().getTime()).build());
         }
 
-        if (searchDTO.getFrom()!=null) {
+        if (searchDTO.getFrom() != null) {
             searchProto.setFrom(Int64Value.newBuilder().setValue(searchDTO.getFrom().getTime()).build());
         }
 
-        if (searchDTO.getSelectedDate()!=null) {
+        if (searchDTO.getSelectedDate() != null) {
             searchProto.clearFrom();
             searchProto.clearTo();
             searchProto.setSelectedDate(Int64Value.newBuilder().setValue(searchDTO.getSelectedDate().getTime()).build());
@@ -156,20 +155,16 @@ public class EventsController {
     @PostMapping("/{eventId}/vote")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String voteEvent(@PathVariable Long eventId, @RequestParam Integer vote) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
         return JsonFormat.printer().print(eventService.voteEvent(VoteProto.newBuilder().setEventId(eventId).setValue(vote).setUserId(user.getId()).build()));
     }
 
     @DeleteMapping("/{eventId}/vote")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String deleteVoteEvent(@PathVariable Long eventId) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
         return JsonFormat.printer().print(eventService.deleteVoteFromEvent(VoteProto.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
-
-
-    //////////////////////////////////////////
-
 
     @GetMapping("/{eventId}/comments")
     public String getCommentsByEvent(@PathVariable Long eventId) throws InvalidProtocolBufferException {
@@ -179,25 +174,27 @@ public class EventsController {
     @PostMapping("/{eventId}/comments")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String createComment(@PathVariable Long eventId, @RequestParam String comment) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user =  getCurrentUser();
         return JsonFormat.printer().print(eventService.createComment(CommentProto.newBuilder()
-                        .setUserId(user.getId())
-                        .setEventId(eventId)
-                        .setInfo(comment)
+                .setUserId(user.getId())
+                .setEventId(eventId)
+                .setInfo(comment)
                 .build()));
     }
 
     @PostMapping("/{eventId}/comments/{commentId}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
-    public String editComment(@PathVariable Long commentId,@RequestParam String newComment) throws InvalidProtocolBufferException {
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+    public String editComment(@PathVariable Long commentId, @RequestParam String newComment) throws InvalidProtocolBufferException {
+        UserProto user =  getCurrentUser();
         return JsonFormat.printer().print(eventService.editComment(CommentProto.newBuilder().setId(commentId).setInfo(newComment).setUserId(user.getId()).build()));
     }
-
 
 
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
+    private UserProto getCurrentUser() {
+        return userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+    }
 }

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 @Slf4j
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -51,10 +50,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String cookieAuthValue = null;
         Cookie[] cookies = req.getCookies();
         Cookie found = null;
-        if (cookies!=null) {
-            for (Cookie cookie: cookies) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(SecurityConstants.AUTHORIZATION_COOKIE)) {
-                    cookieAuthValue=cookie.getValue();
+                    cookieAuthValue = cookie.getValue();
                     found = cookie;
                 }
             }
@@ -72,7 +71,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         Authorization authorization = getAuthorization(cookieAuthValue);
-        if (authorization==null) {
+        if (authorization == null) {
             AccessDeniedException accessDeniedException = new AccessDeniedException("JWT token stores invalid data! Please login again and receive new token!");
             found.setMaxAge(0);
             res.addCookie(found);
@@ -86,8 +85,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(authorization.getUsername(), authorization.getPassword(), authorization.getAuthorities());
-
-
 
 
         if (authorization.getIsBanned()) {
@@ -122,28 +119,28 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private Authorization getAuthorization(String token) {
-            try {
-                String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
-                        .build()
-                        .verify(token)
-                        .getSubject();
-                if (user != null) {
-                    return getUserData(user);
-                }
-            } catch (TokenExpiredException tokenExpiredException) {
-                return null;
+        try {
+            String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()))
+                    .build()
+                    .verify(token)
+                    .getSubject();
+            if (user != null) {
+                return getUserData(user);
             }
+        } catch (TokenExpiredException tokenExpiredException) {
             return null;
+        }
+        return null;
     }
 
     private Authorization getUserData(String username) {
-        UserProto userProto =  userService.getLoginData(UserProto.newBuilder().setUsername(username).build());
+        UserProto userProto = userService.getLoginData(UserProto.newBuilder().setUsername(username).build());
         Authorization authorization = new Authorization();
         authorization.setUsername(userProto.getUsername());
         authorization.setPassword(userProto.getPassword());
         Role role = userProto.getRole();
         List<Permission> permissionList = new ArrayList<>();
-        for (ru.it.lab.Permission permission: role.getPermissionList()) {
+        for (ru.it.lab.Permission permission : role.getPermissionList()) {
             permissionList.add(new Permission(PermissionType.valueOf(permission.getName())));
         }
         ru.it.lab.entities.Role authRole = new ru.it.lab.entities.Role();

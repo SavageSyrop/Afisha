@@ -5,7 +5,13 @@ import com.google.protobuf.util.JsonFormat;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.it.lab.AdminServiceGrpc;
 import ru.it.lab.Empty;
 import ru.it.lab.Id;
@@ -18,7 +24,6 @@ import ru.it.lab.dto.SupportRequestDTO;
 @RestController
 @RequestMapping("/admin")
 public class AdminsController {
-
 
     @GrpcClient("grpc-admin-service")
     private AdminServiceGrpc.AdminServiceBlockingStub adminService;
@@ -108,5 +113,4 @@ public class AdminsController {
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
-
 }

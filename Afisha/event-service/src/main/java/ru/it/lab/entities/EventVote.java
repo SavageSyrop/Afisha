@@ -13,13 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="event_votes")
+@Table(name = "event_votes")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventVote extends AbstractEntity{
+public class EventVote extends AbstractEntity {
     @Column
     private Long userId;
     @ManyToOne

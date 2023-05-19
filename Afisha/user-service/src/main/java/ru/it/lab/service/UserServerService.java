@@ -12,7 +12,6 @@ import ru.it.lab.Empty;
 import ru.it.lab.Id;
 import ru.it.lab.Info;
 import ru.it.lab.ResetPasswordRequest;
-
 import ru.it.lab.SupportRequestsStream;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
@@ -88,7 +87,6 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(user.build());
         responseObserver.onCompleted();
     }
-
 
 
     @Override
@@ -395,7 +393,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         supportRequest.setAnswer(request.getAnswer());
         supportRequest.setCloseTime(LocalDateTime.now());
         supportRequestDao.update(supportRequest);
-        mailService.sendAnswerEmail(supportRequest.getUser(),supportRequest.getQuestion(),supportRequest.getAnswer());
+        mailService.sendAnswerEmail(supportRequest.getUser(), supportRequest.getQuestion(), supportRequest.getAnswer());
         responseObserver.onNext(Info.newBuilder().setInfo("Support request closed").build());
         responseObserver.onCompleted();
     }
@@ -415,7 +413,6 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(stream.build());
         responseObserver.onCompleted();
     }
-
 
 
     private boolean validateEmail(String email) {

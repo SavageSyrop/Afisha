@@ -3,7 +3,6 @@ package ru.it.lab.controller;
 
 import com.google.protobuf.Int64Value;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.StringValue;
 import com.google.protobuf.util.JsonFormat;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
@@ -32,8 +31,8 @@ import ru.it.lab.SupportRequest;
 import ru.it.lab.UserProto;
 import ru.it.lab.UserServiceGrpc;
 import ru.it.lab.configuration.SecurityConstants;
-import ru.it.lab.dto.SupportRequestDTO;
 import ru.it.lab.dto.LoginDTO;
+import ru.it.lab.dto.SupportRequestDTO;
 import ru.it.lab.dto.UserDTO;
 import ru.it.lab.entities.Authorization;
 import ru.it.lab.entities.Permission;
@@ -180,7 +179,6 @@ public class UsersController {
     }
 
 
-
     @GetMapping("forgot_password")
     public String forgotPassword(@RequestParam String username) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(userService.forgotPassword(Info.newBuilder().setInfo(username).build()));
@@ -202,7 +200,7 @@ public class UsersController {
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String requestRole(@RequestParam String roleType) throws InvalidProtocolBufferException {
         RoleType role = RoleType.valueOf(roleType);
-        UserProto user = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto user = getCurrentUser();
         if (user.getRole().getName().equals(role.name())) {
             throw new IllegalArgumentException("You already have this role!");
         }
@@ -246,7 +244,7 @@ public class UsersController {
     @GetMapping("user/my_favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getMyFavorites() throws InvalidProtocolBufferException {
-        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto userProto = getCurrentUser();
         return JsonFormat.printer().print(eventService.getFavoritesByUserId(Id.newBuilder().setId(userProto.getId()).build()));
     }
 
@@ -285,8 +283,6 @@ public class UsersController {
         return JsonFormat.printer().print(eventService.getCommentsByUserId(Id.newBuilder().setId(userProto.getId()).build()));
     }
 
-/////////////////////////////////
-
     @PostMapping("user/{userId}/write_message")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String writeUser(@PathVariable Long userId, @RequestParam String message) throws InvalidProtocolBufferException {
@@ -294,23 +290,25 @@ public class UsersController {
         if (recipientUser.getUsername().equals(getCurrentUserName())) {
             throw new IllegalArgumentException("You can not write yourself!");
         }
-        UserProto userProto = userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
+        UserProto userProto = getCurrentUser();
         if (!recipientUser.getIsOpenProfile()) {
             throw new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("User has private profile!"));
         }
-              return JsonFormat.printer().print(chatService.writeUser(MessageProto.newBuilder()
-                        .setRecipientId(Int64Value.newBuilder().setValue(recipientUser.getId()).build())
-                        .setSenderId(userProto.getId())
-                        .setText(message)
+        return JsonFormat.printer().print(chatService.writeUser(MessageProto.newBuilder()
+                .setRecipientId(Int64Value.newBuilder().setValue(recipientUser.getId()).build())
+                .setSenderId(userProto.getId())
+                .setText(message)
                 .build()));
 
     }
 
 
-
-
     private String getCurrentUserName() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    private UserProto getCurrentUser() {
+        return userService.getUserByUsername(UserProto.newBuilder().setUsername(getCurrentUserName()).build());
     }
 
     private void validatePassword(String password) {

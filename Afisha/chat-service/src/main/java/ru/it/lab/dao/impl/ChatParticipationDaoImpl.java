@@ -53,7 +53,7 @@ public class ChatParticipationDaoImpl extends AbstractDaoImpl<ChatParticipation>
 
         CriteriaQuery<ChatParticipation> crit = criteriaQuery.select(rootEntry)
                 .where(
-                        criteriaBuilder.equal(rootEntry.get("userId"),userId)
+                        criteriaBuilder.equal(rootEntry.get("userId"), userId)
                 );
         TypedQuery<ChatParticipation> found = entityManager.createQuery(crit);
         return found.getResultList();

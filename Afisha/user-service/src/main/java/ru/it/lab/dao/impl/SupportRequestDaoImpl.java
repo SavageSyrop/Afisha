@@ -14,7 +14,6 @@ import java.util.List;
 @Component
 public class SupportRequestDaoImpl extends AbstractDaoImpl<SupportRequest> implements SupportRequestDao {
 
-
     @Override
     public List<SupportRequest> getAllByUser(String username) {
         Class entityClass = getEntityClass();

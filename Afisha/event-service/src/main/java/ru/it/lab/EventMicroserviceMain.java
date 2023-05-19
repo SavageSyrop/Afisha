@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Slf4j
-@SpringBootApplication(scanBasePackages = "ru.it.lab", exclude = {SecurityAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "ru.it.lab", exclude = {SecurityAutoConfiguration.class})
 @EnableTransactionManagement
 public class EventMicroserviceMain {
     public static void main(String[] args) {

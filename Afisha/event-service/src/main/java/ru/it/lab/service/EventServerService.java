@@ -7,7 +7,6 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import ru.it.lab.CommentProto;
 import ru.it.lab.CommentsList;
 import ru.it.lab.Empty;
@@ -329,7 +328,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
         responseObserver.onNext(Info.newBuilder().setInfo("Vote has been deleted").build());
         responseObserver.onCompleted();
     }
-//////////////////////////////////////////////////////////////////////////////////////////////
+
     @Override
     public void getCommentsByUserId(Id request, StreamObserver<CommentsList> responseObserver) {
         CommentsList.Builder res = CommentsList.newBuilder();
@@ -349,7 +348,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
 
     @Override
     public void createComment(CommentProto request, StreamObserver<Info> responseObserver) {
-        EventComment comment = commentDao.getCommentByUserAndEventId(request.getEventId(),request.getUserId());
+        EventComment comment = commentDao.getCommentByUserAndEventId(request.getEventId(), request.getUserId());
         if (comment != null) {
             responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("You have already commented this event! Edit previous comment")));
         }
@@ -367,7 +366,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
     @Override
     public void editComment(CommentProto request, StreamObserver<Info> responseObserver) {
         EventComment comment = commentDao.getById(request.getId());
-        if (comment.getUserId()!=request.getUserId()) {
+        if (comment.getUserId() != request.getUserId()) {
             responseObserver.onError(new StatusRuntimeException(Status.PERMISSION_DENIED.withDescription("You are not author of this comment")));
             return;
         }

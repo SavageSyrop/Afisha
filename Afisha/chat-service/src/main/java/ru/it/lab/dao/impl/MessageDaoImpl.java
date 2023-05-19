@@ -1,10 +1,7 @@
 package ru.it.lab.dao.impl;
 
 import org.springframework.stereotype.Component;
-import ru.it.lab.dao.AbstractDao;
 import ru.it.lab.dao.MessageDao;
-import ru.it.lab.dao.impl.AbstractDaoImpl;
-import ru.it.lab.entities.ChatParticipation;
 import ru.it.lab.entities.Message;
 
 import javax.persistence.EntityManager;
@@ -28,7 +25,7 @@ public class MessageDaoImpl extends AbstractDaoImpl<Message> implements MessageD
 
         CriteriaQuery<Message> crit = criteriaQuery.select(rootEntry)
                 .where(
-                        criteriaBuilder.equal(rootEntry.get("chat").get("id"),chatId)
+                        criteriaBuilder.equal(rootEntry.get("chat").get("id"), chatId)
                 );
         TypedQuery<Message> found = entityManager.createQuery(crit);
         return found.getResultList();

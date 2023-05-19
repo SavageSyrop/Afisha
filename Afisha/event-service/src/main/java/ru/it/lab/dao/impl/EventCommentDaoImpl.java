@@ -3,8 +3,6 @@ package ru.it.lab.dao.impl;
 import org.springframework.stereotype.Component;
 import ru.it.lab.dao.EventCommentDao;
 import ru.it.lab.entities.EventComment;
-import ru.it.lab.entities.EventParticipation;
-import ru.it.lab.enums.EventParticipationType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

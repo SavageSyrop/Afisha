@@ -26,7 +26,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(StatusRuntimeException.class)
     public ResponseEntity<Object> handleGRPCException(StatusRuntimeException e, HttpServletRequest request) {
-        return constructResponseEntity(e,HttpStatus.INTERNAL_SERVER_ERROR,request);
+        return constructResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
     private ResponseEntity<Object> constructResponseEntity(Exception exception, HttpStatus httpStatus, HttpServletRequest request) {

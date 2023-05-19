@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import ru.it.lab.enums.EventType;
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name="events")
+@Table(name = "events")
 @Getter
 @Setter
 @ToString
@@ -30,10 +29,10 @@ import java.time.LocalDateTime;
         name = "pgsql_enum",
         typeClass = PostgreSQLEnumType.class
 )
-public class Event extends AbstractEntity{
+public class Event extends AbstractEntity {
     @Column
     private Long organizerId;
-    @Type( type = "pgsql_enum" )
+    @Type(type = "pgsql_enum")
     @Column
     @Enumerated(EnumType.STRING)
     private EventType type;
