@@ -46,9 +46,10 @@
 7. Выполните Afish->Lifecycle->compile. Дождитесь окончания выполнения.
 8. Создайте в PGAdmin (на порту `5432`) базы данных с названиями adminDB,afishDB,eventDB,chatDB
 9. Настройте блок `mail settings` в application.properties модуля user-service под свои данные.
-10. Запустите `Main` файлы в модулях admin-service, api-gateway, events-service, user-service, chat-service.
-11. Дождитесь запуска `всех` модулей.
-12. Можно отправлять запросы через `Postman`!
+10. Откройте модуль proto, перейдите в папку target->generated-sources->protobuf, нажмите правой кнокой мыши по папкам  grpc-java и java, выберите пункт Mark Directory as Generated Sources Root.
+11. Запустите `Main` файлы в модулях admin-service, api-gateway, events-service, user-service, chat-service.
+12. Дождитесь запуска `всех` модулей.
+13. Можно отправлять запросы через `Postman`!
 
 ## Дополнительно
 Не пропустите видео демонстрацию работы сервиса!
