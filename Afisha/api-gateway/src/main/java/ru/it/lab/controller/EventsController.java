@@ -6,6 +6,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.StringValue;
 import com.google.protobuf.util.JsonFormat;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +36,7 @@ import java.time.ZoneId;
 
 @RestController
 @RequestMapping("/events")
-@Api(value = "event-controller")
+@Api(value = "event-controller", description = "contains event related endpoints")
 public class EventsController {
 
     @GrpcClient("grpc-events-service")
@@ -44,12 +45,13 @@ public class EventsController {
     @GrpcClient("grpc-users-service")
     private UserServiceGrpc.UserServiceBlockingStub userService;
 
-
+    @ApiOperation("Gets event by id")
     @GetMapping("/{eventId}")
     public String getEventById(@PathVariable Long eventId) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(eventService.getEventById(Id.newBuilder().setId(eventId).build()));
     }
 
+    @ApiOperation("Gets created events of current user")
     @GetMapping("/my_created_events")
     @PreAuthorize("hasAuthority('CREATING_ACTIONS')")
     public String getMyCreatedEvents() throws InvalidProtocolBufferException {
@@ -57,12 +59,14 @@ public class EventsController {
         return JsonFormat.printer().print(eventService.getMyCreatedEvents(Id.newBuilder().setId(user.getId()).build()));
     }
 
+    @ApiOperation("Gets all events which are accepted by admin")
     @GetMapping("/all")
     public String getApprovedEvents() throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(eventService.getAllApprovedEvents(Empty.newBuilder().build()));
     }
 
 
+    @ApiOperation("Creates event request in admin-service and event in event-service")
     @PostMapping("/my_created_events")
     @PreAuthorize("hasAuthority('CREATING_ACTIONS')")
     public String createEvent(@RequestBody EventDTO eventDTO) throws InvalidProtocolBufferException {
@@ -85,6 +89,7 @@ public class EventsController {
                 .build()));
     }
 
+    @ApiOperation("Updates event by id if current user is its creator")
     @PostMapping("/my_created_events/{eventId}/update")
     @PreAuthorize("hasAuthority('CREATING_ACTIONS')")
     public String updateEvent(@PathVariable Long eventId, @RequestBody EventDTO eventDTO) throws InvalidProtocolBufferException {
@@ -108,6 +113,7 @@ public class EventsController {
                         .build()));
     }
 
+    @ApiOperation("Adds event to current user favorites if he has not already")
     @PostMapping("/{eventId}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String addToFavorites(@PathVariable Long eventId) throws InvalidProtocolBufferException {
@@ -115,6 +121,7 @@ public class EventsController {
         return JsonFormat.printer().print(eventService.addFavorites(EventParticipation.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
 
+    @ApiOperation("Removes event from current user favorites if he has added it")
     @DeleteMapping("/{eventId}/favorites")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String deleteFavorites(@PathVariable Long eventId) throws InvalidProtocolBufferException {
@@ -122,7 +129,7 @@ public class EventsController {
         return JsonFormat.printer().print(eventService.deleteFromFavorites(EventParticipation.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
 
-
+    @ApiOperation("Searches approved events by parameters: type, selectedDate or to-from period")
     @GetMapping("/search")
     public String search(@RequestBody SearchDTO searchDTO) throws InvalidProtocolBufferException {
         SearchProto.Builder searchProto = SearchProto.newBuilder();
@@ -153,7 +160,7 @@ public class EventsController {
         return JsonFormat.printer().print(eventService.getApprovedEventsWithPeriodAndType(searchProto.build()));
     }
 
-
+    @ApiOperation("Adds vote to event by id, recalculates rating of event")
     @PostMapping("/{eventId}/vote")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String voteEvent(@PathVariable Long eventId, @RequestParam Integer vote) throws InvalidProtocolBufferException {
@@ -161,6 +168,7 @@ public class EventsController {
         return JsonFormat.printer().print(eventService.voteEvent(VoteProto.newBuilder().setEventId(eventId).setValue(vote).setUserId(user.getId()).build()));
     }
 
+    @ApiOperation("Removes vote from event, recalculates rating of event")
     @DeleteMapping("/{eventId}/vote")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String deleteVoteEvent(@PathVariable Long eventId) throws InvalidProtocolBufferException {
@@ -168,11 +176,13 @@ public class EventsController {
         return JsonFormat.printer().print(eventService.deleteVoteFromEvent(VoteProto.newBuilder().setEventId(eventId).setUserId(user.getId()).build()));
     }
 
+    @ApiOperation("Gets all comments from event by id")
     @GetMapping("/{eventId}/comments")
     public String getCommentsByEvent(@PathVariable Long eventId) throws InvalidProtocolBufferException {
         return JsonFormat.printer().print(eventService.getCommentsByEventId(Id.newBuilder().setId(eventId).build()));
     }
 
+    @ApiOperation("Creates comment to event by id if it is not already exist")
     @PostMapping("/{eventId}/comments")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String createComment(@PathVariable Long eventId, @RequestParam String comment) throws InvalidProtocolBufferException {
@@ -184,6 +194,7 @@ public class EventsController {
                 .build()));
     }
 
+    @ApiOperation("Edits comment by id if it already exists and is written by current user")
     @PostMapping("/{eventId}/comments/{commentId}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String editComment(@PathVariable Long commentId, @RequestParam String newComment) throws InvalidProtocolBufferException {

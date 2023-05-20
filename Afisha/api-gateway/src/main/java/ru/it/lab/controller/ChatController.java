@@ -4,6 +4,7 @@ import com.google.protobuf.Int64Value;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +23,7 @@ import ru.it.lab.UserServiceGrpc;
 
 @RestController
 @RequestMapping("/chats")
-@Api(value = "chat-controller")
+@Api(value = "chat-controller", description = "contains chat related endpoints")
 public class ChatController {
 
     @GrpcClient("grpc-chats-service")
@@ -31,6 +32,7 @@ public class ChatController {
     @GrpcClient("grpc-users-service")
     private UserServiceGrpc.UserServiceBlockingStub userService;
 
+    @ApiOperation("Gets all chats of current user")
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getChats() throws InvalidProtocolBufferException {
@@ -41,6 +43,7 @@ public class ChatController {
     }
 
 
+    @ApiOperation("Gets chat by id of current user")
     @GetMapping("/{chatId}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getChat(@PathVariable Long chatId) throws InvalidProtocolBufferException {
@@ -51,6 +54,7 @@ public class ChatController {
                 .build()));
     }
 
+    @ApiOperation("Gets all messages by chat id if current user is a participant in it")
     @GetMapping("/{chatId}/messages")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String getMessages(@PathVariable Long chatId) throws InvalidProtocolBufferException {
@@ -62,6 +66,7 @@ public class ChatController {
     }
 
 
+    @ApiOperation("Sends a message in chat if current user is a participant in it")
     @PostMapping("/{chatId}/messages")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String sendMessage(@PathVariable Long chatId, @RequestParam String message) throws InvalidProtocolBufferException {
@@ -74,6 +79,7 @@ public class ChatController {
     }
 
 
+    @ApiOperation("Renames chat if current user is a participant in it")
     @PostMapping("/{chatId}")
     @PreAuthorize("hasAuthority('AUTHORIZED_ACTIONS')")
     public String renameChat(@PathVariable Long chatId, @RequestParam String chatName) throws InvalidProtocolBufferException {
