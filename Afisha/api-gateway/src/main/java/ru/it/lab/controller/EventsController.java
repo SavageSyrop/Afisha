@@ -5,6 +5,7 @@ import com.google.protobuf.Int64Value;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.StringValue;
 import com.google.protobuf.util.JsonFormat;
+import io.swagger.annotations.Api;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +35,7 @@ import java.time.ZoneId;
 
 @RestController
 @RequestMapping("/events")
+@Api(value = "event-controller")
 public class EventsController {
 
     @GrpcClient("grpc-events-service")

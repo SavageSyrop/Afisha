@@ -2,6 +2,7 @@ package ru.it.lab.controller;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
+import io.swagger.annotations.Api;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,7 @@ import ru.it.lab.dto.SupportRequestDTO;
 
 @RestController
 @RequestMapping("/admin")
+@Api(value = "admin-controller")
 public class AdminsController {
 
     @GrpcClient("grpc-admin-service")

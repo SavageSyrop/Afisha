@@ -6,6 +6,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
+import io.swagger.annotations.Api;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.AccessException;
@@ -50,6 +51,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
+@Api(value = "user-controller")
 public class UsersController {
 
     @GrpcClient("grpc-users-service")
