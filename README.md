@@ -6,7 +6,7 @@
 
 В качестве цели ставилось создание автоматизированной системы поиска событий в городе Томск (мой родной город).  
 Пользователям представляется возможность комментировать, создавать и оценивать события, общаться между собой в личных чатах.
-А свобода, точнее дозволенность, этих возможностей чутко модерируется администрацией, к которым однако всегда можно обратиться с вопросом через службу поддержки.
+А свобода, точнее дозволенность, пользователей чутко модерируется администрацией, к которым однако всегда можно обратиться с вопросом через службу поддержки.
 
 Разработанная в рамках проекта система, обладает следующим функционалом:
 1. Регистрация
@@ -60,14 +60,14 @@
 Файлы для тестов из видео лежат в папке `other`.
 
 PS: Суммарная длительность видео без установки: 19:42   
-Длительность видео установки: 4:28
+Длительность видео установки: 4:57
 
 Видео:  
-0. Установка и использование: https://www.youtube.com/watch?v=c_wzt8dkzMg&ab_channel=JohnnyknoksvilII
-1. До регистрациии, регистрация: https://www.youtube.com/watch?v=IUZRmoNY4bo&ab_channel=JohnnyknoksvilII
-2. Запрос в поддержку, запрос роли и создание события: https://www.youtube.com/watch?v=wcWFtvc1y7g&ab_channel=JohnnyknoksvilII
-3. Комментирование, оценивание, добавление в фавориты и чаты: https://www.youtube.com/watch?v=3L3myRg901M&ab_channel=JohnnyknoksvilII
-4. Дополнительные функции администратора: https://www.youtube.com/watch?v=e1cnLPdCXyQ&ab_channel=JohnnyknoksvilII
+0. Установка и использование: https://www.youtube.com/watch?v=2P0Pq5E9NQ0&ab_channel=JohnnyknoksvilII    
+1. До регистрациии, регистрация: https://www.youtube.com/watch?v=IUZRmoNY4bo&ab_channel=JohnnyknoksvilII  
+2. Запрос в поддержку, запрос роли и создание события: https://www.youtube.com/watch?v=wcWFtvc1y7g&ab_channel=JohnnyknoksvilII  
+3. Комментирование, оценивание, добавление в фавориты и чаты: https://www.youtube.com/watch?v=3L3myRg901M&ab_channel=JohnnyknoksvilII  
+4. Дополнительные функции администратора: https://www.youtube.com/watch?v=e1cnLPdCXyQ&ab_channel=JohnnyknoksvilII  
 
 
 Автор: Шевцов Ярослав
