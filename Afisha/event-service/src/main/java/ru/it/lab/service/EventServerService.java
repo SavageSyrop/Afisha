@@ -61,6 +61,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
         Event event = eventDao.getById(request.getId());
         if (!event.getIsAccepted()) {
             responseObserver.onError(new StatusRuntimeException(Status.CANCELLED.withDescription("This event is not yet published")));
+            return;
         } else {
             responseObserver.onNext(EventProto.newBuilder()
                     .setId(event.getId())
@@ -70,6 +71,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                    .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
             responseObserver.onCompleted();
@@ -89,6 +91,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                    .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
         }
@@ -108,6 +111,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                 .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                 .setLocation(event.getLocation())
                 .setRating(event.getRating())
+                .setEventType(event.getType().name())
                 .setIsAccepted(event.getIsAccepted())
                 .build());
         responseObserver.onCompleted();
@@ -127,6 +131,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                    .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
         }
@@ -271,6 +276,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
                     .setStartTime(event.getStartTime().atZone(ZoneId.systemDefault()).toEpochSecond())
                     .setLocation(event.getLocation())
                     .setRating(event.getRating())
+                            .setEventType(event.getType().name())
                     .setIsAccepted(event.getIsAccepted())
                     .build());
         }
@@ -351,6 +357,7 @@ public class EventServerService extends EventServiceGrpc.EventServiceImplBase {
         EventComment comment = commentDao.getCommentByUserAndEventId(request.getEventId(), request.getUserId());
         if (comment != null) {
             responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("You have already commented this event! Edit previous comment")));
+            return;
         }
         comment = new EventComment();
         comment.setUserId(request.getUserId());

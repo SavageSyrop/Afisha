@@ -2,6 +2,7 @@ package ru.it.lab.exceptions.handlers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.StatusRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.expression.AccessException;
@@ -33,7 +34,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-    @ExceptionHandler(StatusRuntimeException.class)
+    @ExceptionHandler({StatusRuntimeException.class, InvalidProtocolBufferException.class})
     public ResponseEntity<Object> handleGRPCException(StatusRuntimeException e, HttpServletRequest request) {
         return constructResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }

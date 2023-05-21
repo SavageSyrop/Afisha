@@ -105,7 +105,7 @@ public class ChatServerService extends ChatServiceGrpc.ChatServiceImplBase {
         ChatParticipationsList.Builder chatList = ChatParticipationsList.newBuilder();
         for (ChatParticipation participation : list) {
             chatList.addChats(ChatParticipationProto.newBuilder()
-                    .setId(participation.getId())
+                    .setId(participation.getChat().getId())
                     .setUserId(participation.getUserId())
                     .setChatName(participation.getChat().getName())
                     .build());

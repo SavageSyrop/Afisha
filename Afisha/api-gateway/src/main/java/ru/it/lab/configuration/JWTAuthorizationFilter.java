@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Slf4j
@@ -47,6 +48,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
                                     FilterChain chain) throws IOException, ServletException {
+
+        if (req.getRequestURI().contains("swagger") || req.getRequestURI().contains("/v2/api/docs")) {
+            chain.doFilter(req,res);
+            return;
+        }
+
         String cookieAuthValue = null;
         Cookie[] cookies = req.getCookies();
         Cookie found = null;

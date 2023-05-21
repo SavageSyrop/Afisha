@@ -106,6 +106,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
             user = userDao.create(user);
         } catch (Exception e) {
             responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("User with username " + user.getUsername() + " already exists")));
+            return;
         }
         mailService.sendActivationEmail(user);
         responseObserver.onNext(Info.newBuilder().setInfo("To complete registration follow instructions in mail sent at " + user.getEmail()).build());
@@ -121,7 +122,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
                 validateUsername(request.getNewUsername());
             } catch (IllegalArgumentException e) {
                 responseObserver.onError(new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription(e.getMessage())));
-
+                return;
             }
             user.setUsername(request.getNewUsername());
         }
@@ -130,7 +131,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
                 validateEmail(request.getEmail());
             } catch (IllegalArgumentException e) {
                 responseObserver.onError(new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription(e.getMessage())));
-
+                return;
             }
             user.setEmail(request.getEmail());
             user.setActivationCode(UUID.randomUUID().toString());
@@ -146,6 +147,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
             userDao.update(user);
         } catch (Exception e) {
             responseObserver.onError(new StatusRuntimeException(Status.ALREADY_EXISTS.withDescription("User with username " + user.getUsername() + " already exists")));
+            return;
         }
         if (emailChanged) {
             mailService.sendActivationEmail(user);
@@ -230,6 +232,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         User user = userDao.getByActivationCode(request.getInfo());
         if (user == null) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("Invalid activation code")));
+            return;
         }
         user.setActivationCode(null);
         userDao.update(user);
@@ -237,11 +240,12 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
-    @Override
+    @Override       // password validation checked in api-gateway
     public void resetPassword(ResetPasswordRequest request, StreamObserver<Info> responseObserver) {
         User user = userDao.getByResetCode(request.getCode());
         if (user == null) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("Invalid reset code")));
+            return;
         }
         user.setPassword(request.getNewPassword());
         user.setRestorePasswordCode(null);
@@ -255,6 +259,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         User user = userDao.getByUsername(request.getInfo());
         if (user == null) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("User " + request.getInfo() + " not found")));
+            return;
         }
         user.setRestorePasswordCode(UUID.randomUUID().toString());
         userDao.update(user);
@@ -303,6 +308,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
         User user = userDao.getById(request.getId());
         if (!user.getIsBanned()) {
             responseObserver.onError(new StatusRuntimeException(Status.CANCELLED.withDescription("User is not banned")));
+            return;
         }
         user.setIsBanned(false);
         userDao.update(user);
@@ -344,6 +350,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
             SupportRequest supportRequest = supportRequestDao.getById(request.getSearchedId());
             if (!Objects.equals(supportRequest.getUser().getUsername(), request.getUsername())) {
                 responseObserver.onError(new StatusRuntimeException(Status.UNAUTHENTICATED.withDescription("You can not access that support request")));
+                return;
             }
             response.setId(supportRequest.getId());
             response.setUserId(supportRequest.getUser().getId());
@@ -360,6 +367,7 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
             }
         } catch (EntityNotFoundException e) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("Support request no found")));
+            return;
         }
         responseObserver.onNext(response.build());
         responseObserver.onCompleted();
@@ -369,10 +377,6 @@ public class UserServerService extends UserServiceGrpc.UserServiceImplBase {
     public void createSupportRequest(ru.it.lab.SupportRequest request, StreamObserver<Info> responseObserver) {
         SupportRequest supportRequest = new SupportRequest();
         User user = userDao.getByUsername(request.getUsername());
-        if (user == null) {
-            responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription("User not found")));
-            return;
-        }
         supportRequest.setUser(user);
         supportRequest.setQuestion(request.getQuestion());
         supportRequest.setCreationTime(LocalDateTime.now());

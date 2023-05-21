@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -55,7 +56,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             authorizationService.setAuthenticationManager(customAuthenticationManager());
             http.csrf().disable()
                     .cors().and().authorizeRequests()
-                    .antMatchers("/perform_logout", "/sign_up", "/forgot_password", "/reset_password/*", "/activate/*", "/events/all", "/events/search", "/events/*", "/*/comments").permitAll()
+                    .antMatchers("/perform_logout", "/sign_up", "/forgot_password", "/reset_password/*", "/activate/*", "/events/all", "/events/search", "/events/*", "/events/*/comments", "/swagger-ui/*", "/swagger-ui/", "/v2/api-docs", "/", "/swagger-ui/index.html").permitAll()
                     .antMatchers(HttpMethod.POST, "/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
@@ -73,37 +74,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and()
                     .addFilter(new JWTAuthorizationFilter(authenticationManager(), accessDeniedHandler, userService))
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//            http.csrf().disable();
-//            http.authorizeRequests()
-//                    .antMatchers("/perform_logout","/sign_up", "/login", "/forgot_password", "/reset_password/*", "/activate/*", "/search").permitAll()
-//                    .anyRequest().authenticated()
-//                    .and()
-////                    .rememberMe()
-////                    .tokenValiditySeconds(86400)
-////                    .rememberMeCookieName("rememberme")
-////                    .alwaysRemember(true)
-////                    .userDetailsService(authorizationService)
-////                    .and()
-//                    .httpBasic()
-//                    .and()
-//                    .logout()
-//                    .logoutUrl("/perform_logout")
-//                    .invalidateHttpSession(true)
-//                    .deleteCookies("JSESSIONID")
-//                    .permitAll()
-//                    .and()
-//                    .exceptionHandling()
-//                    .accessDeniedHandler(accessDeniedHandler())
-//                    .authenticationEntryPoint(authenticationEntryPoint)
-//                    .and()
-//                    .addFilter(new JWTAuthorizationFilter(authenticationManager(), accessDeniedHandler))
-//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        } catch (Exception exception) {
+      } catch (Exception exception) {
             log.error(exception.getMessage());
             throw new AuthorizationServiceException(exception.getMessage());
         }
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
+    }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

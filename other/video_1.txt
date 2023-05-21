@@ -1,0 +1,25 @@
+ЧАСТЬ 1 До регистрациии, регистрация, запросы в поддержку
+
+/events/all
+/events/{eventId}
+/events/{eventId}/comments
+/events/search
+{
+"from":"18.05.2023",
+"to":"25.05.2023",
+"type":"OTHER",
+"selectedDate":"28.05.2023"
+}
+/sign_up
+{
+    "username":"test",
+    "password":"testfail",
+    "email":"fess.2002@mail.ru",
+    "dateOfBirth":"01-01-2001",
+    "genderType":"MALE",
+    "roleId":"2",
+    "isOpenProfile":"true"
+}
+
+/activate/{code}
+/login

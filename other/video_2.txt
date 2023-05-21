@@ -1,0 +1,39 @@
+ЧАСТЬ 2 Запрос в поддержку, запрос роли и создание события
+
+/login aleoonka POST
+/user/my_support_requests/all GET
+/user/support_requests 
+{
+	"question": "How to find my favorites?"
+}
+/user/my_support_requests/all GET
+/login desertfox POST
+/admin/support_requests/open GET
+/admin/support_requests/{requestId}/close
+{
+	"answer": "Follow /user/my_favorites GET"
+}
+/login aleoonka POST
+/user/my_support_requests/all
+
+
+/user/request_role roleType='ORGANIZER' POST 
+/login desertfox POST
+/admin/role_requests/all
+/admin/role_requests/{roleRequestId} POST
+/login aleoonka POST
+
+/events/my_created_events 
+{
+	"type":"OTHER",
+	"name":"Aleoonka test event",
+	"info":"Test purpose",
+	"startTime":"19.05.2023 21:00",
+	"price":"50",
+	"location":"Unknown"
+}
+/login desertfox POST
+/admin/event_requests/all GET
+/admin/event_requests/{eventRequestId} POST
+/login aleoonka POST
+/events/all GET

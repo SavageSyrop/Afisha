@@ -70,6 +70,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
             responseObserver.onCompleted();
         } catch (EntityNotFoundException e) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription(e.getMessage())));
+            return;
         }
     }
 
@@ -79,6 +80,7 @@ public class AdminServerService extends AdminServiceGrpc.AdminServiceImplBase {
             roleRequestDao.deleteById(request.getId());
         } catch (EntityNotFoundException e) {
             responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND.withDescription(e.getMessage())));
+            return;
         }
         responseObserver.onNext(Info.newBuilder().setInfo("Role request denied!").build());
         log.info("Admin action: Role request declined");
